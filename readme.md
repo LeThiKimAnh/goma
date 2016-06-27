@@ -1,3 +1,3 @@
 # Laravel PHP Framework
 
-Learning stuffs
+Learning stuffs from Laravel framework. Just helloworld like things
