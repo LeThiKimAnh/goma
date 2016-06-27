@@ -35,7 +35,7 @@ class VatLieuController extends Controller
     	$vat_lieu->save();
     	return redirect()->route('list')->with(['flash_level'=>'success','flash_message'=>'Thêm vật liệu thành công']);
     }
-    public function list(){
+    public function listVL(){
     	$data = VatLieu::select('id','ten','ten_ma','rong','dai','cao','mo_ta','chat_lieu','don_gia','yeu_cau')->get()->toArray();
     	return view('admin.vatlieu.list',compact('data'));
     }

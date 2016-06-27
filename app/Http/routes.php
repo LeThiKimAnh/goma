@@ -15,19 +15,19 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('test',function(){
-	return view('admin.donhang.add');
+	return phpinfo();
 });
 
 Route::get('vatlieu/add',['as'=>'getVatLieu','uses'=>'VatLieuController@get_themVatLieu']);
 Route::post('vatlieu/add',['as'=>'postVatLieu','uses'=>'VatLieuController@post_themVatLieu']);
-Route::get('vatlieu/list',['as'=>'list','uses'=>'VatLieuController@list']);
+Route::get('vatlieu/list',['as'=>'list','uses'=>'VatLieuController@listVL']);
 Route::get('vatlieu/del/{id}',['as'=>'delvatlieu','uses'=>'VatLieuController@delete']);
 Route::get('vatlieu/edit/{id}',['as'=>'getEdit','uses'=>'VatLieuController@getEdit']);
 Route::post('vatlieu/edit/{id}',['as'=>'postEdit','uses'=>'VatLieuController@postEdit']);
 
 Route::get('vatdung/add',['as'=>'getVatdung','uses'=>'VatDungController@get_themVatDung']);
 Route::post('vatdung/add',['as'=>'postVatdung','uses'=>'VatDungController@post_themVatDung']);
-Route::get('vatdung/list',['as'=>'vd-getList','uses'=>'VatDungController@list']);
+Route::get('vatdung/list',['as'=>'vd-getList','uses'=>'VatDungController@listVD']);
 Route::get('vatdung/delete/{id}',['as'=>'delvatdung','uses'=>'VatDungController@delete']);
 Route::get('vatdung/edit/{id}',['as'=>'getEditVD','uses'=>'VatDungController@getEdit']);
 Route::post('vatdung/edit/{id}',['as'=>'postEditVD','uses'=>'VatDungController@postEdit']);
@@ -35,7 +35,7 @@ Route::get('vatdung/chitiet/{id}',['as'=>'chitietVD','uses'=>'VatDungController@
 
 Route::get('donhang/add',['as'=>'getDonhang','uses'=>'DonHangController@get_themDonHang']);
 Route::post('donhang/add',['as'=>'postDonhang','uses'=>'DonHangController@post_DonHang']);
-Route::get('donhang/list',['as'=>'listDh','uses'=>'DonHangController@list']);
+Route::get('donhang/list',['as'=>'listDh','uses'=>'DonHangController@listDH']);
 Route::get('donhang/delete/{id}',['as'=>'deldonhang','uses'=>'DonHangController@delete']);
 Route::get('donhang/edit/{id}',['as'=>'getEditDH','uses'=>'DonHangController@getEdit']);
 Route::post('donhang/edit/{id}',['as'=>'postEditDH','uses'=>'DonHangController@postEdit']);

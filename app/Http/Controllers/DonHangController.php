@@ -75,7 +75,7 @@ class DonHangController extends Controller
         return redirect()->route('getDonhang')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Tối thiểu phải có một vật dụng trong đơn hàng']);
         
     }
-    public function list(){
+    public function listDH(){
         $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang')->get()->toArray();
         return view('admin.donhang.list',compact('data'));
     }

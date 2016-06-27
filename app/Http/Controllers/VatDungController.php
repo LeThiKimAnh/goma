@@ -71,7 +71,7 @@ class VatDungController extends Controller
         
         return redirect()->route('getVatdung')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Tối thiểu phải có một vật liệu trong vật dụng']);
     }
-    public function list(){
+    public function listVD(){
     	$data = VatDung::select('id','ten','mo_ta','ma_vat_dung')->get()->toArray();
     	return view('admin.vatdung.list',compact('data'));
     }
