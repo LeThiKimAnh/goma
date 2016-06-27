@@ -6,3 +6,4 @@
 # save results to db
 # update job status
 
+$connection = "hello"
