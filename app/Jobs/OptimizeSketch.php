@@ -34,11 +34,11 @@ class OptimizeSketch extends Job implements ShouldQueue
     {
         Log::info("Starting optimze the session");
         $recyclees = GoThua::all();
-				$donhang_id = $session->donhang_id;
+		$donhang_id = $session->donhang_id;
 				
-				$sql_query = "";
-				$res = DB::raw($sql_query);
-				$optimizer = new Optimizer();
+		$sql_query = "";
+		$res = DB::raw($sql_query);
+		$optimizer = new Optimizer();
 				
         Log::info("Done!");
     }
