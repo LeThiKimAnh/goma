@@ -3,8 +3,8 @@
 namespace App\Jobs;
 
 use Log;
-use App\Jobs\Job;
-use App\GoThua;
+use DB;
+use App\Jobs\Optimzer;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -34,8 +34,12 @@ class OptimizeSketch extends Job implements ShouldQueue
     {
         Log::info("Starting optimze the session");
         $recyclees = GoThua::all();
-        
-        
+				$donhang_id = $session->donhang_id;
+				
+				$sql_query = "";
+				$res = DB::raw($sql_query);
+				$optimizer = new Optimizer();
+				
         Log::info("Done!");
     }
 }
