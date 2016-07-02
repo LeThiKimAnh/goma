@@ -7,14 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\Http\Requests\VatLieuRequest;
 use App\VatLieu;
-
-function length($array){
-   $length = 0;
-  foreach ($array as $value) {
-    $length = $length+1;
-  }
-  return $length;
-}
+use App\ChiTietVatDung;
 class VatLieuController extends Controller
 {
     public function get_themVatLieu(){
@@ -35,14 +28,19 @@ class VatLieuController extends Controller
     	$vat_lieu->save();
     	return redirect()->route('list')->with(['flash_level'=>'success','flash_message'=>'Thêm vật liệu thành công']);
     }
-    public function list(){
-    	$data = VatLieu::select('id','ten','ten_ma','rong','dai','cao','mo_ta','chat_lieu','don_gia','yeu_cau')->get()->toArray();
+    public function listVl(){
+    	$data = VatLieu::select('id','ten','ten_ma','rong','dai','cao','mo_ta','chat_lieu','don_gia','yeu_cau')->orderBy('id','DESC')->get()->toArray();
     	return view('admin.vatlieu.list',compact('data'));
     }
-    public function delete($id){
-    	$vat_lieu = VatLieu::find($id);
-    	$vat_lieu->delete();
-    	return redirect()->route('list')->with(['flash_level'=>'success','flash_message'=>'Xóa vật liệu thành công']);
+    public function deleteVL($id){
+        $chi_tiet_vd = ChiTietVatDung::where('vatlieu_id',$id);
+        if($chi_tiet_vd->count()>0){
+            return redirect()->route('list')->with(['flash_level'=>'success','flash_message'=>'Bạn không thể xóa vật liệu này vì có vật dụng đang dùng nó, bạn phải xóa vật dụng trước']);
+        }else{
+            $vat_lieu = VatLieu::find($id);
+            $vat_lieu->delete();
+            return redirect()->route('list')->with(['flash_level'=>'success','flash_message'=>'Xóa vật liệu thành công']);
+        }
     }
     public function getEdit($id){
     	$vat_lieu = VatLieu::find($id);

@@ -18,27 +18,47 @@ Route::get('test',function(){
 	return view('admin.donhang.add');
 });
 
-Route::get('vatlieu/add',['as'=>'getVatLieu','uses'=>'VatLieuController@get_themVatLieu']);
-Route::post('vatlieu/add',['as'=>'postVatLieu','uses'=>'VatLieuController@post_themVatLieu']);
-Route::get('vatlieu/list',['as'=>'list','uses'=>'VatLieuController@list']);
-Route::get('vatlieu/del/{id}',['as'=>'delvatlieu','uses'=>'VatLieuController@delete']);
-Route::get('vatlieu/edit/{id}',['as'=>'getEdit','uses'=>'VatLieuController@getEdit']);
-Route::post('vatlieu/edit/{id}',['as'=>'postEdit','uses'=>'VatLieuController@postEdit']);
+Route::get('vatlieu/add',['as'=>'getVatLieu','uses'=>'VatLieuController@get_themVatLieu','middleware'=>'auth']);
+Route::post('vatlieu/add',['as'=>'postVatLieu','uses'=>'VatLieuController@post_themVatLieu','middleware'=>'auth']);
+Route::get('vatlieu/list',['as'=>'list','uses'=>'VatLieuController@listVl','middleware'=>'auth']);
+Route::get('vatlieu/del/{id}',['as'=>'delvatlieu','uses'=>'VatLieuController@deleteVL','middleware'=>'auth']);
+Route::get('vatlieu/edit/{id}',['as'=>'getEdit','uses'=>'VatLieuController@getEdit','middleware'=>'auth']);
+Route::post('vatlieu/edit/{id}',['as'=>'postEdit','uses'=>'VatLieuController@postEdit','middleware'=>'auth']);
 
-Route::get('vatdung/add',['as'=>'getVatdung','uses'=>'VatDungController@get_themVatDung']);
-Route::post('vatdung/add',['as'=>'postVatdung','uses'=>'VatDungController@post_themVatDung']);
-Route::get('vatdung/list',['as'=>'vd-getList','uses'=>'VatDungController@list']);
-Route::get('vatdung/delete/{id}',['as'=>'delvatdung','uses'=>'VatDungController@delete']);
-Route::get('vatdung/edit/{id}',['as'=>'getEditVD','uses'=>'VatDungController@getEdit']);
-Route::post('vatdung/edit/{id}',['as'=>'postEditVD','uses'=>'VatDungController@postEdit']);
-Route::get('vatdung/chitiet/{id}',['as'=>'chitietVD','uses'=>'VatDungController@chitiet']);
+Route::get('vatdung/add',['as'=>'getVatdung','uses'=>'VatDungController@get_themVatDung','middleware'=>'auth']);
+Route::post('vatdung/add',['as'=>'postVatdung','uses'=>'VatDungController@post_themVatDung','middleware'=>'auth']);
+Route::get('vatdung/list',['as'=>'vd-getList','uses'=>'VatDungController@listVd','middleware'=>'auth']);
+Route::get('vatdung/delete/{id}',['as'=>'delvatdung','uses'=>'VatDungController@deleteVD','middleware'=>'auth']);
+Route::get('vatdung/edit/{id}',['as'=>'getEditVD','uses'=>'VatDungController@getEdit','middleware'=>'auth']);
+Route::post('vatdung/edit/{id}',['as'=>'postEditVD','uses'=>'VatDungController@postEdit','middleware'=>'auth']);
+Route::get('vatdung/chitiet/{id}',['as'=>'chitietVD','uses'=>'VatDungController@chitiet','middleware'=>'auth']);
 
-Route::get('donhang/add',['as'=>'getDonhang','uses'=>'DonHangController@get_themDonHang']);
-Route::post('donhang/add',['as'=>'postDonhang','uses'=>'DonHangController@post_DonHang']);
-Route::get('donhang/list',['as'=>'listDh','uses'=>'DonHangController@list']);
-Route::get('donhang/delete/{id}',['as'=>'deldonhang','uses'=>'DonHangController@delete']);
-Route::get('donhang/edit/{id}',['as'=>'getEditDH','uses'=>'DonHangController@getEdit']);
-Route::post('donhang/edit/{id}',['as'=>'postEditDH','uses'=>'DonHangController@postEdit']);
-Route::get('donhang/chitiet/{id}',['as'=>'chitietDH','uses'=>'DonHangController@chitiet']);
+Route::get('donhang/add',['as'=>'getDonhang','uses'=>'DonHangController@get_themDonHang','middleware'=>'auth']);
+Route::post('donhang/add',['as'=>'postDonhang','uses'=>'DonHangController@post_DonHang','middleware'=>'auth']);
+Route::get('donhang/list',['as'=>'listDh','uses'=>'DonHangController@listDh','middleware'=>'auth']);
+Route::get('donhang/delete/{id}',['as'=>'deldonhang','uses'=>'DonHangController@deleteDH','middleware'=>'auth']);
+Route::get('donhang/edit/{id}',['as'=>'getEditDH','uses'=>'DonHangController@getEdit','middleware'=>'auth']);
+Route::post('donhang/edit/{id}',['as'=>'postEditDH','uses'=>'DonHangController@postEdit','middleware'=>'auth']);
+Route::get('donhang/chitiet/{id}',['as'=>'chitietDH','uses'=>'DonHangController@chitiet','middleware'=>'auth']);
+Route::get('donhang/listDaXL',['as'=>'listDhDaXL','uses'=>'DonHangController@listDhDaXL','middleware'=>'auth']);
+Route::get('donhang/listDhCXL',['as'=>'listDhCXL','uses'=>'DonHangController@listDhCXL','middleware'=>'auth']);
 
-Route::get('session/{id}',['as'=>'session','uses'=>'SessionController@session']);
+Route::get('session/{id}',['as'=>'session','uses'=>'SessionController@session','middleware'=>'auth']);
+
+Route::get('user/add',['as'=>'userAdd','uses'=>'UserController@getAdd','middleware'=>'auth']);
+Route::post('user/add',['as'=>'userPostAdd','uses'=>'UserController@postAdd','middleware'=>'auth']);
+Route::get('user/list',['as'=>'listUser','uses'=>'UserController@listUser','middleware'=>'auth']);
+Route::get('user/delete/{id}',['as'=>'delUser','uses'=>'UserController@deleteUser','middleware'=>'auth']);
+Route::get('user/edit/{id}',['as'=>'getEditUser','uses'=>'UserController@getEdit','middleware'=>'auth']);
+Route::post('user/edit/{id}',['as'=>'postEditUser','uses'=>'UserController@postEdit','middleware'=>'auth']);
+
+Route::controllers([
+		'auth' =>'Auth\AuthController',
+		'password'=>'Auth\PasswordController'
+	]);
+
+Route::get('user/login',['as'=>'getLogin','uses'=>'Auth\AuthController@getLogin']);
+Route::post('user/login',['as'=>'postLogin','uses'=>'Auth\AuthController@postLogin']);
+Route::get('user/logout',['as'=>'getLogout','uses'=>'Auth\AuthController@getLogout']);
+
+Route::get('dashboard',['as'=>'dashboard','middleware'=>'auth','uses'=>'DashboardController@dashboard']);

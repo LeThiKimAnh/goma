@@ -59,12 +59,12 @@
                         <i class="glyphicon glyphicon-user"></i>  <i class="glyphicon glyphicon-menu-down"></i>
                     </a>
                     <ul class="dropdown-menu dropdown-user">
-                        <li><a href="#"><i class="glyphicon glyphicon-user"></i>  User Profile</a>
+                        <li><a href="#"><i class="glyphicon glyphicon-user"></i>  {!!Auth::user()->username!!}</a>
                         </li>
                         <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="login"><i class="glyphicon glyphicon-log-out"></i> Logout</a>
+                        <li><a href="{!!URL::route('getLogout')!!}"><i class="glyphicon glyphicon-log-out"></i> Logout</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -88,7 +88,7 @@
                             <!-- /input-group -->
                         </li>
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-dashboard"></i> Dashboard</a>
+                            <a href="{!!URL::route('dashboard')!!}"><i class="glyphicon glyphicon-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Đơn Hàng<span class="glyphicon glyphicon-triangle-bottom"></span></a>
@@ -130,10 +130,10 @@
                             <a href="#"><i class="glyphicon glyphicon-user"></i> User<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="#"> List User</a>
+                                    <a href="{!!URL::route('listUser')!!}">List User</a>
                                 </li>
                                 <li>
-                                    <a href="#"> Add User</a>
+                                    <a href="{!!URL::route('userAdd')!!}"> Add User</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

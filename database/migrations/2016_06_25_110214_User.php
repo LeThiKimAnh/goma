@@ -17,6 +17,7 @@ class User extends Migration
         $table->string('username');
         $table->string('password');
         $table->string('email');
+        $table->tinyInteger('level');
         $table->timestamps();
        });
     }

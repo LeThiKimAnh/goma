@@ -18,10 +18,10 @@
              <table class="table table-striped table-bordered table-hover">
                <thead>
                      <tr align="center">
-                         <th>STT</th>
                          <th>Tên Vật dụng</th>
                          <th>Số lượng</th>
                          <th>Đơn Vị</th>
+                         <th>Xoá</th>
                      </tr>
                 </thead>
                  <?php
@@ -32,7 +32,6 @@
                  <tbody  id="chon_vd" cout ="{!!$cout!!}">
                 
                        <tr class="odd gradeX" align="center">
-                             <td id="stt">1</td>
                              <td>
                              <select class="form-control" name="vatdung[]" id="select_vd">
                                 <option value="0" >Chọn Vật Dụng</option>

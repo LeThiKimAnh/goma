@@ -11,6 +11,7 @@
             <th>Tên</th>
             <th>Mã Vật Dụng</th>
             <th>Mô tả</th>
+            <th>Đơn giá (VND)</th>
             <th>Chi tiết</th>
             <th>Xóa</th>
             <th>Sửa</th>
@@ -25,6 +26,7 @@
                 <td>{!!$item["ten"]!!}</td>
                 <td>{!!$item["ma_vat_dung"]!!}</td>
                 <td>{!!$item["mo_ta"]!!}</td>
+                <td>{!!$item["don_gia"]!!}</td>
                 <td class="center"><a href ="{{URL::route('chitietVD',$item['id'])}}">Chi tiết</a></td>
                 <td class="center"><i class="fa fa-trash-o fa-fw"></i><a  href="{{URL::route('delvatdung',$item['id'])}}" onclick="return xacnhanxoa('Bạn có muốn xóa vật dụng này')">Xóa</a></td>
                 <td class="center"><a  href ="{{URL::route('getEditVD',$item['id'])}}">Sửa</a></td>
