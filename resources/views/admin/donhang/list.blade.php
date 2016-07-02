@@ -1,6 +1,6 @@
 @extends('admin.master')
 @section('controller','Đơn hàng')
-@section('action','List')
+@section('action',$action)
 @section('content')
  <table class="table table-striped table-bordered table-hover" id="dataTables-example">
    <thead>
@@ -10,6 +10,7 @@
              <th>Khách hàng</th>
              <th>Người lập đơn</th>
              <th>Mô tả</th>
+             <th>Tổng hóa đơn</th>
              <th>Trạng thái</th>
              <th>Chi tiết</th>
              <th>Delete</th>
@@ -26,12 +27,13 @@
              <td>{!!$item["khach_hang"]!!}</td>
              <td>{!!$item["nguoi_tao_don"]!!}</td>
              <td>{!!$item["mo_ta"]!!}</td>
+             <td>{!!$item["tong_gia"]!!}</td>
              <td>
                @if($item["trang_thai"]==0)
                     Chưa xử lý
                @elseif($item["trang_thai"]==1)
                     Đang chờ xử lý
-                @else
+                @elseif($item["trang_thai"]==2)
                     Đã xử lý
                @endif
              </td>

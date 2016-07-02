@@ -17,7 +17,6 @@
              <table class="table table-striped table-bordered table-hover">
                <thead>
                      <tr align="center">
-                         <th>STT</th>
                          <th>Tên vật liệu</th>
                          <th>Số lượng</th>
                          <th>Đơn Vị</th>
@@ -30,10 +29,9 @@
                     } ?>
                  <tbody  id="chon_nl" cout ="{!!$cout!!}">
                        <tr class="odd gradeX" align="center" id="tr">
-                             <td>1</td>
                              <td>
                              <select class="form-control" id = "select" name="vatlieu[]">
-                                <option value="">Please Choose Product</option>
+                                <option value="">Chọn vật liệu</option>
                                 @foreach($data as $item)
                                     <option value='{!!$item["id"]!!}'>{!!$item['ten']!!}</option>
                                 @endforeach 
