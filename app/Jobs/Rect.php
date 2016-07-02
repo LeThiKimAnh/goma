@@ -8,6 +8,7 @@ class Rect {
 	private $left;
 	public $width;
 	public $height;
+	
 	public $area;
 	public $rotate;
 
@@ -25,7 +26,7 @@ class Rect {
 	}
 
 	public function sketch() {
-		// TODO generate the sketch as a string
+		return array($this->top, $this->left, $this->width, $this->height);
 	}
 
 	public function draw() {

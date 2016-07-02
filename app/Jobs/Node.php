@@ -62,7 +62,7 @@ class Node {
 	public function remain() {
 		// get all un-filled node and will be used as recyclee later
 		if ($this->left == null) {
-			return [$this->bound];
+			return array($this->bound);
 		}
 		$left = $this->left->remain();
 		$right = $this->right->remain();

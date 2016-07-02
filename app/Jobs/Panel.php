@@ -43,7 +43,12 @@ class Panel {
 	}
 
 	public function sketch() {
-		// TODO generate the sketch as a string
+		$res =array();
+		foreach ($this->mapped_rects as $rect) {
+			array_push($res, $rect->sketch());
+		}
+		
+		return $res;
 	}
 
 	public function draw() {

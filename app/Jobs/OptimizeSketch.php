@@ -37,9 +37,15 @@ class OptimizeSketch extends Job implements ShouldQueue {
 
 		$sql_query = "";
 		$res = DB::raw($sql_query);
-		$solution = new Solution();
 
+		$solution = new Solution();
 		$solution->run();
+
+		$remain = $solution->remain();
+		$panels = $solution->panels();
+		
+		# TODO save remain to DB
+		# update solution to DB
 
 		Log::info("Done!");
 	}

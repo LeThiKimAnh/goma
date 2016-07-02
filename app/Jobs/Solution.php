@@ -12,8 +12,8 @@ class Solution {
 	const HORIZONAL = 1;
 	const VERTICAL = 2;
 
-	private $panels= array();
-	private $remain= array();
+	private $panels = array();
+	private $remain = array();
 
 	public function run($rects, $recyclees) {
 		// sort all the rect by area desc
@@ -37,6 +37,14 @@ class Solution {
 		}
 	}
 
+	public function panels() {
+		return $this->panels;
+	}
+
+	public function remain() {
+		return $this->remain;
+	}
+
 	private function runOnReq($rects, $recyclees, $req) {
 		foreach ($recyclees as $r) {
 			$panel = new Panel($r->width, $r->height, $req);
@@ -53,7 +61,7 @@ class Solution {
 		while (count($rects) != 0) {
 			$panel = new Panel(Solution::STANDARD_W, Solution::STANDARD_H, $req);
 			$rects = $panel->addAll($rects);
-			
+
 			$remain = $panel->remain();
 			array_push($this->panels, $panel);
 			array_merge($this->remain, $remain);
