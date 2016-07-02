@@ -4,34 +4,45 @@ namespace App\Jobs;
 
 class Panel {
 
-	private $root;
 	public $width;
 	public $height;
 	public $area;
 	public $req;
 	private $filledArea = 0;
 	private $root;
+	private $mapped_rects = array();
 
 	public function __construct($width, $height, $req) {
 		$this->width = $width;
 		$this->height = $height;
-		$thus->req = $req;
+		$this->req = $req;
 
 		$this->area = $width * $height;
 		$this->root = new Node($width, $height, $req);
 	}
 
-	public function tryAdd($rects) {
-		foreach ($rects as $rect) {
+	public function addAll($rects) {
+		$remain_rects = array();
+
+		while (count($rects)) {
+			$rect = array_shift($rects);
+
 			if ($this->root->insert($rect)) {
+				#update filled area and mapped_rects
 				$this->filledArea += $rect->area;
+				array_push($this->mapped_rects, $rect);
+			} else {
+				array_push($remain_rects, $rect);
 			}
-			// TODO remove this rect from list
 		}
-		return $rects;
+		return $remain_rects;
 	}
 
-	public function genSketch() {
+	public function remain() {
+		return $this->root->remain();
+	}
+
+	public function sketch() {
 		// TODO generate the sketch as a string
 	}
 
