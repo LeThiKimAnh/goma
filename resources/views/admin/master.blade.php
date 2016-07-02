@@ -190,7 +190,7 @@
     <script src="{{url('admin/dist/js/sb-admin-2.js')}}"></script>
 
     <!-- DataTables JavaScript -->
-    <script src="{{url('admin/bower_components/DataTables/media/js/jquery.dataTables.min.js')}}"></script>
+    <script src="{{url('admin/bower_components/datatables/media/js/jquery.dataTables.min.js')}}"></script>
     <script src="{{url('admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js')}}"></script>
     <!--myscript -->
     <script src="{{url('admin/js/myscript.js')}}"></script>

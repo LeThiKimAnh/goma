@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('test',function(){
-	return view('admin.donhang.add');
+	return phpinfo();
 });
 
 Route::get('vatlieu/add',['as'=>'getVatLieu','uses'=>'VatLieuController@get_themVatLieu','middleware'=>'auth']);
