@@ -12,7 +12,7 @@ class VatDung extends Migration
      */
     public function up()
     {
-       Schema::create('vat_dung',function(Blueprint $table){
+        Schema::create('vat_dung',function(Blueprint $table){
         $table->increments('id');
         $table->string('ma_vat_dung');
         $table->string('ten');

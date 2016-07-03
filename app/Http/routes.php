@@ -14,9 +14,6 @@
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('test',function(){
-	return phpinfo();
-});
 
 Route::get('vatlieu/add',['as'=>'getVatLieu','uses'=>'VatLieuController@get_themVatLieu','middleware'=>'auth']);
 Route::post('vatlieu/add',['as'=>'postVatLieu','uses'=>'VatLieuController@post_themVatLieu','middleware'=>'auth']);
