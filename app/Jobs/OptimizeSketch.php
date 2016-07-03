@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use Log;
 use DB;
+use App\GoThua;
 use App\Jobs\Solution;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -32,18 +33,17 @@ class OptimizeSketch extends Job implements ShouldQueue {
 	 */
 	public function handle() {
 		Log::info("Starting optimze the session");
-		$recyclees = GoThua::all();
-		$donhang_id = $session->donhang_id;
-
-		$sql_query = "";
-		$res = DB::raw($sql_query);
-
-		$solution = new Solution();
-		$solution->run();
-
-		$remain = $solution->remain();
-		$panels = $solution->panels();
-		
+//		$recyclees = GoThua::all();
+//		$donhang_id = $this->session->donhang_id;
+//
+//		$sql_query = "";
+//		$res = DB::raw($sql_query);
+//
+//		$solution = new Solution();
+//		$solution->run();
+//
+//		$remain = $solution->remain();
+//		$panels = $solution->panels();
 		# TODO save remain to DB
 		# update solution to DB
 
