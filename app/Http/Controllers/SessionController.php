@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\Session;
 use App\DonHang;
 use App\Jobs\OptimizeSketch;
+use Auth;
 
 class SessionController extends Controller
 {
@@ -18,12 +19,12 @@ class SessionController extends Controller
     	
     	$session = new Session;
     	$session->donhang_id = $id;
-        $session->nguoi_xu_ly = 'Kim Anh';
+        $session->nguoi_xu_ly = Auth::user()->username;
     	$session->trang_thai = 1;
     	$session->sketch = '';
     	$session->save();
     	
     	$this->dispatch(new OptimizeSketch($session));
-    	return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message'=>'Xin bạn chờ kết quả']);
+    	return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message'=>'Đơn hàng đang chờ xử lý']);
     }
 }

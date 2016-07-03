@@ -45,6 +45,12 @@
             </table>
          </div>
          <div class="form-group">
+             <div class="form-group">
+             <label>Phụ phí</label>
+             <input class="form-control" name="txt_vd" placeholder="Nhập phụ phí" />
+         </div>
+         </div>
+         <div class="form-group">
              <button type="button" class="btn btn-primary" id='btn_them_nl'>Chọn thêm vật liệu</button>
          </div>
          
