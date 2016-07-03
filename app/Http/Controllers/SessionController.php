@@ -2,9 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
-use App\Http\Requests;
 use App\Session;
 use App\DonHang;
 use App\Jobs\OptimizeSketch;
@@ -24,7 +21,10 @@ class SessionController extends Controller
     	$session->sketch = '';
     	$session->save();
     	
-    	$this->dispatch(new OptimizeSketch($session));
+		$job = new OptimizeSketch($session);
+		$job->delay(3600);
+		
+    	$this->dispatch($job);
     	return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message'=>'Đơn hàng đang chờ xử lý']);
     }
 }

@@ -4,8 +4,8 @@ namespace App\Jobs;
 
 class Rect {
 
-	private $top;
-	private $left;
+	public $top;
+	public $left;
 	public $width;
 	public $height;
 	
@@ -14,7 +14,7 @@ class Rect {
 	public $req;
 	public $rotate;
 
-	public function _construct($width, $height, $code, $req) {
+	public function __construct($width, $height, $code, $req) {
 		$this->width = $width;
 		$this->height = $height;
 		$this->rotate = False;

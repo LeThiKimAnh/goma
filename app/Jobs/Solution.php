@@ -17,17 +17,17 @@ class Solution {
 	public static $REQS = array(Solution::VERTICAL, Solution::HORIZONAL, Solution::NONE);
 
 	public function run($rects, $recyclees) {
-		var_dump($rects[0]);
 		// sort all the rect by area desc
 		usort($rects, function($rect1, $rect2) {
-			return $rect2->area - $rect1->area;
+//			return $rect2->area - $rect1->area;
+			return max($rect2->width, $rect2->height) - max($rect1->width, $rect1->height);
 		});
 		// sort all the recyclee by area desc
 		usort($recyclees, function($rect1, $rect2) {
-			return $rect2->area - $rect1->area;
+//			return $rect2->area - $rect1->area;
+			return max($rect2->width, $rect2->height) - max($rect1->width, $rect1->height);
 		});
 
-		var_dump($rects[0]);
 		// foreach type of requirement, we pack it separately
 		foreach (Solution::$REQS as $req) {
 			$sub_rects = array_filter($rects, function($rect) use ($req) {
@@ -48,11 +48,30 @@ class Solution {
 		return $this->remain;
 	}
 
+	public function to_json() {
+		$sketch = array();
+		foreach ($this->panels as $p) {
+			array_push($sketch, $p->sketch());
+		}
+		$obj = array(
+			"panels" => $sketch,
+			"remain" => $this->remain
+		);
+
+		return json_encode($obj);
+	}
+
 	private function runOnReq($rects, $recyclees, $req) {
+		if (count($rects) == 0) {
+			return;
+		}
+		echo 'Running on recyclee ' . count($recyclees) . '<br/>';
 		foreach ($recyclees as $r) {
 			$panel = new Panel($r->width, $r->height, $req);
 			// update remain rects 
+			echo 'Solution rects ' . count($rects) . '<br/>';
 			$rects = $panel->addAll($rects);
+			echo 'Solution rects ' . count($rects) . '<br/>';
 
 			if (count($rects) == 0) {
 				break;
@@ -61,6 +80,8 @@ class Solution {
 			array_push($this->panels, $panel);
 			array_merge($this->remain, $remain);
 		}
+
+		echo 'Creating new panel to add <br/>';
 		while (count($rects) != 0) {
 			$panel = new Panel(Solution::STANDARD_W, Solution::STANDARD_H, $req);
 			$rects = $panel->addAll($rects);

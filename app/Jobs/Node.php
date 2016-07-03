@@ -9,6 +9,8 @@ class Node {
 	protected $right;
 	protected $filled;
 	protected $req;
+	protected $level = 0;
+	protected $gap = 4;
 
 	public function __construct($width, $height, $req) {
 		$this->req = $req;
@@ -21,58 +23,88 @@ class Node {
 	}
 
 	public function insert($rect) {
+		$bound = $this->bound;
+
+		$ww_diff = $bound->width - $rect->width;
+		$hh_diff = $bound->height - $rect->height;
+		$wh_diff = $bound->height - $rect->width;
+		$hw_diff = $bound->width - $rect->height;
+
+		if ($ww_diff < 0 or $hh_diff < 0) {
+			echo 'early return<br/>';
+			return False;
+		}
+
 		if ($this->left != null) {
-			return $this->left->insert($rect) || $this->right->insert($rect);
+			echo 'left node<br/>';
+			$ret = $this->left->insert($rect);
+			if ($ret) {
+				return $ret;
+			}
+		}
+		if ($this->right != null) {
+			echo 'right node<br/>';
+			return $this->right->insert($rect);
 		}
 		if ($this->filled) {
 			return False;
 		}
-		$bound = $this->bound;
-		var_dump($rect);
+		echo 'level > ' . $this->level . ' > bound<br/>';
+		var_dump($bound->top, $bound->left, $bound->width, $bound->height);
 
-		$ww_rate = $rect->width / $bound->width;
-		$hh_rate = $rect->height / $bound->height;
-		$wh_rate = $rect->width / $bound->height;
-		$hw_rate = $rect->height / $bound->width;
-
-		if ($ww_rate == 1 and $hh_rate == 1) {
+		if ($ww_diff == 0 and $hh_diff == 0) {
 			$rect->placeAt($bound->top, $bound->left);
 			$this->filled = True;
 			return True;
 		}
-		if ($wh_rate == 1 and $hw_rate == 1 and $this->req == Solution::NONE) {
-			$rect->placeAt($bound->top, $bound->left);
-			$this->filled = True;
-			$rect->rotate = True;
-			return True;
-		}
+//		if ($wh_diff == 1 and $hw_diff == 1 and $this->req == Solution::NONE) {
+//			$rect->placeAt($bound->top, $bound->left);
+//			$this->filled = True;
+//			$rect->rotate = True;
+//			return True;
+//		}
 
 		if ($this->req == Solution::NONE) {
 			// we can rotate the rect here
 		}
 		# TODO it will fit, chose the best way to rotate
 		// create 2 child nodes
-		$this->left = new Node($this->req);
-		$this->right = new Node($this->req);
-
 		// split verticaly
-		$this->left->bound = new Rect($rect->width, $bound->height - $rect->height);
-		$this->left->bound->placeAt($bound->left, $bound->top + $rect->height);
+//		if ($hh_diff > 0) {
+		$this->left = new Node($rect->width, $hh_diff, $this->req);
+		$this->left->level = $this->level + 1;
 
-		$this->right->bound = new Rect($bound->width - $rect->width, $bound->height);
-		$this->right->bound->placeAt($bound->left + $rect->width, $bound->top);
+		$this->left->bound->left = $bound->left;
+		$this->left->bound->top = $bound->top + $rect->height;
+//		}
+//		if ($ww_diff > 0) {
+		$this->right = new Node($ww_diff, $bound->height, $this->req);
+		$this->right->level = $this->level + 1;
 
+		$this->right->bound->left = $bound->left + $rect->width;
+		$this->right->bound->top = $bound->top;
+//		}
 		$rect->placeAt($bound->top, $bound->left);
+		echo '<br/>rect<br/>';
+		var_dump($rect->top, $rect->left, $rect->width, $rect->height);
+		echo '<br/><hr><br/>';
 		return $rect;
 	}
 
 	public function remain() {
 		// get all un-filled node and will be used as recyclee later
-		if ($this->left == null) {
+		if ($this->left == null && $this->right == null) {
 			return array($this->bound);
 		}
-		$left = $this->left->remain();
-		$right = $this->right->remain();
+		$left = array();
+		$right = array();
+
+		if ($this->left != null) {
+			$left = $this->left->remain();
+		}
+		if ($this->right != null) {
+			$right = $this->right->remain();
+		}
 
 		return array_merge($left, $right);
 	}
