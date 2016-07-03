@@ -21,15 +21,15 @@
             <td>{!!$stt!!}</td>
             <td>{!!$item['username']!!}</td>
             <td>@if($item['level']==1)
-                    {!!"Admin"!!}
+                   Admin
                 @endif
                 @if($item['level']==2)
-                    {!!"Member"!!}
+                    Member
                 @endif
             
             </td>
             <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a onclick="return xacnhanxoa('ban co chac la muon xoa khong')" href="{!!URL::route('delUser',$item['id'])!!}"> Delete</a></td>
-            <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="{!!URL::route('getEditUser',$item['id')]!!}">Edit</a></td>
+            <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="{!!URL::route('getEditUser',$item['id'])!!}">Edit</a></td>
         </tr>
     @endforeach
     </tbody>
