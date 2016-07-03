@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="Khóa Học Lập Trình Laravel Framework 5.x Tại Khoa Phạm">
     <meta name="author" content="Vu Quoc Tuan">
-    <title>Admin - KimAnh</title>
+    <title>Admin - {!!Auth::user()->username!!}</title>
 
     <!-- Bootstrap Core CSS -->
     <link href="{{url('admin/bower_components/bootstrap/dist/css/bootstrap.min.css')}}" rel="stylesheet">
@@ -48,7 +48,7 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">Admin Area - KimAnh</a>
+                <a class="navbar-brand" href="{!!URL::route('dashboard')!!}">Admin Area - {!!Auth::user()->username!!}</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -60,8 +60,6 @@
                     </a>
                     <ul class="dropdown-menu dropdown-user">
                         <li><a href="#"><i class="glyphicon glyphicon-user"></i>  {!!Auth::user()->username!!}</a>
-                        </li>
-                        <li><a href="#"><i class="glyphicon glyphicon-cog"></i> Settings</a>
                         </li>
                         <li class="divider"></li>
                         <li><a href="{!!URL::route('getLogout')!!}"><i class="glyphicon glyphicon-log-out"></i> Logout</a>
@@ -94,10 +92,10 @@
                             <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Đơn Hàng<span class="glyphicon glyphicon-triangle-bottom"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{!!URL::route('getDonhang')!!}"> Thêm đơn hàng</a>
+                                    <a href="{!!URL::route('listDh')!!}"> Danh sách đơn hàng</a>
                                 </li>
                                 <li>
-                                    <a href="{!!URL::route('listDh')!!}"> Danh sách đơn hàng</a>
+                                    <a href="{!!URL::route('getDonhang')!!}"> Thêm đơn hàng</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -106,10 +104,10 @@
                             <a href="#"><i class="glyphicon glyphicon-book"></i> Vật Dụng<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{!!URL::route('getVatdung')!!}"> Thêm vật dụng</a>
+                                    <a href="{!!URL::route('vd-getList')!!}"> Danh sách vật dụng</a>
                                 </li>
                                 <li>
-                                    <a href="{!!URL::route('vd-getList')!!}"> Danh sách vật dụng</a>
+                                    <a href="{!!URL::route('getVatdung')!!}"> Thêm vật dụng</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -118,10 +116,10 @@
                             <a href="#"><i class="glyphicon glyphicon-book"></i> Vật Liệu<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{!!URL::route('getVatLieu')!!}"> Thêm vật liệu</a>
+                                    <a href="{!!URL::route('list')!!}"> Danh sách vật liệu</a>
                                 </li>
                                 <li>
-                                    <a href="{!!URL::route('list')!!}"> Danh sách vật liệu</a>
+                                    <a href="{!!URL::route('getVatLieu')!!}"> Thêm vật liệu</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
