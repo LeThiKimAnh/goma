@@ -14,8 +14,10 @@ class Solution {
 
 	private $panels = array();
 	private $remain = array();
+	public static $REQS = array(Solution::VERTICAL, Solution::HORIZONAL, Solution::NONE);
 
 	public function run($rects, $recyclees) {
+		var_dump($rects[0]);
 		// sort all the rect by area desc
 		usort($rects, function($rect1, $rect2) {
 			return $rect2->area - $rect1->area;
@@ -25,12 +27,13 @@ class Solution {
 			return $rect2->area - $rect1->area;
 		});
 
+		var_dump($rects[0]);
 		// foreach type of requirement, we pack it separately
-		foreach (array(Solution::VERTICAL, Solution::HORIZONAL, Solution::NONE) as $req) {
-			$sub_rects = array_filter($rects, function($rect) {
+		foreach (Solution::$REQS as $req) {
+			$sub_rects = array_filter($rects, function($rect) use ($req) {
 				return $rect->req == $req;
 			});
-			$sub_recyclees = array_filter($recyclees, function($rect) {
+			$sub_recyclees = array_filter($recyclees, function($rect) use ($req) {
 				return $rect->req == $req;
 			});
 			$this->runOnReq($sub_rects, $sub_recyclees, $req);

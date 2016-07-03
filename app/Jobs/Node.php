@@ -10,8 +10,14 @@ class Node {
 	protected $filled;
 	protected $req;
 
-	public function __construct($req) {
+	public function __construct($width, $height, $req) {
 		$this->req = $req;
+
+		$this->bound = new \stdClass();
+		$this->bound->top = 0;
+		$this->bound->left = 0;
+		$this->bound->width = $width;
+		$this->bound->height = $height;
 	}
 
 	public function insert($rect) {
@@ -22,6 +28,7 @@ class Node {
 			return False;
 		}
 		$bound = $this->bound;
+		var_dump($rect);
 
 		$ww_rate = $rect->width / $bound->width;
 		$hh_rate = $rect->height / $bound->height;

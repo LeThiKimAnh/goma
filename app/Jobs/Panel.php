@@ -43,11 +43,11 @@ class Panel {
 	}
 
 	public function sketch() {
-		$res =array();
+		$res = array();
 		foreach ($this->mapped_rects as $rect) {
 			array_push($res, $rect->sketch());
 		}
-		
+
 		return $res;
 	}
 
