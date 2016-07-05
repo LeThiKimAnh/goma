@@ -7,11 +7,17 @@ use Illuminate\Http\Request;
 use App\Http\Requests;
 use App\User;
 use App\Http\Requests\UserRequest;
+use Auth;
 
 class UserController extends Controller
 {
     public function getAdd(){
-    	return view('admin.user.add');
+        $user = Auth::user()->level;
+        if($user==1){
+            return view('admin.user.add');
+        }else{
+            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Bạn không đủ quyền để thực hiện tác vụ này']);
+        }	
     }
     public function postAdd(UserRequest $request){
     	$user = new User;
@@ -23,17 +29,29 @@ class UserController extends Controller
     	return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Success !!Complete Add User']);
     }
     public function listUser(){
-    	$data = User::select('id','username','level')->get()->toArray();
+    	$data = User::select('id','username','level')->where('level','=',2)->get()->toArray();
         return view('admin.user.list',compact('data'));
     }
     public function deleteUser($id){
-    	$user = User::find($id);
-        $user->delete($id);
-        return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Success !!Complete Delete User']);
+        $user = Auth::user()->level;
+        if($user == 1){
+            $user = User::find($id);
+            $user->delete($id);
+            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Success !!Complete Delete User']);
+        }else{
+            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Bạn không đủ quyền để thực hiện tác vụ này']);
+        }
+    	
     }
     public function getEdit($id){
-        $data = User::find($id);
-        return view('admin.user.edit',compact('data'));
+        $user = Auth::user()->level;
+        if($user ==1){
+            $data = User::find($id);
+            return view('admin.user.edit',compact('data'));
+        }else{
+            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Bạn không đủ quyền để thực hiện tác vụ này']);
+        }
+        
     }
     public function postEdit(Request $request,$id){
 	    $this->validate($request,

@@ -78,14 +78,13 @@ class AuthController extends Controller
     public function postLogin(LoginRequest $request){
         $login = array(
                 'username' => $request->txtUser,
-                'password' => $request->txtPass,
-                'level'    => 1
+                'password' => $request->txtPass
             );
         if(Auth::attempt($login)){
-           return redirect()->route('dashboard');
+            return redirect()->route('dashboard');
         }
         else{
-            echo "haha";
+            return redirect()->route('getLogin')->with(['flash_level'=>'success','flash_message'=>'thông tin đăng nhập của bạn bị sai, vui lòng nhập lại']);
         }
     }
     public function postLogout(){

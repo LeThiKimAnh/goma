@@ -42,6 +42,13 @@
                         <form role="form" action="" method="POST">
                             <fieldset>
                              @include('admin.blocks.error')
+                             <div class="col-lg-12  ">
+                                @if(Session::has('flash_message'))
+                                    <div class="alert alert-danger {!! Session::get('flash_level') !!}">
+                                        {!! Session::get('flash_message') !!}
+                                    </div>
+                                @endif
+                            </div>
                             <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
                                 <div class="form-group">
                                     <input class="form-control" placeholder="E-mail" name="txtUser" type="text" autofocus>
