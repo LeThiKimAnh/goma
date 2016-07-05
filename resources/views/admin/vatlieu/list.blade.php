@@ -10,7 +10,6 @@
             <th>Tên Vật Liệu</th>
             <th>Rộng</th>
             <th>Dài</th>
-            <th>Cao</th>
             <th>Đơn giá</th>
             <th>Chất liệu</th>
             <th>Yêu cầu</th>
@@ -29,7 +28,6 @@
                 <td>{!!$item['ten']!!}</td>
                 <td>{!!$item['rong']!!}</td>
                 <td>{!!$item['dai']!!}</td>
-                <td>{!!$item['cao']!!}</td>
                 <td>{!!$item['don_gia']!!}</td>
                 <td>
                     @if($item['chat_lieu']==1)
