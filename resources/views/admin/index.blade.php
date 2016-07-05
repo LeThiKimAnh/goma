@@ -52,7 +52,7 @@
 <!-- /.row -->
 <div class="row">
   <div class="col-lg-4">
-        <div class="panel panel-default">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-money fa-fw"></i>Đơn hàng mới gần đây nhất</h3>
             </div>
@@ -63,7 +63,7 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Date</th>
-                                <th>Ten_KH</th>
+                                <th>Hạn cuối</th>
                                 <th>Hóa đơn (VND)</th>
                             </tr>
                         </thead>
@@ -77,7 +77,12 @@
                                      print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
                                      ?>              
                                 </td>
-                                <td>{!!$item["khach_hang"]!!}</td>
+                                <td> 
+                                    <?php 
+                                     $d = getdate(strtotime($item["ngay_giao_hang"]));
+                                     print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
+                                     ?>              
+                                </td>
                                 <td>{!!$item["tong_gia"]!!}</td>
                             </tr>
                         @endforeach
@@ -89,9 +94,52 @@
                 </div>
             </div>
         </div>
+         <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i>Đơn hàng sắp đến hạn</h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Mã đơn hàng</th>
+                                <th>Date</th>
+                                <th>Hạn cuối</th>
+                                <th>Hóa đơn (VND)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach($don_hang_dead as $item)
+                            <tr>
+                                <td>{!!$item["ma_don_hang"]!!}</td>
+                                <td> 
+                                    <?php 
+                                     $d = getdate(strtotime($item["created_at"]));
+                                     print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
+                                     ?>              
+                                </td>
+                                <td> 
+                                    <?php 
+                                     $d = getdate(strtotime($item["ngay_giao_hang"]));
+                                     print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
+                                     ?>              
+                                </td>
+                                <td>{!!$item["tong_gia"]!!}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-right">
+                    <a href="{!!URL::route('listDh')!!}">Xem tất cả đơn hàng<i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
     </div>
    <div class="col-lg-4">
-        <div class="panel panel-default">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-money fa-fw"></i>Đơn hàng đã xử lý</h3>
             </div>
@@ -102,7 +150,7 @@
                             <tr>
                                 <th>Mã đơn hàng</th>
                                 <th>Date</th>
-                                <th>Ten_KH</th>
+                                <th>Hạn cuối</th>
                                 <th>Hóa đơn(VND)</th>
                             </tr>
                         </thead>
@@ -116,7 +164,54 @@
                                         print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
                                      ?>  
                                 </td>
-                                <td>{!!$item["khach_hang"]!!}</td>
+                                <td> 
+                                    <?php 
+                                     $d = getdate(strtotime($item["ngay_giao_hang"]));
+                                     print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
+                                     ?>              
+                                </td>
+                                <td>{!!$item["tong_gia"]!!}</td>
+                            </tr>
+                        @endforeach
+                        </tbody>
+                    </table>
+                </div>
+                <div class="text-right">
+                    <a href="{!!URL::route('listDhDaXL')!!}">Xem chi tiết<i class="fa fa-arrow-circle-right"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="panel panel-info">
+            <div class="panel-heading">
+                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i>Kết qủa xử lý đơn hàng</h3>
+            </div>
+            <div class="panel-body">
+                <div class="table-responsive">
+                    <table class="table table-bordered table-hover table-striped">
+                        <thead>
+                            <tr>
+                                <th>Mã đơn hàng</th>
+                                <th>Date</th>
+                                <th>Hạn cuối</th>
+                                <th>Hóa đơn(VND)</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        @foreach($data_don_hang_daxl as $item)
+                            <tr>
+                                <td>{!!$item["ma_don_hang"]!!}</td>
+                                <td>
+                                    <?php 
+                                        $d = getdate(strtotime($item["created_at"]));
+                                        print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
+                                     ?>  
+                                </td>
+                                <td> 
+                                    <?php 
+                                     $d = getdate(strtotime($item["ngay_giao_hang"]));
+                                     print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
+                                     ?>              
+                                </td>
                                 <td>{!!$item["tong_gia"]!!}</td>
                             </tr>
                         @endforeach
@@ -130,7 +225,7 @@
         </div>
     </div>
     <div class="col-lg-4">
-        <div class="panel panel-default">
+        <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title"><i class="fa fa-money fa-fw"></i>Đơn hàng chưa xử lý</h3>
             </div>
@@ -141,7 +236,7 @@
                             <tr>
                                <th>Mã đơn hàng</th>
                                 <th>Date</th>
-                                <th>Ten_KH</th>
+                                <th>Hạn cuối</th>
                                 <th>Hóa đơn(VND)</th>
                             </tr>
                         </thead>
@@ -155,7 +250,12 @@
                                         print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
                                      ?>  
                                 </td>
-                                <td>{!!$item["khach_hang"]!!}</td>
+                                <td> 
+                                    <?php 
+                                     $d = getdate(strtotime($item["ngay_giao_hang"]));
+                                     print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
+                                     ?>              
+                                </td>
                                 <td>{!!$item["tong_gia"]!!}</td>
                                 </tr>
                             @endforeach
