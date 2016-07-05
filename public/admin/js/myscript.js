@@ -44,12 +44,12 @@ $(document).ready(function(){
 			$('#insert_erro_vd').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Rất tiếc!</strong>Bạn không thể thêm nữa!!</div>");
 		}
 	});
-	$("#datepicker").datepicker({         
+	$("#datepicker").datepicker({      
 		autoclose: true,         
 		todayHighlight: true 
 		}).datepicker('update', new Date());
 
-	$("#datepicker_edit").datepicker({         
+	$("#datepicker_edit").datepicker({        
 		autoclose: true,         
 		todayHighlight: true 
 		}).datepicker('update', new Date());

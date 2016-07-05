@@ -45,17 +45,16 @@
             </table>
          </div>
          <div class="form-group">
-             <div class="form-group">
-             <label>Phụ phí</label>
-             <input class="form-control" name="txt_vd" placeholder="Nhập phụ phí" />
-         </div>
-         </div>
-         <div class="form-group">
              <button type="button" class="btn btn-primary" id='btn_them_nl'>Chọn thêm vật liệu</button>
          </div>
          
          <div id="insert_erro" class="alert alert-success"></div>
-           <div class="form-group">
+
+        <div class="form-group">
+             <label>Phụ phí</label>
+             <input class="form-control" name="txt_vd" placeholder="Nhập phụ phí" />
+        </div>
+        <div class="form-group">
             <label>Mô tả vật dụng</label>
             <textarea class="form-control" rows="3" name="txt_mo_ta"></textarea>
         </div>

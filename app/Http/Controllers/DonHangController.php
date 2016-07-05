@@ -11,6 +11,7 @@ use App\DonHang;
 use App\ChiTietVatDung;
 use App\ChiTietDonHang;
 use Auth;
+use DB;
 
 use App\Http\Requests\DonHangRequest;
 
@@ -66,7 +67,7 @@ class DonHangController extends Controller
                 $chi_tiet_dh->save();
 
                 $vat_dung = VatDung::find($vatdung_id_mang[$i]);
-                $tong_gia = $tong_gia+$vat_dung['don_gia']*$soluong_mang[$i];
+                $tong_gia = $tong_gia+($vat_dung['don_gia']+$vat_dung['phu_phi'])*$soluong_mang[$i];
             }
             $don_hang = DonHang::find($donhang_id);
             $don_hang->tong_gia = $tong_gia;
@@ -100,9 +101,14 @@ class DonHangController extends Controller
        
     }
     public function getEdit($id){
-        $data = VatDung::select('id','ten')->get()->toArray();
         $don_hang = DonHang::find($id);
-        return view('admin.donhang.edit',compact('data','don_hang'));
+        if($don_hang['trang_thai']==0){
+            $data = VatDung::select('id','ten')->get()->toArray();
+            $vatdungs = DB::table('chi_tiet_don_hang')->join('vat_dung','vat_dung.id','=','chi_tiet_don_hang.vatdung_id')->where('chi_tiet_don_hang.donhang_id','=',$id)->get();
+            return view('admin.donhang.edit',compact('data','don_hang','vatdungs'));
+        }else{
+            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Đơn hàng này đã hoặc đang chờ xử lý, không được sửa ^_^']);
+        }
     }
     public function postEdit(Request $request,$id){
         $this->validate($request,
@@ -126,7 +132,7 @@ class DonHangController extends Controller
                 $chi_tiet_dh->save();
 
                 $vat_dung = VatDung::find($vatdung_id_mang[$i]);
-                $tong_gia = $vat_dung['don_gia']*$soluong_mang[$i];
+                $tong_gia = $tong_gia+($vat_dung['don_gia']+$vat_dung['phu_phi'])*$soluong_mang[$i];
             }
             $don_hang =  DonHang::find($id);
             $don_hang ->khach_hang = $request ->txt_KH;
