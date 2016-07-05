@@ -75,7 +75,7 @@ class DonHangController extends Controller
             $don_hang->tong_gia = $tong_gia;
             $don_hang->save();
 
-            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message'=>'Success !! Đã thêm thành công đơn hàng']);
+            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã thêm thành công đơn hàng']);
             }
             if((check($vatdung_id_mang,0)==0)&&(check($soluong_mang,'')==1)){
                 return redirect()->route('getDonhang')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa điền số lượng vật dụng']);
@@ -96,7 +96,7 @@ class DonHangController extends Controller
         $don_hang = DonHang::find($id);
         if($don_hang['trang_thai']==0){
              $don_hang->delete();
-            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message'=>'Success !! Đã xóa thành công đơn hàng']);
+            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã xóa thành công đơn hàng']);
         }else{
             return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo!! Đơn hàng này đã xử lý hoặc đang đợi xử lý, bạn không thể xóa được']);
         }
@@ -144,7 +144,7 @@ class DonHangController extends Controller
             $don_hang ->ngay_giao_hang = date('Y-m-d', $time);
             $don_hang ->trang_thai = 0;
             $don_hang -> save();
-            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message'=>'Success !! Đã thêm thành công đơn hàng']);
+            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã thêm thành công đơn hàng']);
         }
         if((check($vatdung_id_mang,0)==0)&&(check($soluong_mang,'')==1)){
             return redirect()->route('getEditDH',$id)->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa điền số lượng vật dụng']);

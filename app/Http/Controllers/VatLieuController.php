@@ -26,7 +26,7 @@ class VatLieuController extends Controller
         $vat_lieu->yeu_cau = $request->sl_yeu_cau;
     	$vat_lieu->mo_ta = $request->txt_mo_ta;
     	$vat_lieu->save();
-    	return redirect()->route('list')->with(['flash_level'=>'success','flash_message'=>'Thêm vật liệu thành công']);
+    	return redirect()->route('list')->with(['flash_level'=>'success','flash_message_success'=>'Thêm vật liệu thành công']);
     }
     public function listVl(){
     	$data = VatLieu::select('id','ten','ten_ma','rong','dai','cao','mo_ta','chat_lieu','don_gia','yeu_cau')->orderBy('id','DESC')->get()->toArray();
@@ -39,7 +39,7 @@ class VatLieuController extends Controller
         }else{
             $vat_lieu = VatLieu::find($id);
             $vat_lieu->delete();
-            return redirect()->route('list')->with(['flash_level'=>'success','flash_message'=>'Xóa vật liệu thành công']);
+            return redirect()->route('list')->with(['flash_level'=>'success','flash_message_success'=>'Xóa vật liệu thành công']);
         }
     }
     public function getEdit($id){
@@ -97,6 +97,6 @@ class VatLieuController extends Controller
         $vat_lieu->yeu_cau = $request->sl_yeu_cau;
         $vat_lieu->mo_ta = $request->txt_mo_ta;
         $vat_lieu->save();
-    	return redirect()->route('list')->with(['flash_level'=>'success','flash_message'=>'Sửa vật liệu thành công']);
+    	return redirect()->route('list')->with(['flash_level'=>'success','flash_message_success'=>'Sửa vật liệu thành công']);
     }
 }

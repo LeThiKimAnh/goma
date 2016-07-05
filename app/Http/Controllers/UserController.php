@@ -26,7 +26,7 @@ class UserController extends Controller
     	$user->password = bcrypt($request->txtPass);
         $user->level = $request->rdoLevel;
     	$user->save();
-    	return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Success !!Complete Add User']);
+    	return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message_success'=>'Success !!Complete Add User']);
     }
     public function listUser(){
     	$data = User::select('id','username','level')->where('level','=',2)->get()->toArray();
@@ -37,7 +37,7 @@ class UserController extends Controller
         if($user == 1){
             $user = User::find($id);
             $user->delete($id);
-            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Success !!Complete Delete User']);
+            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message_success'=>'Success !!Complete Delete User']);
         }else{
             return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Bạn không đủ quyền để thực hiện tác vụ này']);
         }
@@ -64,7 +64,7 @@ class UserController extends Controller
             $user->password = bcrypt($request->txtPass);
             $user->level = $request->rdoLevel;
             $user->save();
-            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Success !!Complete Edit User']);
+            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message_success'=>'Success !!Complete Edit User']);
 	             
 	    }
 }

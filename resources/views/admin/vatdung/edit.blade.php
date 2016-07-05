@@ -51,10 +51,10 @@
             <label>Mô tả vật dụng</label>
             <textarea class="form-control" rows="3" name="txt_mo_ta"></textarea>
         </div>
-         <button type="submit" class="btn btn-default">
+         <button type="submit" class="btn btn-success">
             Lưu
          </button>
-         <button type="reset" class="btn btn-default">
+         <button type="reset" class="btn btn-success">
              Reset
          </button>
 <form>

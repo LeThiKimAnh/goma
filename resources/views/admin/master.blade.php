@@ -154,6 +154,10 @@
                             <div class="alert alert-danger {!! Session::get('flash_level') !!}">
                                 {!! Session::get('flash_message') !!}
                             </div>
+                        @elseif(Session::has('flash_message_success'))
+                            <div class="alert alert-success {!! Session::get('flash_level') !!}">
+                                {!! Session::get('flash_message_success') !!}
+                            </div>
                         @endif
                     </div>
                     <!-- đây là nơi chứa nội dung -->
