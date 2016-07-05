@@ -24,7 +24,7 @@ class VatDungRequest extends Request
     public function rules()
     {
         return [
-           'txt_vd'=>'required|unique:vat_lieu,ten'
+           'txt_vd'=>'required|unique:vat_dung,ten'
         ];
     }
      public function messages(){

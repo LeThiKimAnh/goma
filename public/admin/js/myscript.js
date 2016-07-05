@@ -80,10 +80,10 @@ function checkdata(){
 	var vatdung = [];
 	var soluong_obj = document.getElementsByName('soLuong[]');
 	var soluong = [];
-	for(var i = 0; i<vatdung_obj.length;i++){
+	for(var i = 1; i<vatdung_obj.length;i++){
 		vatdung[i] = vatdung_obj[i].value;
 	}
-	for(var i = 0; i<soluong_obj.length;i++){
+	for(var i = 1; i<soluong_obj.length;i++){
 		soluong[i] = soluong_obj[i].value;
 	}
 	console.log(check_vd(vatdung));
@@ -108,6 +108,7 @@ function checkedit(){
 	for(var i = 0; i<soluong_obj.length;i++){
 		soluong[i] = soluong_obj[i].value;
 	}
+
 	console.log(check_vd(vatdung));
 	if(check("0",vatdung)||check("0",soluong)||check("",soluong)){
 		$('#insert_erro_vd_edit').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn nên xem lại để điền đầy đủ thông tin!!</div>");
@@ -115,6 +116,26 @@ function checkedit(){
 		$('#insert_erro_vd_edit').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn không được chọn các loại vật dụng khác nhau :))!!</div>");
 	}else{
 		$('#dh_edit').submit();
+	}
+}
+function checkvd(){
+	var vatlieu_obj = document.getElementsByName('vatlieu[]');
+	var vatlieu = [];
+	var soLuong_obj = document.getElementsByName('soLuong[]');
+	var soLuong = [];
+	for(var i = 1; i<vatlieu_obj.length;i++){
+		vatlieu[i] = vatlieu_obj[i].value;
+	}
+	for(var i = 1; i<soLuong_obj.length;i++){
+		soLuong[i] = soLuong_obj[i].value;
+	}
+	var select = document.getElementById('select_vl_hide').outerHTML;
+	if(check("0",vatlieu)||check("0",soLuong)||check("",soLuong)){
+		$('#insert_erro').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn nên xem lại để điền đầy đủ thông tin!!</div>");
+	}else if(!check_vd(vatlieu)){
+		$('#insert_erro').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn không được chọn các loại vật liệu giống nhau :))!!</div>");
+	}else{
+		$('#vatdung_add').submit();
 	}
 }
 
@@ -128,7 +149,7 @@ $(document).ready(function(){
 	var cout = $('#chon_nl').attr("cout");
 
 	$('#btn_them_nl').click(function(){
-		var select = document.getElementById('select').outerHTML;
+		var select = document.getElementById('select_vl_hide').outerHTML;
 		stt = stt + 1;
 		
 		if(i<=cout-1){
