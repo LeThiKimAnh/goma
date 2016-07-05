@@ -31,9 +31,9 @@
                     } ?>
                  <tbody  id="chon_vd" cout ="{!!$cout!!}">
 
-                        <tr class="odd gradeX" align="center" id="row_1" style="display:none">
+                        <tr class="odd gradeX" align="center"  style="display:none">
                              <td>
-                             <select class="form-control" name="vatdung[]" id="select_vl_hide">
+                             <select class="form-control" name="vatdung[]" id="select_vd_hide">
                                 <option value="" >Chọn Vật Dụng</option>
                                 @foreach($data as $item)
                                     <option value='{!!$item["id"]!!}'>{!!$item['ten']!!}</option>

@@ -25,7 +25,7 @@ $(document).ready(function(){
 	var cout1 = $('#chon_vd').attr("cout");
 	
 	$('#btn_them_vd').click(function(){
-			var select1 = document.getElementById('select').outerHTML;
+			var select1 = document.getElementById('select_vd_hide').outerHTML;
 			stt1 = stt1+1;
 		if(i1<=cout1-1){
 			var str1 = '<tr class="odd gradeX" align="center" id="row_'+stt1+'">'+
