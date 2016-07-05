@@ -40,8 +40,10 @@ class DonHangController extends Controller
     }
     public function post_DonHang(DonHangRequest $request){
 
-        $vatdung_id_mang = $request->vatdung;
-        $soluong_mang = $request->soLuong;
+        $vatdung_id_mang_get = $request->vatdung;
+        $soluong_mang_get = $request->soLuong;
+        $vatdung_id_mang = array_slice($vatdung_id_mang_get, 1,count($vatdung_id_mang_get)-1);
+        $soluong_mang =array_slice($soluong_mang_get, 1,count($soluong_mang_get)-1);
         if(count(array_unique($vatdung_id_mang))<count($vatdung_id_mang)){
             return redirect()->route('getDonhang')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! không thể chọn hai lần 1 vật dụng']);
         }else{
