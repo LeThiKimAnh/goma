@@ -25,10 +25,14 @@
 
     <!-- DataTables Responsive CSS -->
     <link href="{{url('admin/bower_components/datatables-responsive/css/dataTables.responsive.css')}}" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
+    <link href="{{url('admin/dist/css/datepicker.css')}}" rel="stylesheet prefetch">
     <!-- CKeditor && CKFinder -->
     <script src="{{url('admin/js/ckeditor/ckeditor.js')}}"></script>
     <script src="{{url('admin/js/ckfinder/ckfinder.js')}}"></script>
     <script src="{{url('admin/js/func_ckfinder.js')}}"></script>
+    <script src="{{url('admin/js/jquery-1.9.1.js')}}"></script>
+    <script src="{{url('admin/js/jquery-ui.js')}}"></script>
     <script type="text/javascript">
         var baseURL = "{!!url('/')!!}";
     </script>
@@ -62,8 +66,11 @@
                         <li><a href="#"><i class="glyphicon glyphicon-user"></i>  {!!Auth::user()->username!!}</a>
                         </li>
                         <li class="divider"></li>
-                        <li><a href="{!!URL::route('getLogout')!!}"><i class="glyphicon glyphicon-log-out"></i> Logout</a>
+                        <form method="POST" action="{!!URL::route('postLogout')!!}" id="logout">
+                            <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
+                            <li><a href="#" type="button" onclick="return logout()"><i class="glyphicon glyphicon-log-out"></i> Logout</a>
                         </li>
+                        </form>
                     </ul>
                     <!-- /.dropdown-user -->
                 </li>
@@ -74,22 +81,11 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
-                        <li class="sidebar-search">
-                            <div class="input-group custom-search-form">
-                                <input type="text" class="form-control" placeholder="Search...">
-                                <span class="input-group-btn">
-                                    <button class="btn btn-default" type="button">
-                                        <i class="glyphicon glyphicon-search"></i>
-                                    </button>
-                                </span>
-                            </div>
-                            <!-- /input-group -->
-                        </li>
                         <li>
                             <a href="{!!URL::route('dashboard')!!}"><i class="glyphicon glyphicon-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Đơn Hàng<span class="glyphicon glyphicon-triangle-bottom"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Đơn Hàng</a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="{!!URL::route('listDh')!!}"> Danh sách đơn hàng</a>
@@ -118,7 +114,7 @@
                                 <li>
                                     <a href="{!!URL::route('list')!!}"> Danh sách vật liệu</a>
                                 </li>
-                                <li>
+                                 <li>
                                     <a href="{!!URL::route('getVatLieu')!!}"> Thêm vật liệu</a>
                                 </li>
                             </ul>
@@ -186,6 +182,8 @@
 
     <!-- Custom Theme JavaScript -->
     <script src="{{url('admin/dist/js/sb-admin-2.js')}}"></script>
+    <script src="{{url('admin/js/bootstrap-datepicker.js')}}"></script>
+
 
     <!-- DataTables JavaScript -->
     <script src="{{url('admin/bower_components/datatables/media/js/jquery.dataTables.min.js')}}"></script>

@@ -8,7 +8,7 @@ class VatDung extends Model
 {
    protected $table ='vat_dung';
 
-   protected $fillable =['ten','ma_vat_dung','mo_ta','don_gia'];
+   protected $fillable =['ten','ma_vat_dung','mo_ta','don_gia','phu_phi'];
 
    public function chi_tiet_vat_dung(){
    		return $this->hasMany('App\ChiTietVatDung');

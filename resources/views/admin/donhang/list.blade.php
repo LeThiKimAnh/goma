@@ -12,6 +12,7 @@
              <th>Mô tả</th>
              <th>Tổng hóa đơn</th>
              <th>Trạng thái</th>
+             <th>Ngày giao hàng</th>
              <th>Chi tiết</th>
              <th>Delete</th>
              <th>Edit</th>
@@ -36,6 +37,12 @@
                 @elseif($item["trang_thai"]==2)
                     Đã xử lý
                @endif
+             </td>
+             <td>
+                  <?php 
+                     $d = getdate(strtotime($item["ngay_giao_hang"]));
+                     print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
+                   ?>  
              </td>
              <td class="center"></i><a href="{{URL::route('chitietDH',$item['id'])}}"> Chi tiết</a></td>
              <td class="center"></i><a onclick="return xacnhanxoa('ban co chac la muon xoa khong')" href="{{URL::route('deldonhang',$item['id'])}}">Xóa</a></td>

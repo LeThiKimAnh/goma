@@ -18,7 +18,7 @@ class Session extends Migration
         $table->foreign('donhang_id')->references('id')->on('don_hang')->onDelete('cascade');
         $table->string('nguoi_xu_ly');
         $table->integer('trang_thai');
-        $table->string('sketch');
+        $table->mediumText('sketch');
         $table->timestamps();
        });
     }

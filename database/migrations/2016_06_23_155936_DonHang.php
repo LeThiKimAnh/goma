@@ -18,6 +18,7 @@ class DonHang extends Migration
         $table->string('khach_hang');
         $table->string('nguoi_tao_don');
         $table->double('tong_gia');
+        $table->dateTime('ngay_giao_hang');
         $table->string('mo_ta');
         $table->integer('trang_thai');
         $table->timestamps();

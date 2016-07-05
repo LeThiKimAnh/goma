@@ -50,6 +50,8 @@ class DonHangController extends Controller
             $don_hang ->khach_hang = $request ->txt_KH;
             $don_hang->ma_don_hang = "DH".($cout+1);
             $don_hang ->nguoi_tao_don = Auth::user()->username;
+            $time = strtotime( $request ->date);
+            $don_hang ->ngay_giao_hang =  date('Y-m-d', $time);
             $don_hang ->trang_thai = 0;
             $don_hang -> save();
             $donhang_id = $don_hang->id;
@@ -84,7 +86,7 @@ class DonHangController extends Controller
     }
     public function listDh(){
         $action = 'List';
-        $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia')->orderBy('id','DESC')->get()->toArray();
+        $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang')->orderBy('id','DESC')->get()->toArray();
         return view('admin.donhang.list',compact('data','action'));
     }
     public function deleteDH($id){
@@ -130,6 +132,8 @@ class DonHangController extends Controller
             $don_hang ->khach_hang = $request ->txt_KH;
             $don_hang ->nguoi_tao_don = Auth::user()->username;
             $don_hang ->tong_gia = $tong_gia;
+            $time = strtotime( $request ->date);
+            $don_hang ->ngay_giao_hang = date('Y-m-d', $time);
             $don_hang ->trang_thai = 0;
             $don_hang -> save();
             return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message'=>'Success !! Đã thêm thành công đơn hàng']);

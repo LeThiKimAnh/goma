@@ -7,6 +7,7 @@
 
 <div class="col-lg-7" style="padding-bottom:120px">
     @include('admin.blocks.error')
+    <form method="POST" action="{!!URL::route('session',$id)!!}">
         <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
          <div class="form-group">
              <label>Khách hàng : {{$don_hang['khach_hang']}}</label>
@@ -46,10 +47,10 @@
             </table>
             <div class="form-group">
              <a type="button" class="btn btn-primary" href="{!!URL::route('listDh')!!}">Quay lại danh sách</a>
-             <a type="button" class="btn btn-primary" href="{!!URL::route('session',$id)!!}">Xử Lý</a>
+             <button type="submit" class="btn btn-primary">Xử Lý</button>
          </div id="insert_erro_vd">
          </div>
-
+    </form>
 </div>
 @endsection
                 

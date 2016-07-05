@@ -40,7 +40,7 @@ Route::get('donhang/chitiet/{id}',['as'=>'chitietDH','uses'=>'DonHangController@
 Route::get('donhang/listDaXL',['as'=>'listDhDaXL','uses'=>'DonHangController@listDhDaXL','middleware'=>'auth']);
 Route::get('donhang/listDhCXL',['as'=>'listDhCXL','uses'=>'DonHangController@listDhCXL','middleware'=>'auth']);
 
-Route::get('session/{id}',['as'=>'session','uses'=>'SessionController@session','middleware'=>'auth']);
+Route::post('session/{id}',['as'=>'session','uses'=>'SessionController@session','middleware'=>'auth']);
 
 Route::get('user/add',['as'=>'userAdd','uses'=>'UserController@getAdd','middleware'=>'auth']);
 Route::post('user/add',['as'=>'userPostAdd','uses'=>'UserController@postAdd','middleware'=>'auth']);
@@ -56,6 +56,6 @@ Route::controllers([
 
 Route::get('user/login',['as'=>'getLogin','uses'=>'Auth\AuthController@getLogin']);
 Route::post('user/login',['as'=>'postLogin','uses'=>'Auth\AuthController@postLogin']);
-Route::get('user/logout',['as'=>'getLogout','uses'=>'Auth\AuthController@getLogout']);
+Route::post('user/logout',['as'=>'postLogout','uses'=>'Auth\AuthController@postLogout']);
 
-Route::get('dashboard',['as'=>'dashboard','middleware'=>'auth','uses'=>'DashboardController@dashboard']);
+Route::get('dashboard',['as'=>'dashboard','middleware'=>'auth','uses'=>'DashboardController@dashboard','middleware'=>'auth']);

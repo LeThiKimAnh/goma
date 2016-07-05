@@ -40,7 +40,7 @@ class AuthController extends Controller
      */
     public function __construct()
     {
-        $this->middleware($this->guestMiddleware(), ['except' => 'getLogout']);
+        $this->middleware($this->guestMiddleware(), ['except' => 'postLogout']);
     }
 
     /**
@@ -82,13 +82,13 @@ class AuthController extends Controller
                 'level'    => 1
             );
         if(Auth::attempt($login)){
-           return redirect()->route('getVatLieu');
+           return redirect()->route('dashboard');
         }
         else{
             echo "haha";
         }
     }
-    public function getLogout(){
+    public function postLogout(){
         Auth::logout();
         Session::flush();
         return redirect()->route('getLogin');
