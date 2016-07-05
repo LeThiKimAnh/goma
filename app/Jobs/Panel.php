@@ -29,10 +29,14 @@ class Panel {
 
 			if ($this->root->insert($rect)) {
 				#update filled area and mapped_rects
+				echo 'placed ';
+				var_dump($rect->top, $rect->left, $rect->width, $rect->height);
+				echo '<br/>=================<br/>';
 				$this->filledArea += $rect->area;
 				array_push($this->mapped_rects, $rect);
 			} else {
 				array_push($remain_rects, $rect);
+				echo 'ignored<br/>';
 			}
 		}
 		return $remain_rects;
@@ -43,11 +47,11 @@ class Panel {
 	}
 
 	public function sketch() {
-		$res =array();
+		$res = array();
 		foreach ($this->mapped_rects as $rect) {
 			array_push($res, $rect->sketch());
 		}
-		
+
 		return $res;
 	}
 

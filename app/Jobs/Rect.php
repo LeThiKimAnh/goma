@@ -4,18 +4,22 @@ namespace App\Jobs;
 
 class Rect {
 
-	private $top;
-	private $left;
+	public $top;
+	public $left;
 	public $width;
 	public $height;
 	
+	public $code;
 	public $area;
+	public $req;
 	public $rotate;
 
-	public function _construct($width, $height) {
+	public function __construct($width, $height, $code, $req) {
 		$this->width = $width;
 		$this->height = $height;
 		$this->rotate = False;
+		$this->code = $code;
+		$this->req = $req;
 
 		$this->area = $width * $height;
 	}
