@@ -126,8 +126,13 @@
                                 <li>
                                     <a href="{!!URL::route('listUser')!!}">List User</a>
                                 </li>
+                                @if(Auth::user()->level ==1)
                                 <li>
                                     <a href="{!!URL::route('userAdd')!!}"> Add User</a>
+                                </li>
+                                @endif
+                                <li>
+                                    <a href="{!!URL::route('getRepass')!!}">Đổi mật khẩu</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->

@@ -67,4 +67,13 @@ class UserController extends Controller
             return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message_success'=>'Success !!Complete Edit User']);
 	             
 	    }
+    public function getRepass(){
+        return view('admin.user.repass');
+    }
+    public function postRepass(Request $request){
+        if(bcrypt($request->txtPass)==Auth::user()->password){
+            $user = User::find(Auth::user()->id);
+            $user->password = bcrypt($request->txtPass);
+        }
+    }
 }

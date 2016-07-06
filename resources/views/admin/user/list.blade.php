@@ -9,8 +9,10 @@
             <th>STT</th>
             <th>Username</th>
             <th>Level</th>
+            @if(Auth::user()->level ==1)
             <th>Delete</th>
             <th>Edit</th>
+            @endif
         </tr>
     </thead>
     <tbody>
@@ -28,8 +30,10 @@
                 @endif
             
             </td>
+            @if(Auth::user()->level ==1)
             <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a onclick="return xacnhanxoa('ban co chac la muon xoa khong')" href="{!!URL::route('delUser',$item['id'])!!}"> Delete</a></td>
             <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="{!!URL::route('getEditUser',$item['id'])!!}">Edit</a></td>
+            @endif
         </tr>
     @endforeach
     </tbody>
