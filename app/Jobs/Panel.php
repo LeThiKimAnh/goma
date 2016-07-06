@@ -31,12 +31,12 @@ class Panel {
 				#update filled area and mapped_rects
 				echo 'placed ';
 				var_dump($rect->top, $rect->left, $rect->width, $rect->height);
-				echo '<br/>=================<br/>';
+				echo '=================';
 				$this->filledArea += $rect->area;
 				array_push($this->mapped_rects, $rect);
 			} else {
 				array_push($remain_rects, $rect);
-				echo 'ignored<br/>';
+				echo 'ignored';
 			}
 		}
 		return $remain_rects;

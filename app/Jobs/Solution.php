@@ -65,13 +65,13 @@ class Solution {
 		if (count($rects) == 0) {
 			return;
 		}
-		echo 'Running on recyclee ' . count($recyclees) . '<br/>';
+		echo 'Running on recyclee ' . count($recyclees) . '';
 		foreach ($recyclees as $r) {
 			$panel = new Panel($r->width, $r->height, $req);
 			// update remain rects 
-			echo 'Solution rects ' . count($rects) . '<br/>';
+			echo 'Solution rects ' . count($rects) . '';
 			$rects = $panel->addAll($rects);
-			echo 'Solution rects ' . count($rects) . '<br/>';
+			echo 'Solution rects ' . count($rects) . '';
 
 			if (count($rects) == 0) {
 				break;
@@ -81,7 +81,7 @@ class Solution {
 			array_merge($this->remain, $remain);
 		}
 
-		echo 'Creating new panel to add <br/>';
+		echo 'Creating new panel to add ';
 		while (count($rects) != 0) {
 			$panel = new Panel(Solution::STANDARD_W, Solution::STANDARD_H, $req);
 			$rects = $panel->addAll($rects);

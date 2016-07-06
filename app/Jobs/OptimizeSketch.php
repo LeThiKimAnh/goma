@@ -4,6 +4,7 @@ namespace App\Jobs;
 
 use Log;
 use DB;
+use App\Jobs\Job;
 use App\Jobs\Solution;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Queue\InteractsWithQueue;
@@ -46,7 +47,7 @@ class OptimizeSketch extends Job implements ShouldQueue {
 			}
 		}
 
-		echo '52: recyclee ' . count($gothua) . '<br/>';
+		echo '52: recyclee ' . count($gothua);
 
 		foreach ($gothua as $r) {
 			$r->width = intval($r->width);
@@ -62,6 +63,7 @@ class OptimizeSketch extends Job implements ShouldQueue {
 
 		$sketch = $solution->to_json();
 		$this->session->trang_thai = 2;
+		DB::update("UPDATE `don_hang` SET `trang_thai` = 2 WHERE `id` = $order_id");
 
 		$this->session->sketch = $sketch;
 		$this->session->save();
