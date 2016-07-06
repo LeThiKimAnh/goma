@@ -133,7 +133,8 @@ class VatDungController extends Controller
             $vat_dung =  VatDung::find($id);
             $vat_dung->ten = $request->txt_vd;
             $vat_dung->mo_ta = $request->txt_mo_ta;
-            $vat_dung->don_gia = $don_gia_vd;
+            $vat_dung->phu_phi = $request->txt_phuphi;
+            $vat_dung->don_gia = $don_gia_vd+($request->txt_phuphi);
             $vat_dung->save();
 
             return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã sửa thành công vật dụng']);
