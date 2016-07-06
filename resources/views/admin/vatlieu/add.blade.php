@@ -20,9 +20,9 @@
              <label>dài</label>
              <input class="form-control" name="txt_chieu_dai" placeholder="Nhập chiều dài" value="{{old('txt_ten')}}"></input>
          </div>
-         <div class="form-group">
+         <div class="form-group" style="display:none">
              <label>cao</label>
-             <input class="form-control" name="txt_chieu_cao" placeholder="Nhập chiều cao" value="{{old('txt_ten')}}"></input>
+             <input class="form-control" name="txt_chieu_cao" placeholder="Nhập chiều cao" value="{{old('txt_ten')}}" ></input>
          </div>
          <div class="form-group">
              <label>Đơn giá</label>
@@ -49,10 +49,10 @@
         <label>Mô tả vật liệu</label>
         <textarea class="form-control" rows="3" name="txt_mo_ta" value="{!!old('txt_mo_ta')!!}"></textarea>
         </div>
-         <button type="submit" class="btn btn-default">
+         <button type="submit" class="btn btn-success">
             Thêm Vật Liệu
          </button>
-         <button type="reset" class="btn btn-default">
+         <button type="reset" class="btn btn-success">
              Reset
          </button>
 <form>

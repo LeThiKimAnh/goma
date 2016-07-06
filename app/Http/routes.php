@@ -48,6 +48,9 @@ Route::get('user/list',['as'=>'listUser','uses'=>'UserController@listUser','midd
 Route::get('user/delete/{id}',['as'=>'delUser','uses'=>'UserController@deleteUser','middleware'=>'auth']);
 Route::get('user/edit/{id}',['as'=>'getEditUser','uses'=>'UserController@getEdit','middleware'=>'auth']);
 Route::post('user/edit/{id}',['as'=>'postEditUser','uses'=>'UserController@postEdit','middleware'=>'auth']);
+Route::get('user/repass',['as'=>'getRepass','uses'=>'UserController@getRepass']);
+Route::post('user/repass',['as'=>'postRepass','uses'=>'UserController@postRepass']);
+
 
 Route::controllers([
 		'auth' =>'Auth\AuthController',
@@ -57,5 +60,6 @@ Route::controllers([
 Route::get('user/login',['as'=>'getLogin','uses'=>'Auth\AuthController@getLogin']);
 Route::post('user/login',['as'=>'postLogin','uses'=>'Auth\AuthController@postLogin']);
 Route::post('user/logout',['as'=>'postLogout','uses'=>'Auth\AuthController@postLogout']);
+
 
 Route::get('dashboard',['as'=>'dashboard','middleware'=>'auth','uses'=>'DashboardController@dashboard','middleware'=>'auth']);

@@ -40,20 +40,22 @@
                              <td>cái</td>
                              <td><a id="del_row1" class="btn glyphicon glyphicon-remove" onclick ="return del_row(1)" type="button"></td>
                         </tr>
-                
+                    @foreach($vatdungs as $vatdung)
                        <tr class="odd gradeX" align="center" id="row_1">
                              <td>
                              <select class="form-control" name="vatdung[]" id='select_vd'>
-                                <option value="0" >Chọn Vật Dụng</option>
+                                <option value="{!!$vatdung->id!!}" >{!!$vatdung->ten!!}</option>
                                 @foreach($data as $item)
-                                    <option value='{!!$item["id"]!!}'>{!!$item['ten']!!}</option>
+                                    <option value='{!!$item["id"]!!}'>{!!$item["ten"]!!}</option>
                                 @endforeach 
                              </select>    
                              </td>
-                             <td><input class="form-control" id="{!!$item['id']!!}" name="soLuong[]"></input></td>
+                             <td><input class="form-control" id="{!!$item['id']!!}" name="soLuong[]" value="{!!$vatdung->so_luong!!}"></input></td>
                              <td>cái</td>
                              <td><a id="del_row1" class="btn glyphicon glyphicon-remove" onclick ="return del_row(1)" type="button"></td>
                         </tr>
+                    @endforeach
+
                 </tbody>
             </table>
          </div>
@@ -63,17 +65,19 @@
          <div id="insert_erro_vd_edit">
              
          </div>
-
+            <?php 
+                 $d = getdate(strtotime($don_hang["ngay_giao_hang"]));
+             ?>  
         <div class="form-group">
-            <label>Ngày giao hàng: </label>
+            <label>Ngày giao hàng:</label>
             <div id="datepicker_edit" class="input-group date" data-date-format="dd-mm-yyyy">
-             <input class="form-control" type="text" readonly=""  name = "date"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
+             <input class="form-control" type="text" readonly=""  name = "date" value="" /> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
             </div>
         </div>
 
            <div class="form-group">
             <label>Mô tả đơn hàng</label>
-            <textarea class="form-control" rows="3" name="txtDescription" value="{!!$don_hang['mo_ta']!!}"></textarea>
+            <textarea class="form-control" rows="3" name="txtDescription">{!!$don_hang['mo_ta']!!}</textarea>
         </div>
          <button  type="button" class="btn btn-success" onclick="return checkedit()">
             Lưu

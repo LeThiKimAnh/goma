@@ -32,8 +32,8 @@
                 <input name="rdoLevel" value="2" type="radio">Member
             </label>
         </div>
-        <button type="submit" class="btn btn-default">User Edit</button>
-        <button type="reset" class="btn btn-default">Reset</button>
+        <button type="submit" class="btn btn-success">User Edit</button>
+        <button type="reset" class="btn btn-success">Reset</button>
     <form>
 </div>
 

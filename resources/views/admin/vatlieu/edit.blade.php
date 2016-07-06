@@ -48,10 +48,10 @@
         <label>Mô tả vật liệu</label>
         <textarea class="form-control" rows="3" name="txt_mo_ta" value="{!!$vat_lieu['mo_ta']!!}"></textarea>
         </div>
-         <button type="submit" class="btn btn-default">
+         <button type="submit" class="btn btn-success">
             Lưu lại
          </button>
-         <button type="reset" class="btn btn-default">
+         <button type="reset" class="btn btn-success">
              Reset
          </button>
 <form>

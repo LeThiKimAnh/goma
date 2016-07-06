@@ -62,7 +62,7 @@ class VatDungController extends Controller
             $vat_dung->don_gia = $don_gia_vd;
             $vat_dung->save();
 
-            return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message'=>'Success !! Đã thêm thành công vật liệu']);
+            return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã thêm thành công vật liệu']);
         }
         if((check($vatlieu_id_mang,0)==0)&&(check($soluong_mang,'')==1)){
             return redirect()->route('getVatdung')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa điền số lượng vật liệu']);
@@ -84,7 +84,7 @@ class VatDungController extends Controller
         }else{
             $vat_dung = VatDung::find($id);
             $vat_dung->delete($id);
-            return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message'=>'Success !! Đã xóa thành công vật dụng']);
+            return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã xóa thành công vật dụng']);
         }
     }
     public function getEdit($id){
@@ -122,7 +122,7 @@ class VatDungController extends Controller
             $vat_dung->don_gia = $don_gia_vd;
             $vat_dung->save();
 
-            return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message'=>'Success !! Đã sửa thành công vật dụng']);
+            return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã sửa thành công vật dụng']);
        }
         if((check($vatlieu_id_mang,0)==0)&&(check($soluong_mang,'')==1)){
             return redirect()->route('getEditVD',$id)->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa điền số lượng vật liệu']);

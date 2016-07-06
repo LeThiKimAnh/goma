@@ -30,10 +30,11 @@
                         $cout =$cout +1;
                     } ?>
                  <tbody  id="chon_vd" cout ="{!!$cout!!}">
-                        <tr class="odd gradeX" align="center" id="sample" style="display:none">
+
+                        <tr class="odd gradeX" align="center"  style="display:none">
                              <td>
-                             <select class="form-control" name="vatdung[]" id="select">
-                                <option value="0" >Chọn Vật Dụng</option>
+                             <select class="form-control" name="vatdung[]" id="select_vd_hide">
+                                <option value="" >Chọn Vật Dụng</option>
                                 @foreach($data as $item)
                                     <option value='{!!$item["id"]!!}'>{!!$item['ten']!!}</option>
                                 @endforeach 
@@ -43,11 +44,11 @@
                              <td>cái</td>
                              <td><a id="del_row1" class="btn glyphicon glyphicon-remove" onclick ="return del_row(1)" type="button"></td>
                         </tr>
-                
+
                        <tr class="odd gradeX" align="center" id="row_1">
                              <td>
                              <select class="form-control" name="vatdung[]" id="select_vd">
-                                <option value="0" >Chọn Vật Dụng</option>
+                                <option value="" >Chọn Vật Dụng</option>
                                 @foreach($data as $item)
                                     <option value='{!!$item["id"]!!}'>{!!$item['ten']!!}</option>
                                 @endforeach 

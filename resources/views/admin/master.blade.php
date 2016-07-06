@@ -126,8 +126,13 @@
                                 <li>
                                     <a href="{!!URL::route('listUser')!!}">List User</a>
                                 </li>
+                                @if(Auth::user()->level ==1)
                                 <li>
                                     <a href="{!!URL::route('userAdd')!!}"> Add User</a>
+                                </li>
+                                @endif
+                                <li>
+                                    <a href="{!!URL::route('getRepass')!!}">Đổi mật khẩu</a>
                                 </li>
                             </ul>
                             <!-- /.nav-second-level -->
@@ -153,6 +158,10 @@
                         @if(Session::has('flash_message'))
                             <div class="alert alert-danger {!! Session::get('flash_level') !!}">
                                 {!! Session::get('flash_message') !!}
+                            </div>
+                        @elseif(Session::has('flash_message_success'))
+                            <div class="alert alert-success {!! Session::get('flash_level') !!}">
+                                {!! Session::get('flash_message_success') !!}
                             </div>
                         @endif
                     </div>
