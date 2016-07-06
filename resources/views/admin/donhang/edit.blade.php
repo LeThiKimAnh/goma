@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('controller','Category')
+@section('controller','Đơn hàng')
 @section('action','Edit')
 @section('content')
 <div class="col-lg-7" style="padding-bottom:120px">
@@ -29,7 +29,7 @@
                  <tbody  id="chon_vd" cout ="{!!$cout!!}">
                         <tr class="odd gradeX" align="center" id="sample" style="display:none">
                              <td>
-                             <select class="form-control" name="vatdung[]" id="select">
+                             <select class="form-control" name="vatdung[]" id="select_vd_hide">
                                 <option value="0" >Chọn Vật Dụng</option>
                                 @foreach($data as $item)
                                     <option value='{!!$item["id"]!!}'>{!!$item['ten']!!}</option>
@@ -38,7 +38,7 @@
                              </td>
                              <td><input class="form-control" id="{!!$item['id']!!}" name="soLuong[]"></input></td>
                              <td>cái</td>
-                             <td><a id="del_row1" class="btn glyphicon glyphicon-remove" onclick ="return del_row(1)" type="button"></td>
+                             <td><a id="del_row1" class="btn glyphicon glyphicon-remove" type="button"></td>
                         </tr>
                     @foreach($vatdungs as $vatdung)
                        <tr class="odd gradeX" align="center" id="row_1">

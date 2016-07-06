@@ -24,13 +24,15 @@ class VatDungRequest extends Request
     public function rules()
     {
         return [
-           'txt_vd'=>'required|unique:vat_dung,ten'
+           'txt_vd'=>'required|unique:vat_dung,ten',
+           'txt_phuphi'=>'numeric'
         ];
     }
      public function messages(){
         return [
             'txt_vd.required' =>'Bắt buộc phải nhập tên vật dụng',
-            'txt_vd.unique'=>'tên này đã tồn tại'
+            'txt_vd.unique'=>'tên này đã tồn tại',
+            'txt_phuphi.numeric'=>'Phụ phí phải là kiểu số'
         ];
     }
 }

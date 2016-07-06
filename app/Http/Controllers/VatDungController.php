@@ -11,6 +11,7 @@ use App\VatLieu;
 use App\VatDung;
 use App\ChiTietVatDung;
 use App\ChiTietDonHang;
+use DB;
 
 function check($array,$key){
    if(in_array($key,$array)){
@@ -35,14 +36,18 @@ class VatDungController extends Controller
     	
     }
     public function post_themVatDung(VatDungRequest $request){
-        $vatlieu_id_mang = $request->vatlieu;
-        $soluong_mang = $request->soLuong;
+        $vatlieu_id_mang_get = $request->vatlieu;
+        $soluong_mang_get = $request->soLuong;
+
+        $vatlieu_id_mang = array_slice($vatlieu_id_mang_get, 1,count($vatlieu_id_mang_get)-1);
+        $soluong_mang =array_slice($soluong_mang_get, 1,count($soluong_mang_get)-1);
 
         if((check($vatlieu_id_mang,0)==0)&&(check($soluong_mang,'')==0)){
             $cout = VatDung::max('id');
         	$vat_dung = new VatDung;
             $vat_dung->ma_vat_dung = "VD".($cout+1);
         	$vat_dung->ten = $request->txt_vd;
+            $vat_dung->phu_phi = $request->txt_phuphi;
         	$vat_dung->mo_ta = $request->txt_mo_ta;
         	$vat_dung->save();
         	$vatdung_id = $vat_dung->id;
@@ -59,7 +64,7 @@ class VatDungController extends Controller
         	}
 
             $vat_dung = VatDung::find($vatdung_id);
-            $vat_dung->don_gia = $don_gia_vd;
+            $vat_dung->don_gia = $don_gia_vd+($vat_dung->phu_phi);
             $vat_dung->save();
 
             return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã thêm thành công vật liệu']);
@@ -90,15 +95,24 @@ class VatDungController extends Controller
     public function getEdit($id){
         $data = VatLieu::select('id','ten')->get()->toArray();
         $vat_dung = VatDung::find($id);
-        return view('admin.vatdung.edit',compact('data','vat_dung'));
+        $vat_lieus = DB::table('chi_tiet_vat_dung')->join('vat_lieu','vat_lieu.id','=','chi_tiet_vat_dung.vatlieu_id')->where('chi_tiet_vat_dung.vatdung_id','=',$id)->get();
+        return view('admin.vatdung.edit',compact('data','vat_dung','vat_lieus'));
     }
     public function postEdit(Request $request,$id){
         $this->validate($request,
             ['txt_vd'=>'required'],
             ["txt_vd.required"=>"Xin hãy nhập tên vật dung!!"]
             );
-        $vatlieu_id_mang = $request->vatlieu;
-        $soluong_mang = $request->soLuong;
+        $this->validate($request,
+            ['txt_phuphi'=>'required'],
+            ["txt_phuphi.required"=>"Xin hãy nhập tên vật dụng!!"]
+            );
+        $vatlieu_id_mang_get = $request->vatlieu;
+        $soluong_mang_get = $request->soLuong;
+
+        $vatlieu_id_mang = array_slice($vatlieu_id_mang_get, 1,count($vatlieu_id_mang_get)-1);
+        $soluong_mang =array_slice($soluong_mang_get, 1,count($soluong_mang_get)-1);
+        
         if((check($vatlieu_id_mang,0)==0)&&(check($soluong_mang,'')==0)){
             $chitiet = ChiTietVatDung::where('vatdung_id','=',$id);
             $chitiet->delete();

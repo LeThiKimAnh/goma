@@ -17,6 +17,8 @@
     <!-- Custom CSS -->
     <link href="{{url('admin/dist/css/sb-admin-2.css')}}" rel="stylesheet">
 
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet">
+
     <!-- Custom Fonts -->
     <link href="{{url('admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet')}}" type="text/css">
 
@@ -81,11 +83,22 @@
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
+                        <li class="sidebar-search">
+                            <div class="input-group custom-search-form">
+                                <input type="text" class="form-control" placeholder="Search...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <i class="glyphicon glyphicon-search"></i>
+                                    </button>
+                                </span>
+                            </div>
+                            <!-- /input-group -->
+                        </li>
                         <li>
                             <a href="{!!URL::route('dashboard')!!}"><i class="glyphicon glyphicon-dashboard"></i> Dashboard</a>
                         </li>
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Đơn Hàng</a>
+                            <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Đơn Hàng<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="{!!URL::route('listDh')!!}"> Danh sách đơn hàng</a>
@@ -97,7 +110,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-book"></i> Vật Dụng<span class="fa arrow"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-bed"></i> Vật Dụng<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="{!!URL::route('vd-getList')!!}"> Danh sách vật dụng</a>
@@ -109,7 +122,7 @@
                             <!-- /.nav-second-level -->
                         </li>
                         <li>
-                            <a href="#"><i class="glyphicon glyphicon-book"></i> Vật Liệu<span class="fa arrow"></span></a>
+                            <a href="#"><i class="glyphicon glyphicon-object-align-bottom"></i> Vật Liệu<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
                                     <a href="{!!URL::route('list')!!}"> Danh sách vật liệu</a>
@@ -124,11 +137,11 @@
                             <a href="#"><i class="glyphicon glyphicon-user"></i> User<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
                                 <li>
-                                    <a href="{!!URL::route('listUser')!!}">List User</a>
+                                    <a href="{!!URL::route('listUser')!!}">Danh Sách User</a>
                                 </li>
                                 @if(Auth::user()->level ==1)
                                 <li>
-                                    <a href="{!!URL::route('userAdd')!!}"> Add User</a>
+                                    <a href="{!!URL::route('userAdd')!!}"> Thêm User</a>
                                 </li>
                                 @endif
                                 <li>

@@ -56,6 +56,7 @@ class DonHangController extends Controller
             $time = strtotime( $request ->date);
             $don_hang ->ngay_giao_hang =  date('Y-m-d', $time);
             $don_hang ->trang_thai = 0;
+            $don_hang ->mo_ta = $request->txtDescription;
             $don_hang -> save();
             $donhang_id = $don_hang->id;
 
@@ -69,7 +70,7 @@ class DonHangController extends Controller
                 $chi_tiet_dh->save();
 
                 $vat_dung = VatDung::find($vatdung_id_mang[$i]);
-                $tong_gia = $tong_gia+($vat_dung['don_gia']+$vat_dung['phu_phi'])*$soluong_mang[$i];
+                $tong_gia = $tong_gia+$vat_dung['don_gia']*$soluong_mang[$i];
             }
             $don_hang = DonHang::find($donhang_id);
             $don_hang->tong_gia = $tong_gia;
@@ -117,8 +118,10 @@ class DonHangController extends Controller
             ['txt_KH'=>'required'],
             ["txt_KH.required"=>"Xin hãy nhập tên khách hàng!!"]
             );
-        $vatdung_id_mang = $request->vatdung;
-        $soluong_mang = $request->soLuong;
+        $vatdung_id_mang_get = $request->vatdung;
+        $soluong_mang_get = $request->soLuong;
+        $vatdung_id_mang = array_slice($vatdung_id_mang_get, 1,count($vatdung_id_mang_get)-1);
+        $soluong_mang =array_slice($soluong_mang_get, 1,count($soluong_mang_get)-1);
         if((check($vatdung_id_mang,0)==0)&&(check($soluong_mang,'')==0)){
 
             $chitiet = ChiTietDonHang::where('donhang_id','=',$id);
@@ -134,7 +137,7 @@ class DonHangController extends Controller
                 $chi_tiet_dh->save();
 
                 $vat_dung = VatDung::find($vatdung_id_mang[$i]);
-                $tong_gia = $tong_gia+($vat_dung['don_gia']+$vat_dung['phu_phi'])*$soluong_mang[$i];
+                $tong_gia = $tong_gia+$vat_dung['don_gia']*$soluong_mang[$i];
             }
             $don_hang =  DonHang::find($id);
             $don_hang ->khach_hang = $request ->txt_KH;
@@ -143,8 +146,9 @@ class DonHangController extends Controller
             $time = strtotime( $request ->date);
             $don_hang ->ngay_giao_hang = date('Y-m-d', $time);
             $don_hang ->trang_thai = 0;
+            $don_hang ->mo_ta = $request->txtDescription;
             $don_hang -> save();
-            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã thêm thành công đơn hàng']);
+            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã sửa thành công đơn hàng']);
         }
         if((check($vatdung_id_mang,0)==0)&&(check($soluong_mang,'')==1)){
             return redirect()->route('getEditDH',$id)->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa điền số lượng vật dụng']);

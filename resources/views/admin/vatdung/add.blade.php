@@ -68,7 +68,7 @@
 
         <div class="form-group">
              <label>Phụ phí</label>
-             <input class="form-control" name="txt_vd" placeholder="Nhập phụ phí" />
+             <input class="form-control" placeholder="Nhập phụ phí" name="txt_phuphi" />
         </div>
         <div class="form-group">
             <label>Mô tả vật dụng</label>
