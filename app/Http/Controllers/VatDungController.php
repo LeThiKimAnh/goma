@@ -21,6 +21,14 @@ function check($array,$key){
      return 0;
    }
 }
+function check_slg($array){
+    for($i =0;$i<count($array);$i++){
+        if($array[$i]<=0){
+            return true;
+        }
+    }
+    return false;
+}
 
 class VatDungController extends Controller
 {
@@ -42,38 +50,40 @@ class VatDungController extends Controller
         $vatlieu_id_mang = array_slice($vatlieu_id_mang_get, 1,count($vatlieu_id_mang_get)-1);
         $soluong_mang =array_slice($soluong_mang_get, 1,count($soluong_mang_get)-1);
 
-        if((check($vatlieu_id_mang,0)==0)&&(check($soluong_mang,'')==0)){
-            $cout = VatDung::max('id');
-        	$vat_dung = new VatDung;
-            $vat_dung->ma_vat_dung = "VD".($cout+1);
-        	$vat_dung->ten = $request->txt_vd;
-            $vat_dung->phu_phi = $request->txt_phuphi;
-        	$vat_dung->mo_ta = $request->txt_mo_ta;
-        	$vat_dung->save();
-        	$vatdung_id = $vat_dung->id;
+        if(count($vatlieu_id_mang)>0){
+            if((check($vatlieu_id_mang,0)==0)&&(!check_slg($soluong_mang))){
+                $cout = VatDung::max('id');
+            	$vat_dung = new VatDung;
+                $vat_dung->ma_vat_dung = "VD".($cout+1);
+            	$vat_dung->ten = $request->txt_vd;
+                $vat_dung->phu_phi = $request->txt_phuphi;
+            	$vat_dung->mo_ta = $request->txt_mo_ta;
+            	$vat_dung->save();
+            	$vatdung_id = $vat_dung->id;
 
-            $don_gia_vd = 0;
-        	for($i = 0;$i<count($vatlieu_id_mang);$i++){
-        		$chi_tiet_vd = new ChiTietVatDung;
-        		$chi_tiet_vd->vatdung_id = $vatdung_id;
-        		$chi_tiet_vd->vatlieu_id = $vatlieu_id_mang[$i];
-        		$chi_tiet_vd->so_luong = $soluong_mang[$i];
-        		$chi_tiet_vd->save();
-                $vat_lieu = VatLieu::find($vatlieu_id_mang[$i]);
-                $don_gia_vd = $don_gia_vd+$vat_lieu['don_gia']*$soluong_mang[$i]; 
-        	}
+                $don_gia_vd = 0;
+            	for($i = 0;$i<count($vatlieu_id_mang);$i++){
+            		$chi_tiet_vd = new ChiTietVatDung;
+            		$chi_tiet_vd->vatdung_id = $vatdung_id;
+            		$chi_tiet_vd->vatlieu_id = $vatlieu_id_mang[$i];
+            		$chi_tiet_vd->so_luong = $soluong_mang[$i];
+            		$chi_tiet_vd->save();
+                    $vat_lieu = VatLieu::find($vatlieu_id_mang[$i]);
+                    $don_gia_vd = $don_gia_vd+$vat_lieu['don_gia']*$soluong_mang[$i]; 
+            	}
 
-            $vat_dung = VatDung::find($vatdung_id);
-            $vat_dung->don_gia = $don_gia_vd+($vat_dung->phu_phi);
-            $vat_dung->save();
+                $vat_dung = VatDung::find($vatdung_id);
+                $vat_dung->don_gia = $don_gia_vd+($vat_dung->phu_phi);
+                $vat_dung->save();
 
-            return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã thêm thành công vật liệu']);
-        }
-        if((check($vatlieu_id_mang,0)==0)&&(check($soluong_mang,'')==1)){
-            return redirect()->route('getVatdung')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa điền số lượng vật liệu']);
-        }
-        if((check($vatlieu_id_mang,0)==1)&&(check($soluong_mang,'')==0)){
-            return redirect()->route('getVatdung')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa chọn đầy đủ vật liệu']);
+                return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã thêm thành công vật liệu']);
+            }
+            if((check($vatlieu_id_mang,0)==0)&&(check($soluong_mang,'')==1)){
+                return redirect()->route('getVatdung')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa điền số lượng vật liệu']);
+            }
+            if((check($vatlieu_id_mang,0)==1)&&(check($soluong_mang,'')==0)){
+                return redirect()->route('getVatdung')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa chọn đầy đủ vật liệu']);
+            }
         }
         
         return redirect()->route('getVatdung')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Tối thiểu phải có một vật liệu trong vật dụng']);
@@ -113,39 +123,40 @@ class VatDungController extends Controller
         $vatlieu_id_mang = array_slice($vatlieu_id_mang_get, 1,count($vatlieu_id_mang_get)-1);
         $soluong_mang =array_slice($soluong_mang_get, 1,count($soluong_mang_get)-1);
         
-        if((check($vatlieu_id_mang,0)==0)&&(check($soluong_mang,'')==0)){
-            $chitiet = ChiTietVatDung::where('vatdung_id','=',$id);
-            $chitiet->delete();
+        if(count($vatlieu_id_mang)>0){
+            if((check($vatlieu_id_mang,0)==0)&&(!check_slg($soluong_mang))){
+                $chitiet = ChiTietVatDung::where('vatdung_id','=',$id);
+                $chitiet->delete();
 
-            $don_gia_vd = 0;
+                $don_gia_vd = 0;
 
-            for($i = 0;$i<count($vatlieu_id_mang);$i++){
-                $chi_tiet_vd = new ChiTietVatDung;
-                $chi_tiet_vd->vatdung_id = $id;
-                $chi_tiet_vd->vatlieu_id = $vatlieu_id_mang[$i];
-                $chi_tiet_vd->so_luong = $soluong_mang[$i];
-                $chi_tiet_vd->save();
+                for($i = 0;$i<count($vatlieu_id_mang);$i++){
+                    $chi_tiet_vd = new ChiTietVatDung;
+                    $chi_tiet_vd->vatdung_id = $id;
+                    $chi_tiet_vd->vatlieu_id = $vatlieu_id_mang[$i];
+                    $chi_tiet_vd->so_luong = $soluong_mang[$i];
+                    $chi_tiet_vd->save();
 
-                $vat_lieu = VatLieu::find($vatlieu_id_mang[$i]);
-                $don_gia_vd = $don_gia_vd+$vat_lieu['don_gia']*$soluong_mang[$i];
+                    $vat_lieu = VatLieu::find($vatlieu_id_mang[$i]);
+                    $don_gia_vd = $don_gia_vd+$vat_lieu['don_gia']*$soluong_mang[$i];
 
+                }
+                $vat_dung =  VatDung::find($id);
+                $vat_dung->ten = $request->txt_vd;
+                $vat_dung->mo_ta = $request->txt_mo_ta;
+                $vat_dung->phu_phi = $request->txt_phuphi;
+                $vat_dung->don_gia = $don_gia_vd+($request->txt_phuphi);
+                $vat_dung->save();
+
+                return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã sửa thành công vật dụng']);
             }
-            $vat_dung =  VatDung::find($id);
-            $vat_dung->ten = $request->txt_vd;
-            $vat_dung->mo_ta = $request->txt_mo_ta;
-            $vat_dung->phu_phi = $request->txt_phuphi;
-            $vat_dung->don_gia = $don_gia_vd+($request->txt_phuphi);
-            $vat_dung->save();
-
-            return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã sửa thành công vật dụng']);
-       }
-        if((check($vatlieu_id_mang,0)==0)&&(check($soluong_mang,'')==1)){
-            return redirect()->route('getEditVD',$id)->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa điền số lượng vật liệu']);
+            if((check($vatlieu_id_mang,0)==0)&&(check($soluong_mang,'')==1)){
+                return redirect()->route('getEditVD',$id)->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa điền số lượng vật liệu']);
+            }
+            if((check($vatlieu_id_mang,0)==1)&&(check($soluong_mang,'')==0)){
+                return redirect()->route('getEditVD',$id)->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa chọn đầy đủ vật liệu']);
+            }
         }
-        if((check($vatlieu_id_mang,0)==1)&&(check($soluong_mang,'')==0)){
-            return redirect()->route('getEditVD',$id)->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa chọn đầy đủ vật liệu']);
-        }
-        
         return redirect()->route('getEditVD',$id)->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Tối thiểu phải có một vật liệu trong vật dụng']);
 
     }

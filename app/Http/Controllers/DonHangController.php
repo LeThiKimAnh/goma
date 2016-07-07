@@ -23,6 +23,14 @@ function check($array,$key){
      return 0;
    }
 }
+function check_slg($array){
+    for($i =0;$i<count($array);$i++){
+        if($array[$i]<=0){
+            return true;
+        }
+    }
+    return false;
+}
 
 class DonHangController extends Controller
 {
@@ -44,49 +52,52 @@ class DonHangController extends Controller
         $soluong_mang_get = $request->soLuong;
         $vatdung_id_mang = array_slice($vatdung_id_mang_get, 1,count($vatdung_id_mang_get)-1);
         $soluong_mang =array_slice($soluong_mang_get, 1,count($soluong_mang_get)-1);
-        if(count(array_unique($vatdung_id_mang))<count($vatdung_id_mang)){
-            return redirect()->route('getDonhang')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! không thể chọn hai lần 1 vật dụng']);
-        }else{
-            if((check($vatdung_id_mang,0)==0)&&(check($soluong_mang,'')==0)){
-            $cout = DonHang::max('id');
-            $don_hang = new DonHang;
-            $don_hang ->khach_hang = $request ->txt_KH;
-            $don_hang->ma_don_hang = "DH".($cout+1);
-            $don_hang ->nguoi_tao_don = Auth::user()->username;
-            $time = strtotime( $request ->date);
-            $don_hang ->ngay_giao_hang =  date('Y-m-d', $time);
-            $don_hang ->trang_thai = 0;
-            $don_hang ->mo_ta = $request->txtDescription;
-            $don_hang -> save();
-            $donhang_id = $don_hang->id;
+        print_r(count($vatdung_id_mang));
+        if(count($vatdung_id_mang)>0){
+            if(count(array_unique($vatdung_id_mang))<count($vatdung_id_mang)){
+                return redirect()->route('getDonhang')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! không thể chọn hai lần 1 vật dụng']);
+            }else{
+                if((check($vatdung_id_mang,0)==0)&&(!check_slg($soluong_mang))){
+                $cout = DonHang::max('id');
+                $don_hang = new DonHang;
+                $don_hang ->khach_hang = $request ->txt_KH;
+                $don_hang->ma_don_hang = "DH".($cout+1);
+                $don_hang ->nguoi_tao_don = Auth::user()->username;
+                $time = strtotime( $request ->date);
+                $don_hang ->ngay_giao_hang =  date('Y-m-d', $time);
+                $don_hang ->trang_thai = 0;
+                $don_hang ->mo_ta = $request->txtDescription;
+                $don_hang -> save();
+                $donhang_id = $don_hang->id;
 
-            $tong_gia = 0;
+                $tong_gia = 0;
 
-            for($i = 0;$i<count($vatdung_id_mang);$i++){
-                $chi_tiet_dh = new ChiTietDonHang;
-                $chi_tiet_dh->donhang_id = $donhang_id;
-                $chi_tiet_dh->vatdung_id = $vatdung_id_mang[$i];
-                $chi_tiet_dh->so_luong = $soluong_mang[$i];
-                $chi_tiet_dh->save();
+                for($i = 0;$i<count($vatdung_id_mang);$i++){
+                    $chi_tiet_dh = new ChiTietDonHang;
+                    $chi_tiet_dh->donhang_id = $donhang_id;
+                    $chi_tiet_dh->vatdung_id = $vatdung_id_mang[$i];
+                    $chi_tiet_dh->so_luong = $soluong_mang[$i];
+                    $chi_tiet_dh->save();
 
-                $vat_dung = VatDung::find($vatdung_id_mang[$i]);
-                $tong_gia = $tong_gia+$vat_dung['don_gia']*$soluong_mang[$i];
-            }
-            $don_hang = DonHang::find($donhang_id);
-            $don_hang->tong_gia = $tong_gia;
-            $don_hang->save();
+                    $vat_dung = VatDung::find($vatdung_id_mang[$i]);
+                    $tong_gia = $tong_gia+$vat_dung['don_gia']*$soluong_mang[$i];
+                }
+                $don_hang = DonHang::find($donhang_id);
+                $don_hang->tong_gia = $tong_gia;
+                $don_hang->save();
 
-            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã thêm thành công đơn hàng']);
+                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã thêm thành công đơn hàng']);
+                }
+                if((check($vatdung_id_mang,0)==0)&&(check($soluong_mang,'')==1)){
+                    return redirect()->route('getDonhang')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa điền số lượng vật dụng']);
+                }
+                if((check($vatdung_id_mang,0)==1)&&(check($soluong_mang,'')==0)){
+                    return redirect()->route('getDonhang')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa chọn đầy đủ vật dung']);
+                } 
             }
-            if((check($vatdung_id_mang,0)==0)&&(check($soluong_mang,'')==1)){
-                return redirect()->route('getDonhang')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa điền số lượng vật dụng']);
-            }
-            if((check($vatdung_id_mang,0)==1)&&(check($soluong_mang,'')==0)){
-                return redirect()->route('getDonhang')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa chọn đầy đủ vật dung']);
-            }
-            
-            return redirect()->route('getDonhang')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Tối thiểu phải có một vật dụng trong đơn hàng']);
-            }
+        }
+
+        return redirect()->route('getDonhang')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Tối thiểu phải có một vật dụng trong đơn hàng']);
     }
     public function listDh(){
         $action = 'List';
@@ -122,39 +133,42 @@ class DonHangController extends Controller
         $soluong_mang_get = $request->soLuong;
         $vatdung_id_mang = array_slice($vatdung_id_mang_get, 1,count($vatdung_id_mang_get)-1);
         $soluong_mang =array_slice($soluong_mang_get, 1,count($soluong_mang_get)-1);
-        if((check($vatdung_id_mang,0)==0)&&(check($soluong_mang,'')==0)){
 
-            $chitiet = ChiTietDonHang::where('donhang_id','=',$id);
-            $chitiet->delete();
+        if(count($vatdung_id_mang)>0){
+            if((check($vatdung_id_mang,0)==0)&&(!check_slg($soluong_mang))){
 
-            $tong_gia = 0;
+                $chitiet = ChiTietDonHang::where('donhang_id','=',$id);
+                $chitiet->delete();
 
-            for($i = 0;$i<count($vatdung_id_mang);$i++){
-                $chi_tiet_dh = new ChiTietDonHang;
-                $chi_tiet_dh->donhang_id =$id;
-                $chi_tiet_dh->vatdung_id = $vatdung_id_mang[$i];
-                $chi_tiet_dh->so_luong = $soluong_mang[$i];
-                $chi_tiet_dh->save();
+                $tong_gia = 0;
 
-                $vat_dung = VatDung::find($vatdung_id_mang[$i]);
-                $tong_gia = $tong_gia+$vat_dung['don_gia']*$soluong_mang[$i];
+                for($i = 0;$i<count($vatdung_id_mang);$i++){
+                    $chi_tiet_dh = new ChiTietDonHang;
+                    $chi_tiet_dh->donhang_id =$id;
+                    $chi_tiet_dh->vatdung_id = $vatdung_id_mang[$i];
+                    $chi_tiet_dh->so_luong = $soluong_mang[$i];
+                    $chi_tiet_dh->save();
+
+                    $vat_dung = VatDung::find($vatdung_id_mang[$i]);
+                    $tong_gia = $tong_gia+$vat_dung['don_gia']*$soluong_mang[$i];
+                }
+                $don_hang =  DonHang::find($id);
+                $don_hang ->khach_hang = $request ->txt_KH;
+                $don_hang ->nguoi_tao_don = Auth::user()->username;
+                $don_hang ->tong_gia = $tong_gia;
+                $time = strtotime( $request ->date);
+                $don_hang ->ngay_giao_hang = date('Y-m-d', $time);
+                $don_hang ->trang_thai = 0;
+                $don_hang ->mo_ta = $request->txtDescription;
+                $don_hang -> save();
+                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã sửa thành công đơn hàng']);
             }
-            $don_hang =  DonHang::find($id);
-            $don_hang ->khach_hang = $request ->txt_KH;
-            $don_hang ->nguoi_tao_don = Auth::user()->username;
-            $don_hang ->tong_gia = $tong_gia;
-            $time = strtotime( $request ->date);
-            $don_hang ->ngay_giao_hang = date('Y-m-d', $time);
-            $don_hang ->trang_thai = 0;
-            $don_hang ->mo_ta = $request->txtDescription;
-            $don_hang -> save();
-            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã sửa thành công đơn hàng']);
-        }
-        if((check($vatdung_id_mang,0)==0)&&(check($soluong_mang,'')==1)){
-            return redirect()->route('getEditDH',$id)->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa điền số lượng vật dụng']);
-        }
-        if((check($vatdung_id_mang,0)==1)&&(check($soluong_mang,'')==0)){
-            return redirect()->route('getEditDH',$id)->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa chọn đầy đủ vật dụng']);
+            if((check($vatdung_id_mang,0)==0)&&(check($soluong_mang,'')==1)){
+                return redirect()->route('getEditDH',$id)->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa điền số lượng vật dụng']);
+            }
+            if((check($vatdung_id_mang,0)==1)&&(check($soluong_mang,'')==0)){
+                return redirect()->route('getEditDH',$id)->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn chưa chọn đầy đủ vật dụng']);
+            }
         }
         
         return redirect()->route('getEditDH',$id)->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Tối thiểu phải có một vật dụng trong đơn hàng']);

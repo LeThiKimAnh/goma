@@ -86,15 +86,19 @@ function checkdata(){
 	for(var i = 1; i<soluong_obj.length;i++){
 		soluong[i] = soluong_obj[i].value;
 	}
-	console.log(check_vd(vatdung));
-	if(check("0",vatdung)||check("0",soluong)||check("",soluong)){
-		$('#insert_erro_vd').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn nên xem lại để điền đầy đủ thông tin!!</div>");
-	}else if(!check_vd(vatdung)){
-		$('#insert_erro_vd').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn không được chọn các loại vật dụng khác nhau :))!!</div>");
+	if(vatdung.length>0){
+		console.log(check_vd(vatdung));
+		if(check("0",vatdung)||check("0",soluong)||check("",soluong)){
+			$('#insert_erro_vd').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn nên xem lại để điền đầy đủ thông tin!!</div>");
+		}else if(!check_vd(vatdung)){
+			$('#insert_erro_vd').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn không được chọn các loại vật dụng khác nhau :))!!</div>");
+		}else{
+			$('#donhang').submit();
+		}
 	}else{
-		$('#donhang').submit();
+		$('#insert_erro_vd').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn phải chọn ít nhất một vật dụng :))!!</div>");
 	}
-
+	
 
 }
 function checkedit(){
@@ -109,13 +113,16 @@ function checkedit(){
 		soluong[i] = soluong_obj[i].value;
 	}
 
-	console.log(check_vd(vatdung));
-	if(check("0",vatdung)||check("0",soluong)||check("",soluong)){
-		$('#insert_erro_vd_edit').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn nên xem lại để điền đầy đủ thông tin!!</div>");
-	}else if(!check_vd(vatdung)){
-		$('#insert_erro_vd_edit').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn không được chọn các loại vật giống khác nhau :))!!</div>");
+	if(vatdung.length>0){
+		if(check("0",vatdung)||check("0",soluong)||check("",soluong)){
+			$('#insert_erro_vd_edit').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn nên xem lại để điền đầy đủ thông tin!!</div>");
+		}else if(!check_vd(vatdung)){
+			$('#insert_erro_vd_edit').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn không được chọn các loại vật giống khác nhau :))!!</div>");
+		}else{
+			$('#dh_edit').submit();
+		}
 	}else{
-		$('#dh_edit').submit();
+		$('#insert_erro_vd_edit').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn phải chọn ít nhất một vật dụng :))!!</div>");
 	}
 }
 function checkvd(){
@@ -130,12 +137,16 @@ function checkvd(){
 		soLuong[i] = soLuong_obj[i].value;
 	}
 	var select = document.getElementById('select_vl_hide').outerHTML;
-	if(check("0",vatlieu)||check("0",soLuong)||check("",soLuong)){
-		$('#insert_erro').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn nên xem lại để điền đầy đủ thông tin!!</div>");
-	}else if(!check_vd(vatlieu)){
-		$('#insert_erro').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn không được chọn các loại vật liệu giống nhau :))!!</div>");
+	if(vatlieu.length>0){
+		if(check("0",vatlieu)||check("0",soLuong)||check("",soLuong)){
+			$('#insert_erro').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn nên xem lại để điền đầy đủ thông tin!!</div>");
+		}else if(!check_vd(vatlieu)){
+			$('#insert_erro').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn không được chọn các loại vật liệu giống nhau :))!!</div>");
+		}else{
+			$('#vatdung_add').submit();
+		}
 	}else{
-		$('#vatdung_add').submit();
+		$('#insert_erro').append("<div class='alert alert-warning fade in' aria-label='close'><a href='#' class='close' data-dismiss='alert' aria-label='close'>&times;</a><strong>Cảnh báo!</strong>Bạn phải chọn ít nhất một vật liệu :))!!</div>");
 	}
 }
 

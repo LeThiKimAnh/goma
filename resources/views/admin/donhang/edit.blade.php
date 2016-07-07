@@ -36,7 +36,7 @@
                                 @endforeach 
                              </select>    
                              </td>
-                             <td><input class="form-control" id="{!!$item['id']!!}" name="soLuong[]" style="text-align:right"></input></td>
+                             <td><input class="form-control" id="{!!$item['id']!!}" name="soLuong[]" style="text-align:right" type="number" min="0"></input></td>
                              <td>cái</td>
                              <td><a id="del_row1" class="btn glyphicon glyphicon-remove" type="button"></td>
                         </tr>
@@ -50,7 +50,7 @@
                                 @endforeach 
                              </select>    
                              </td>
-                             <td><input class="form-control" id="{!!$item['id']!!}" name="soLuong[]" value="{!!$vatdung->so_luong!!}" style="text-align:right"></input></td>
+                             <td><input class="form-control" id="{!!$item['id']!!}" name="soLuong[]" value="{!!$vatdung->so_luong!!}" style="text-align:right" type="number" min="0"></input></td>
                              <td>cái</td>
                              <td><a id="del_row1" class="btn glyphicon glyphicon-remove" onclick ="return del_row(1)" type="button"></td>
                         </tr>
