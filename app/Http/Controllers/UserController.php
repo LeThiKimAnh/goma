@@ -8,6 +8,7 @@ use App\Http\Requests;
 use App\User;
 use App\Http\Requests\UserRequest;
 use Auth;
+use Hash;
 
 class UserController extends Controller
 {
@@ -53,6 +54,7 @@ class UserController extends Controller
         }
         
     }
+
     public function postEdit(Request $request,$id){
 	    $this->validate($request,
             ["txtUser"=>"required"],
@@ -64,16 +66,40 @@ class UserController extends Controller
             $user->password = bcrypt($request->txtPass);
             $user->level = $request->rdoLevel;
             $user->save();
-            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message_success'=>'Success !!Complete Edit User']);
-	             
+            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message_success'=>'Success !!Complete Edit User']);          
 	    }
+
     public function getRepass(){
         return view('admin.user.repass');
     }
     public function postRepass(Request $request){
-        if(bcrypt($request->txtPass)==Auth::user()->password){
-            $user = User::find(Auth::user()->id);
-            $user->password = bcrypt($request->txtPass);
+        $this->validate($request,
+            ["old_Pass"=>"required"],
+            ["old_Pass.required"=>"Bạn phải nhập mật khẩu cũ!!"]
+            );
+        $this->validate($request,
+            ["new_Pass"=>"required"],
+            ["new_Pass.required"=>"Bạn phải nhập mật khẩu mới!!"]
+            );
+        $this->validate($request,
+            ["txtRePass"=>"required"],
+            ["txtRePass.required"=>"Bạn phải nhập lại mật khẩu mới!!"],
+            ["txtRePass.same:new_Pass"=>"Mật khẩu nhập lại chưa khớp!!"]
+            );
+        $this->validate($request,
+            ["txtRePass"=>"same:new_Pass"],
+            ["txtRePass.same"=>"Mật khẩu nhập lại chưa khớp!!"]
+            );
+        $id = Auth::user()->id;
+        $user = User::find($id);
+        $oldpass = $request->old_Pass;
+        if(Hash::check($oldpass,$user->password)){
+            $user->password = bcrypt($request->new_Pass);
+            $user->save();
+            Auth::logout();
+            return redirect()->route('getLogin');
+        }else{
+             return redirect()->route('getRepass')->with(['flash_level'=>'success','flash_message'=>'Bạn nhập mật khẩu sai, vui lòng nhập lại']);
         }
     }
 }

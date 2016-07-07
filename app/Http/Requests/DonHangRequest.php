@@ -29,7 +29,7 @@ class DonHangRequest extends Request
     }
      public function messages(){
         return [
-            'txt_KH.required' =>'Bắt buộc phải nhập tên khách hàng'
+            'txt_KH.required' =>'Bắt buộc phải nhập tên khách hàng',
         ];
     }
 }

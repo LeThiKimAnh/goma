@@ -59,6 +59,7 @@ Route::controllers([
 
 Route::get('user/login',['as'=>'getLogin','uses'=>'Auth\AuthController@getLogin']);
 Route::post('user/login',['as'=>'postLogin','uses'=>'Auth\AuthController@postLogin']);
+
 Route::post('user/logout',['as'=>'postLogout','uses'=>'Auth\AuthController@postLogout']);
 
 

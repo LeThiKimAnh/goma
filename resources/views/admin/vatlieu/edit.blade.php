@@ -13,19 +13,19 @@
          </div>
          <div class="form-group">
              <label>rộng</label>
-             <input class="form-control" name="txt_chieu_rong" value="{!!$vat_lieu['rong']!!}" placeholder="Nhập chiều rộng" value="{{old('txt_ten')}}"></input>
+             <input class="form-control" name="txt_chieu_rong" value="{!!$vat_lieu['rong']!!}" placeholder="Nhập chiều rộng" value="{{old('txt_ten')}}" type="number" min="0"></input>
          </div>
          <div class="form-group">
              <label>dài</label>
-             <input class="form-control" name="txt_chieu_dai" value="{!!$vat_lieu['dai']!!}" placeholder="Nhập chiều dài" value="{{old('txt_ten')}}"></input>
+             <input class="form-control" name="txt_chieu_dai" value="{!!$vat_lieu['dai']!!}" placeholder="Nhập chiều dài" value="{{old('txt_ten')}}" type="number" min="0"></input>
          </div>
-         <div class="form-group">
+         <div class="form-group" style="display:none">
              <label>cao</label>
-             <input class="form-control" name="txt_chieu_cao" value="{!!$vat_lieu['cao']!!}" placeholder="Nhập chiều cao" value="{{old('txt_ten')}}"></input>
+             <input class="form-control" name="txt_chieu_cao" value="{!!$vat_lieu['cao']!!}" placeholder="Nhập chiều cao" value="{{old('txt_ten')}}" type="number" min="0"></input>
          </div>
          <div class="form-group">
              <label>Đơn giá</label>
-             <input class="form-control" name="txt_don_gia" value="{!!$vat_lieu['don_gia']!!}" placeholder="Nhập đơn giá"></input>
+             <input class="form-control" name="txt_don_gia" value="{!!$vat_lieu['don_gia']!!}" placeholder="Nhập đơn giá" type="number" min="0"></input>
          </div>
          <div class="form-group">
              <label>Chất liệu</label>

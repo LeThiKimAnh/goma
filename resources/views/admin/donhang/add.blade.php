@@ -40,21 +40,21 @@
                                 @endforeach 
                              </select>    
                              </td>
-                             <td><input class="form-control" id="{!!$item['id']!!}" name="soLuong[]"></input></td>
+                             <td><input class="form-control" id="{!!$item['id']!!}" name="soLuong[]" style="text-align:right" type="number" min="0"></input></td>
                              <td>cái</td>
                              <td><a id="del_row1" class="btn glyphicon glyphicon-remove" onclick ="return del_row(1)" type="button"></td>
                         </tr>
 
                        <tr class="odd gradeX" align="center" id="row_1">
                              <td>
-                             <select class="form-control" name="vatdung[]" id="select_vd">
+                             <select class="form-control" name="vatdung[]" id="select_vd" onchange="alert(this.text)">
                                 <option value="" >Chọn Vật Dụng</option>
                                 @foreach($data as $item)
                                     <option value='{!!$item["id"]!!}'>{!!$item['ten']!!}</option>
                                 @endforeach 
                              </select>    
                              </td>
-                             <td><input class="form-control" id="{!!$item['id']!!}" name="soLuong[]"></input></td>
+                             <td><input class="form-control" id="{!!$item['id']!!}" name="soLuong[]" style="text-align:right" type="number" min="0"></input></td>
                              <td>cái</td>
                              <td><a id="del_row1" class="btn glyphicon glyphicon-remove" onclick ="return del_row(1)" type="button"></td>
                         </tr>

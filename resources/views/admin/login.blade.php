@@ -51,7 +51,7 @@
                             </div>
                             <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
                                 <div class="form-group">
-                                    <input class="form-control" placeholder="E-mail" name="txtUser" type="text" autofocus>
+                                    <input class="form-control" placeholder="Username" name="txtUser" type="text" autofocus>
                                 </div>
                                 <div class="form-group">
                                     <input class="form-control" placeholder="Password" name="txtPass" type="password" value="">

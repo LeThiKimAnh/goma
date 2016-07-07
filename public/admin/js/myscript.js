@@ -32,7 +32,7 @@ $(document).ready(function(){
 				             '<td>'+
 				             	select1+
 				             '</td>'+
-				             '<td><input class="form-control" name="soLuong[]""></input></td>'+
+				             '<td><input class="form-control" name="soLuong[]" style="text-align:right" type="number" min="0"></input></td>'+
 				             '<td>cái</td>'+
 				             '<td>'+
 				             	'<a id="del_row'+stt1+'" class="btn glyphicon glyphicon-remove" onclick ="return del_row('+stt1+')" type="button">'+
@@ -157,7 +157,7 @@ $(document).ready(function(){
 	             '<td>'+
 	                select+
 	             '</td>'+
-	             '<td><input class="form-control" id="{!!$item["id"]!!}" name="soLuong[]"></input></td>'+
+	             '<td><input class="form-control" id="{!!$item["id"]!!}" name="soLuong[]" style="text-align:right" type="number" min="0"></input></td>'+
 	             '<td>cái</td>'+
 				             '<td>'+
 				             	'<a class="btn glyphicon glyphicon-remove" onclick ="return del_row_vl('+stt+')" type="button">'+

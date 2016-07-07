@@ -10,23 +10,23 @@
      <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
         <div class="form-group">
              <label>Tên Vật Liệu</label>
-             <input class="form-control" name="txt_ten" value="{{old('txt_ten')}}" placeholder="Nhập tên vật liệu" />
+             <input class="form-control" name="txt_ten" value="{{old('txt_ten')}}" placeholder="Nhập tên vật liệu"/>
          </div>
          <div class="form-group">
              <label>rộng</label>
-             <input class="form-control" name="txt_chieu_rong" placeholder="Nhập chiều rộng" value="{{old('txt_ten')}}"></input>
+             <input class="form-control" name="txt_chieu_rong" placeholder="Nhập chiều rộng" value="{{old('txt_ten')}}" type="number" min="0"></input>
          </div>
          <div class="form-group">
              <label>dài</label>
-             <input class="form-control" name="txt_chieu_dai" placeholder="Nhập chiều dài" value="{{old('txt_ten')}}"></input>
+             <input class="form-control" name="txt_chieu_dai" placeholder="Nhập chiều dài" value="{{old('txt_ten')}}" type="number" min="0"></input>
          </div>
          <div class="form-group" style="display:none">
              <label>cao</label>
-             <input class="form-control" name="txt_chieu_cao" placeholder="Nhập chiều cao" value="{{old('txt_ten')}}" ></input>
+             <input class="form-control" name="txt_chieu_cao" placeholder="Nhập chiều cao" value="{{old('txt_ten')}}" type="number" min="0" ></input>
          </div>
          <div class="form-group">
              <label>Đơn giá</label>
-             <input class="form-control" name="txt_don_gia" placeholder="Nhập đơn giá"></input>
+             <input class="form-control" name="txt_don_gia" placeholder="Nhập đơn giá" type="number" min="0"></input>
          </div>
          <div class="form-group">
              <label>Chất liệu</label>
