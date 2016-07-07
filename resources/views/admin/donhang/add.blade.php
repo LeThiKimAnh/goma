@@ -47,7 +47,7 @@
 
                        <tr class="odd gradeX" align="center" id="row_1">
                              <td>
-                             <select class="form-control" name="vatdung[]" id="select_vd" onchange="alert(this.text)">
+                             <select class="form-control" name="vatdung[]" id="select_vd">
                                 <option value="" >Chọn Vật Dụng</option>
                                 @foreach($data as $item)
                                     <option value='{!!$item["id"]!!}'>{!!$item['ten']!!}</option>
