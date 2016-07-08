@@ -53,6 +53,7 @@ class Solution {
 		foreach ($this->panels as $p) {
 			array_push($sketch, $p->sketch());
 		}
+		var_dump($this->remain);
 		$obj = array(
 			"panels" => $sketch,
 			"remain" => $this->remain
@@ -87,9 +88,14 @@ class Solution {
 			$rects = $panel->addAll($rects);
 
 			$remain = $panel->remain();
+			echo 'panel remain';
+			var_dump($remain);
 			array_push($this->panels, $panel);
-			array_merge($this->remain, $remain);
+			$this->remain = array_merge($this->remain, $remain);
 		}
+
+		echo 'Remain =>';
+		var_dump($this->remain);
 	}
 
 }

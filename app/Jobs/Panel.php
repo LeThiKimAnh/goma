@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-class Panel {
+class Panel1 {
 
 	public $width;
 	public $height;
@@ -70,7 +70,7 @@ class Bound {
 
 	public function __construct($top, $left, $width, $height) {
 		$this->top = $top;
-		$this->left = $top;
+		$this->left = $left;
 		$this->width = $width;
 		$this->height = $height;
 	}
@@ -81,14 +81,15 @@ class Bound {
 
 }
 
-class Panel2 {
+class Panel {
 
 	public $width;
 	public $height;
 	public $area;
 	public $req;
 	public $bound;
-	private $mapped_rect;
+	private $mapped_rects;
+	public $gap = 4;
 
 	public function __construct($width, $height, $req) {
 		$this->width = $width;
@@ -105,7 +106,7 @@ class Panel2 {
 	}
 
 	public function addAll($rects) {
-		echo 'add all '. count($rects);
+		echo 'add all ' . count($rects);
 		$remain_rects = array();
 		foreach ($rects as $rect) {
 			if ($this->tryInsert($rect)) {
@@ -121,12 +122,15 @@ class Panel2 {
 	}
 
 	public function tryInsert($rect) {
+		$gap = $this->gap;
 		$stack = $this->stack;
 		$queue = array();
 		$res = False;
 
 		while (count($stack)) {
 			$bound = array_pop($stack);
+
+			var_dump($bound);
 
 			$ww_diff = $bound->width - $rect->width;
 			$hh_diff = $bound->height - $rect->height;
@@ -135,6 +139,7 @@ class Panel2 {
 
 			if ($ww_diff < 0 or $hh_diff < 0) {
 				// this bound can't fit this rect
+				echo 'not fit \n';
 				array_unshift($queue, $bound);
 				continue;
 			}
@@ -143,11 +148,15 @@ class Panel2 {
 			$rect->placeAt($bound->top, $bound->left);
 			// create new sub bound if need
 			if ($hh_diff > 0) {
-				$left = new Bound($bound->left, $bound->top + $rect->height, $rect->width, $hh_diff);
+				$left = new Bound($bound->top + $rect->height + $gap, $bound->left, $rect->width, $hh_diff - $gap);
+				echo '\n left';
+				var_dump($left);
 				array_unshift($queue, $left);
 			}
 			if ($ww_diff > 0) {
-				$right = new Bound($bound->left + $rect->width, $bound->top, $ww_diff, $rect->height);
+				$right = new Bound($bound->top, $bound->left + $rect->width + $gap, $ww_diff - $gap, $bound->height);
+				echo '\n right';
+				var_dump($right);
 				array_unshift($queue, $right);
 			}
 
@@ -160,6 +169,13 @@ class Panel2 {
 	}
 
 	public function sketch() {
+		return array(
+			"rects" => $this->map(),
+			"remains" => $this->remain()
+		);
+	}
+	
+	public function map() {
 		$res = array();
 		foreach ($this->mapped_rects as $rect) {
 			array_push($res, $rect->sketch());
@@ -171,6 +187,7 @@ class Panel2 {
 	public function remain() {
 		$res = array();
 		foreach ($this->stack as $bound) {
+			echo 'panel->empty';
 			array_push($res, $bound->sketch());
 		}
 
