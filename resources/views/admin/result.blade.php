@@ -2,7 +2,7 @@
 @section('content')
 <script>
 	var imageObj = new Image();
-	imageObj.src = 'http://i.stack.imgur.com/WLsci.png';
+	imageObj.src = '/admin/images/WLsci.png';
 
 	function random_color() {
 		var color = [0, 0, 0]
