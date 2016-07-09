@@ -37,10 +37,14 @@ Route::get('donhang/delete/{id}',['as'=>'deldonhang','uses'=>'DonHangController@
 Route::get('donhang/edit/{id}',['as'=>'getEditDH','uses'=>'DonHangController@getEdit','middleware'=>'auth']);
 Route::post('donhang/edit/{id}',['as'=>'postEditDH','uses'=>'DonHangController@postEdit','middleware'=>'auth']);
 Route::get('donhang/chitiet/{id}',['as'=>'chitietDH','uses'=>'DonHangController@chitiet','middleware'=>'auth']);
+Route::get('donhang/chitietDaXL/{id}',['as'=>'chitietDaXL','uses'=>'DonHangController@chitiet_daXL','middleware'=>'auth']);
 Route::get('donhang/listDaXL',['as'=>'listDhDaXL','uses'=>'DonHangController@listDhDaXL','middleware'=>'auth']);
 Route::get('donhang/listDhCXL',['as'=>'listDhCXL','uses'=>'DonHangController@listDhCXL','middleware'=>'auth']);
 
+
+
 Route::post('session/{id}',['as'=>'session','uses'=>'SessionController@session','middleware'=>'auth']);
+Route::get('result/{id}',['as'=>'result','uses'=>'SessionController@result','middleware'=>'auth']);
 
 Route::get('user/add',['as'=>'userAdd','uses'=>'UserController@getAdd','middleware'=>'auth']);
 Route::post('user/add',['as'=>'userPostAdd','uses'=>'UserController@postAdd','middleware'=>'auth']);

@@ -175,13 +175,20 @@ class DonHangController extends Controller
     }
     public function chitiet($id){
         $don_hang = DonHang::find($id);
+        $check_tt = 0;
         $chi_tiet_dh = ChiTietDonHang::where('donhang_id','=',$id)->get()->toArray();
-        return view('admin.donhang.chitiet',compact('don_hang','chi_tiet_dh','id'));
+        return view('admin.donhang.chitiet',compact('don_hang','chi_tiet_dh','id','check_tt'));
+    }
+    public function chitiet_daXL($id){
+        $don_hang = DonHang::find($id);
+        $check_tt = 1;
+        $chi_tiet_dh = ChiTietDonHang::where('donhang_id','=',$id)->get()->toArray();
+        return view('admin.donhang.chitiet',compact('don_hang','chi_tiet_dh','id','check_tt'));
     }
     public function listDhDaXL(){
         $data = DonHang::where('trang_thai',2)->orderBy('id','DESC')->get()->toArray();
         $action = 'Đã xử lý';
-        return view('admin.donhang.list',compact('data','action'));
+        return view('admin.donhang.daXL',compact('data','action'));
     }
     public function listDhCXL(){
         $data = DonHang::where('trang_thai',0)->orderBy('id','DESC')->get()->toArray();

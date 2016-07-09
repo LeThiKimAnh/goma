@@ -24,9 +24,12 @@ class SessionController extends Controller
         	$session->save();
         	
         	$this->dispatch(new OptimizeSketch($session));
-        	return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message'=>'Đơn hàng đang chờ xử lý']);
+        	return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message_success'=>'Đơn hàng đang chờ xử lý']);
         }else{
             return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message'=>'Đơn hàng này đã hoặc đang đợi xử lý']);
         }
+    }
+    public function result($id){
+        return view('admin.result');
     }
 }

@@ -45,9 +45,16 @@
                     
                 </tbody>
             </table>
+            @if($check_tt==1)
             <div class="form-group">
-             <a type="button" class="btn btn-primary" href="{!!URL::route('listDh')!!}">Quay lại danh sách</a>
-             <button type="submit" class="btn btn-primary">Xử Lý</button>
+             <a type="button" class="btn btn-primary" href="{!!URL::route('listDhDaXL')!!}">Quay lại danh sách</a>
+            @else
+            <div class="form-group">
+            <a type="button" class="btn btn-primary" href="{!!URL::route('listDh')!!}">Quay lại danh sách</a>
+            @endif
+            @if($don_hang['trang_thai']==0)
+                <button type="submit" class="btn btn-primary">Xử Lý</button>
+             @endif
          </div id="insert_erro_vd">
          </div>
     </form>

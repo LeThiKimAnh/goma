@@ -11,11 +11,9 @@
              <th>Người lập đơn</th>
              <th>Mô tả</th>
              <th>Tổng hóa đơn</th>
-             <th>Trạng thái</th>
              <th>Ngày giao hàng</th>
              <th>Chi tiết</th>
-             <th>Xóa</th>
-             <th>Sửa</th>
+             <th>Kết quả</th>
            </tr>
     </thead>
      <tbody>
@@ -30,23 +28,13 @@
              <td>{!!$item["mo_ta"]!!}</td>
              <td>{!!$item["tong_gia"]!!}</td>
              <td>
-               @if($item["trang_thai"]==0)
-                    Chưa xử lý
-               @elseif($item["trang_thai"]==1)
-                    Đang chờ xử lý
-                @elseif($item["trang_thai"]==2)
-                    Đã xử lý
-               @endif
-             </td>
-             <td>
                   <?php 
                      $d = getdate(strtotime($item["ngay_giao_hang"]));
                      print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
                    ?>  
              </td>
-             <td class="center"></i><a href="{{URL::route('chitietDH',$item['id'])}}"> Chi tiết</a></td>
-             <td class="center"></i><a onclick="return xacnhanxoa('ban co chac la muon xoa khong')" href="{{URL::route('deldonhang',$item['id'])}}">Xóa</a></td>
-             <td class="center"></i> <a href="{{URL::route('getEditDH',$item['id'])}}">Sửa</a></td>
+             <td class="center"><a href="{{URL::route('chitietDaXL',$item['id'])}}"> Chi tiết</a></td>
+             <td class="center"><a href="{!!URL::route('result',$item['id'])!!}">Kết quả</a></td>
             </tr>
       @endforeach
           
