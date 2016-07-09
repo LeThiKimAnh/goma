@@ -1,0 +1,75 @@
+<textarea rows="4" cols="50" id='solution_text'>
+</textarea> 
+<input type='button' onclick='show()' value="show"/>
+<div id=parent>
+    
+<div>
+<script>
+var imageObj = new Image();
+imageObj.src = 'http://i.stack.imgur.com/WLsci.png';
+
+
+var show = function() {
+    var solution = JSON.parse(document.getElementById('solution_text').value);
+    
+    var random_color = function() {
+        var color = [0, 0, 0]
+        for(var i = 0; i <= 2; i++)
+        {
+            if(Math.random() < 0.66666)
+                color[i] = 32 + parseInt(Math.random() * 192);
+        }
+        return 'rgb('+color[0]+','+color[1]+','+color[2]+')';
+    }
+    
+    var parent = document.getElementById('parent');
+    parent.innerHTML = "";
+    
+    function drawPanel(panel, i) {
+        var canvas = document.createElement('canvas');
+        canvas.setAttribute('id', 'cavas'+i);
+        parent.appendChild(canvas);
+        
+        canvas.width = 2400
+        canvas.height = 1200
+        
+        var ctx = canvas.getContext('2d');
+        pattern = ctx.createPattern(imageObj, 'repeat');
+        
+        ctx.beginPath();
+        ctx.lineWidth = 3;
+        ctx.rect(0, 0, 2400, 1200);
+        ctx.strokeStyle = 'black';
+        ctx.stroke();
+        
+        var rects = panel.rects;
+        var remains = panel.remains;
+        
+        for(var i =0; i < rects.length; i++) {
+            var rect = rects[i];
+            ctx.fillStyle = random_color();
+            ctx.fillRect(rect[1], rect[0], rect[2], rect[3]);
+        }
+        
+        for(var i =0; i < remains.length; i++) {
+            console.log(i, remains[i]);
+            var rect = remains[i];
+            ctx.beginPath();
+            ctx.rect(rect[1], rect[0], rect[2], rect[3]);
+            ctx.fillStyle = pattern;
+            ctx.fill();
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = 'black';
+            ctx.stroke();
+        }
+        
+    }
+
+    var panels = solution['panels'];
+    for(var i =0; i < panels.length; i++) {
+        drawPanel(panels[i], i);
+    }
+}
+    
+</script>
+
