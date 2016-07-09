@@ -1,15 +1,16 @@
 @extends('admin.master')
 @section('content')
 <script>
+	var solution = <?php print $session->sketch; ?>;
 	var imageObj = new Image();
 	imageObj.src = '/admin/images/WLsci.png';
 
 	function random_color() {
-		var color = [0, 0, 0]
-		for (var i = 0; i <= 2; i++)
-		{
-			if (Math.random() < 0.66666)
+		var color = [0, 0, 0];
+		for (var i = 0; i <= 2; i++) {
+			if (Math.random() < 0.66666) {
 				color[i] = 32 + parseInt(Math.random() * 192);
+			}
 		}
 		return 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
 	}
@@ -56,7 +57,6 @@
 	}
 
 	function show() {
-		var solution = <?php print $session->sketch; ?>;
 		var parent = document.getElementById('slider');
 		var indicators = document.getElementById('slide-indicator');
 		parent.innerHTML = "";
