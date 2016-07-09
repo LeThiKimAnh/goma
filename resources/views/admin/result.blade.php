@@ -15,9 +15,9 @@
 		return 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
 	}
 
-	function createCanvas(panel, i) {
+	function createCanvas(panel, idx) {
 		var canvas = document.createElement('canvas');
-		canvas.setAttribute('id', 'canvas' + i);
+		canvas.setAttribute('id', 'canvas' + idx);
 		canvas.setAttribute('class', 'img');
 
 		canvas.width = 2400;
