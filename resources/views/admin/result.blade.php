@@ -67,7 +67,7 @@
 		indicators.innerHTML = "";
 
 		var panels = solution['panels'];
-		for (var i = 0; i < panels.length; i++) {
+		for (var i = 0, j = 0; i < panels.length; i++) {
 			var canvas = createCanvas(panels[i], i);
 			if (canvas === null) {
 				continue;
@@ -82,8 +82,9 @@
 				indicator.setAttribute('class', 'active');
 			}
 			wrapper.setAttribute('class', clazz);
-			indicator.setAttribute('data-slide-to', i);
+			indicator.setAttribute('data-slide-to', j);
 			indicator.setAttribute('data-target', '#myCarousel');
+			j += 1;
 
 			wrapper.appendChild(canvas);
 			parent.appendChild(wrapper);
