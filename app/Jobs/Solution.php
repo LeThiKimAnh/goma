@@ -74,12 +74,13 @@ class Solution {
 			$rects = $panel->addAll($rects);
 			echo 'Solution rects ' . count($rects) . '';
 
+			$remain = $panel->remain();
+			array_push($this->panels, $panel);
+			$this->remain = array_merge($this->remain, $remain);
+			
 			if (count($rects) == 0) {
 				break;
 			}
-			$remain = $panel->remain();
-			array_push($this->panels, $panel);
-			array_merge($this->remain, $remain);
 		}
 
 		echo 'Creating new panel to add ';

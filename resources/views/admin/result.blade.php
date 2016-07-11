@@ -37,6 +37,10 @@
 		var rects = panel.rects;
 		var remains = panel.remains;
 
+		if (rects.length < 1) {
+			return null;
+		}
+
 		for (var i = 0; i < rects.length; i++) {
 			var rect = rects[i];
 			ctx.fillStyle = random_color();
@@ -64,6 +68,11 @@
 
 		var panels = solution['panels'];
 		for (var i = 0; i < panels.length; i++) {
+			var canvas = createCanvas(panels[i], i);
+			if (canvas === null) {
+				continue;
+			}
+
 			var wrapper = document.createElement('div');
 			var indicator = document.createElement('li');
 
@@ -76,7 +85,6 @@
 			indicator.setAttribute('data-slide-to', i);
 			indicator.setAttribute('data-target', '#myCarousel');
 
-			var canvas = createCanvas(panels[i], i);
 			wrapper.appendChild(canvas);
 			parent.appendChild(wrapper);
 			indicators.appendChild(indicator);
