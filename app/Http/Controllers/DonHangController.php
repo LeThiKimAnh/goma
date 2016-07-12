@@ -195,4 +195,66 @@ class DonHangController extends Controller
         $action = 'Chưa xử lý';
         return view('admin.donhang.list',compact('data','action'));
     }
+    public function listByMa(Request $request){
+        $action = 'List';
+        $maDH = $request ->txt_maDH;
+        if($maDH!=null){
+            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang')->where('ma_don_hang',$maDH)->orderBy('id','DESC')->get()->toArray();
+            if(count($data)>0){
+                return view('admin.donhang.list',compact('data','action'));
+            }else{
+                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Thông tin bạn cung cấp cho chúng tôi không tồn tại']);
+            }
+        }else{
+            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Bạn phải nhập mã đơn hàng']);
+        }
+    }
+    public function listByNameKH(Request $request){
+        $action = 'List';
+        $tenKH = $request ->txt_KH;
+        if($tenKH!=null){
+            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang')->where('khach_hang',$tenKH)->orderBy('id','DESC')->get()->toArray();
+            if(count($data)>0){
+                return view('admin.donhang.list',compact('data','action'));
+            }else{
+                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Thông tin bạn cung cấp cho chúng tôi không tồn tại']);
+            }
+        }else{
+            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Bạn phải nhập tên khách hàng']);
+        }
+    }
+    public function listByNL(Request $request){
+        $action = 'List';
+        $tenNL = $request ->txt_NL;
+        if($tenNL!=null){
+            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang')->where('nguoi_tao_don',$tenNL)->orderBy('id','DESC')->get()->toArray();
+            if(count($data)>0){
+                return view('admin.donhang.list',compact('data','action'));
+            }else{
+                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Thông tin bạn cung cấp cho chúng tôi không tồn tại']);
+            }
+        }else{
+            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Bạn phải nhập tên người lập']);
+        }
+    }
+    public function listByDate(Request $request){
+        $action = 'List';
+        $time1 = strtotime( $request ->start_date);
+        $time2 =   strtotime( $request ->end_date);
+        $start_date = date('Y-m-d', $time1);
+        $end_date = date('Y-m-d', $time2);
+        if($start_date!=null&&$end_date!=null){
+            if($end_date<$start_date){
+                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Bạn nhập sai khoảng thời gian(ngày sau phải lớn hơn ngày trước)']);
+            }else{
+                $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang')->whereBetween('ngay_giao_hang',[$start_date,$end_date])->orderBy('id','DESC')->get()->toArray();
+                if(count($data)>0){
+                    return view('admin.donhang.list',compact('data','action'));
+                }else{
+                    return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
+                }
+            }
+        }
+       
+    }
 }

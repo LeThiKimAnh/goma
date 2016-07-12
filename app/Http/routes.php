@@ -40,6 +40,10 @@ Route::get('donhang/chitiet/{id}',['as'=>'chitietDH','uses'=>'DonHangController@
 Route::get('donhang/chitietDaXL/{id}',['as'=>'chitietDaXL','uses'=>'DonHangController@chitiet_daXL','middleware'=>'auth']);
 Route::get('donhang/listDaXL',['as'=>'listDhDaXL','uses'=>'DonHangController@listDhDaXL','middleware'=>'auth']);
 Route::get('donhang/listDhCXL',['as'=>'listDhCXL','uses'=>'DonHangController@listDhCXL','middleware'=>'auth']);
+Route::post('donhang/listByMa',['as'=>'listByMa','uses'=>'DonHangController@listByMa','middleware'=>'auth']);
+Route::post('donhang/listByNameKH',['as'=>'listByNameKH','uses'=>'DonHangController@listByNameKH','middleware'=>'auth']);
+Route::post('donhang/listByNL',['as'=>'listByNL','uses'=>'DonHangController@listByNL','middleware'=>'auth']);
+Route::post('donhang/listByDate',['as'=>'listByDate','uses'=>'DonHangController@listByDate','middleware'=>'auth']);
 
 
 

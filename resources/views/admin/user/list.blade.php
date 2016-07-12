@@ -26,7 +26,13 @@
                    Admin
                 @endif
                 @if($item['level']==2)
-                    Member
+                    Sale Admin
+                @endif
+                @if($item['level']==3)
+                    Sale
+                @endif
+                @if($item['level']==3)
+                    Tech
                 @endif
             
             </td>

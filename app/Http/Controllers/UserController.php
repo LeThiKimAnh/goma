@@ -30,7 +30,7 @@ class UserController extends Controller
     	return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message_success'=>'Success !!Complete Add User']);
     }
     public function listUser(){
-    	$data = User::select('id','username','level')->where('level','=',2)->get()->toArray();
+    	$data = User::select('id','username','level')->get()->toArray();
         return view('admin.user.list',compact('data'));
     }
     public function deleteUser($id){

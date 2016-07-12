@@ -30,6 +30,7 @@ class SessionController extends Controller
         }
     }
     public function result($id){
+        
         return view('admin.result');
     }
 }

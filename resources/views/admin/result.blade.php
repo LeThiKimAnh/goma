@@ -12,7 +12,7 @@
   </ol>
 
   <!-- Wrapper for slides -->
-  <div class="carousel-inner" role="listbox"  width="1920 px" height="1200 px">
+  <div class="carousel-inner" role="listbox">
     <div class="item active">
       <img src="{{url('admin/images/anh1.jpg')}}" alt="Chania">
     </div>

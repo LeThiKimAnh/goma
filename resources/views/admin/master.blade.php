@@ -40,7 +40,6 @@
     </script>
      <!-- End CKeditor && CKFinder -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-    <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
       <style>
       .carousel-inner > .item > img,
       .carousel-inner > .item > a > img {
@@ -106,6 +105,7 @@
                         <li>
                             <a href="{!!URL::route('dashboard')!!}"><i class="glyphicon glyphicon-dashboard"></i> Dashboard</a>
                         </li>
+                        @if(Auth::user()->level ==1||Auth::user()->level ==2)
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-list-alt"></i> Đơn Hàng<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
@@ -118,6 +118,7 @@
                             </ul>
                             <!-- /.nav-second-level -->
                         </li>
+                        @endif
                         <li>
                             <a href="#"><i class="glyphicon glyphicon-bed"></i> Vật Dụng<span class="fa arrow"></span></a>
                             <ul class="nav nav-second-level">
