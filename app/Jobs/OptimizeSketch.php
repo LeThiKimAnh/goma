@@ -34,7 +34,8 @@ class OptimizeSketch extends Job implements ShouldQueue {
 	public function handle() {
 		Log::info("Starting optimze the session");
 		$order_id = $this->session->donhang_id;
-		$gothua = DB::select("SELECT dai as height,rong as width, chat_lieu as req FROM go_thua;");
+		$gothua = DB::select("SELECT dai as height,rong as width, chat_lieu as req FROM go_thua WHERE dai > 50 and rong > 50;");
+		DB::table('go_thua')->truncate();
 		$sql = "SELECT c.ten as `code`, SUM(a.so_luong * b.so_luong) as count, c.dai as height, c.rong as width, c.yeu_cau as req FROM chi_tiet_vat_dung as a inner join chi_tiet_don_hang as b ON a.vatdung_id = b.vatdung_id and b.donhang_id = $order_id inner join vat_lieu as c ON a.vatlieu_id = c.id GROUP BY a.vatlieu_id;";
 		$res = DB::select($sql);
 		$rects = array();
@@ -64,6 +65,15 @@ class OptimizeSketch extends Job implements ShouldQueue {
 		$sketch = $solution->to_json();
 		$this->session->trang_thai = 2;
 		DB::update("UPDATE `don_hang` SET `trang_thai` = 2 WHERE `id` = $order_id");
+
+		$remains = array_map(function($rect) {
+			return array(
+				'dai' => $rect[3],
+				'rong' => $rect[2],
+				'chat_lieu' => $rect[4]
+			);
+		}, $solution->remain());
+		DB::table('go_thua')->insert($remains);
 
 		$this->session->sketch = $sketch;
 		$this->session->save();

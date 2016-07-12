@@ -75,8 +75,8 @@ class Bound {
 		$this->height = $height;
 	}
 
-	public function sketch() {
-		return array($this->top, $this->left, $this->width, $this->height);
+	public function sketch($req = 0) {
+		return array($this->top, $this->left, $this->width, $this->height, $req);
 	}
 
 }
@@ -137,6 +137,36 @@ class Panel {
 			$wh_diff = $bound->height - $rect->width;
 			$hw_diff = $bound->width - $rect->height;
 
+			if ($this->req == 0 and $wh_diff > 0 and $hw_diff > 0 and
+					($bound->width < 100 or $bound->height < 100 or
+					($rect->width < 100 and $rect->height < 100))) {
+				// rotate it
+				$temp = $rect->width;
+				$rect->width = $rect->height;
+				$rect->height = $temp;
+
+				$ww_diff = $hw_diff;
+				$hh_diff = $wh_diff;
+
+				$res = True;
+				$rect->placeAt($bound->top, $bound->left);
+
+				// split horizonaly
+				if ($ww_diff > $gap) {
+					$left = new Bound($bound->top, $bound->left + $rect->width + $gap, $ww_diff - $gap, $rect->height);
+					echo '\n left';
+					var_dump($left);
+					array_unshift($queue, $left);
+				}
+				if ($hh_diff > $gap) {
+					$right = new Bound($bound->top + $rect->height + $gap, $bound->left, $bound->width, $hh_diff - $gap);
+					echo '\n right';
+					var_dump($right);
+					array_unshift($queue, $right);
+				}
+
+				break;
+			}
 			if ($ww_diff < 0 or $hh_diff < 0) {
 				// this bound can't fit this rect
 				echo 'not fit \n';
@@ -147,13 +177,14 @@ class Panel {
 			$res = True;
 			$rect->placeAt($bound->top, $bound->left);
 			// create new sub bound if need
-			if ($hh_diff > 0) {
+			// split vertically
+			if ($hh_diff > $gap) {
 				$left = new Bound($bound->top + $rect->height + $gap, $bound->left, $rect->width, $hh_diff - $gap);
 				echo '\n left';
 				var_dump($left);
 				array_unshift($queue, $left);
 			}
-			if ($ww_diff > 0) {
+			if ($ww_diff > $gap) {
 				$right = new Bound($bound->top, $bound->left + $rect->width + $gap, $ww_diff - $gap, $bound->height);
 				echo '\n right';
 				var_dump($right);
@@ -174,7 +205,7 @@ class Panel {
 			"remains" => $this->remain()
 		);
 	}
-	
+
 	public function map() {
 		$res = array();
 		foreach ($this->mapped_rects as $rect) {
@@ -188,7 +219,7 @@ class Panel {
 		$res = array();
 		foreach ($this->stack as $bound) {
 			echo 'panel->empty';
-			array_push($res, $bound->sketch());
+			array_push($res, $bound->sketch($this->req));
 		}
 
 		return $res;
