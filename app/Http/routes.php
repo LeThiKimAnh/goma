@@ -44,7 +44,7 @@ Route::post('donhang/listByMa',['as'=>'listByMa','uses'=>'DonHangController@list
 Route::post('donhang/listByNameKH',['as'=>'listByNameKH','uses'=>'DonHangController@listByNameKH','middleware'=>'auth']);
 Route::post('donhang/listByNL',['as'=>'listByNL','uses'=>'DonHangController@listByNL','middleware'=>'auth']);
 Route::post('donhang/listByDate',['as'=>'listByDate','uses'=>'DonHangController@listByDate','middleware'=>'auth']);
-
+Route::get('donhang/searchDH',['as'=>'SearchDH','uses'=>'DonHangController@searchDH','middleware'=>'auth']);
 
 
 Route::post('session/{id}',['as'=>'session','uses'=>'SessionController@session','middleware'=>'auth']);

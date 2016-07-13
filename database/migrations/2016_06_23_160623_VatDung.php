@@ -17,8 +17,9 @@ class VatDung extends Migration
         $table->string('ma_vat_dung');
         $table->string('ten');
         $table->string('mo_ta');
-        $table->double('don_gia');
-        $table->double('phu_phi');
+        $table->double('gia_san_xuat');
+        $table->double('he_so');
+        $table->double('gia_san_pham');
         $table->timestamps();
        });
     }

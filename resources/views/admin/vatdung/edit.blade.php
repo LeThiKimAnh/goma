@@ -67,12 +67,16 @@
          <div id="insert_erro"></div>
 
         <div class="form-group">
-             <label>Phụ phí</label>
-             <input class="form-control" placeholder="Nhập phụ phí" name="txt_phuphi" value="{!!$vat_dung['phu_phi']!!}" />
+            <label>Giá sản xuất</label>
+            <input class="form-control" placeholder="Nhập giá sản xuất" name="txt_giaSX" value="{!!$vat_dung['gia_san_xuat']!!}"/>
+        </div>
+         <div class="form-group">
+            <label>Hệ số</label>
+            <input class="form-control" placeholder="Nhập hệ số giá" name="txt_heSo" value="{!!$vat_dung['he_so']!!}"/>
         </div>
         <div class="form-group">
             <label>Mô tả vật dụng</label>
-            <textarea class="form-control" rows="3" name="txt_mo_ta">{!!$vat_dung['mo_ta']!!}</textarea>
+            <textarea class="form-control" rows="3" name="txt_mo_ta" >{!!$vat_dung['mo_ta']!!}</textarea>
         </div>
          <button  type="button" class="btn btn-success" onclick="return checkvd()">
             Lưu

@@ -28,8 +28,7 @@ class VatLieuRequest extends Request
             'txt_chieu_rong'=>'required|numeric',
             'txt_chieu_dai'=>'required|numeric',
             'sl_chat_lieu'=>'required',
-            'sl_yeu_cau'=>'required',
-            'txt_don_gia'=>'required',
+            'sl_yeu_cau'=>'required'
         ];
 
     }
@@ -43,8 +42,7 @@ class VatLieuRequest extends Request
             'txt_chieu_dai.numeric' =>'chiều dài không phải là số',
             'txt_chieu_cao.required'=>'Chưa điền chiều cao',
             'sl_chat_lieu.required'=>'Chưa chọn chất liệu',
-            'sl_yeu_cau.required'=>'Chưa chọn yêu cầu',
-            'txt_don_gia.required'=>'Chưa điền đơn giá',
+            'sl_yeu_cau.required'=>'Chưa chọn yêu cầu'
         ];
     }
 }

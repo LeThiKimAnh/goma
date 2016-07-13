@@ -19,7 +19,6 @@ class VatLieu extends Migration
         $table->double('rong');
         $table->double('dai');
         $table->double('cao');
-        $table->double('don_gia');
         $table->integer('chat_lieu');
         $table->integer('yeu_cau');
         $table->string('mo_ta');

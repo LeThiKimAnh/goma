@@ -21,7 +21,6 @@ class VatLieuController extends Controller
     	$vat_lieu->rong =$request->txt_chieu_rong;
     	$vat_lieu->dai = $request->txt_chieu_dai;
     	$vat_lieu->cao = $request->txt_chieu_cao;
-        $vat_lieu->don_gia = $request->txt_don_gia;
         $vat_lieu->chat_lieu = $request->sl_chat_lieu;
         $vat_lieu->yeu_cau = $request->sl_yeu_cau;
     	$vat_lieu->mo_ta = $request->txt_mo_ta;
@@ -29,7 +28,7 @@ class VatLieuController extends Controller
     	return redirect()->route('list')->with(['flash_level'=>'success','flash_message_success'=>'Thêm vật liệu thành công']);
     }
     public function listVl(){
-    	$data = VatLieu::select('id','ten','ten_ma','rong','dai','cao','mo_ta','chat_lieu','don_gia','yeu_cau')->orderBy('id','DESC')->get()->toArray();
+    	$data = VatLieu::select('id','ten','ten_ma','rong','dai','cao','mo_ta','chat_lieu','yeu_cau')->orderBy('id','DESC')->get()->toArray();
     	return view('admin.vatlieu.list',compact('data'));
     }
     public function deleteVL($id){
@@ -65,19 +64,15 @@ class VatLieuController extends Controller
             );
     	$this->validate($request,
             ['txt_chieu_rong'=>'numeric'],
-            ["txt_chieu_rong.numeric"=>"Xin hãy nhập chiều rộng!!"]
+            ["txt_chieu_rong.numeric"=>"Chiều rộng phải là số!!"]
             );
     	$this->validate($request,
             ['txt_chieu_dai'=>'numeric'],
-            ["txt_chieu_dai.numeric"=>"Xin hãy nhập chiều dài!!"]
+            ["txt_chieu_dai.numeric"=>"chiều dài phải là số!!"]
             );
     	$this->validate($request,
             ['txt_chieu_cao'=>'numeric'],
             ["txt_chieu_cao.numeric"=>"Xin hãy nhập chiều cao!!"]
-            );
-        $this->validate($request,
-            ['txt_don_gia'=>'required'],
-            ["txt_don_gia.required"=>"Xin hãy nhập mã vật liệu!!"]
             );
          $this->validate($request,
             ['sl_yeu_cau'=>'required'],
@@ -92,7 +87,6 @@ class VatLieuController extends Controller
         $vat_lieu->rong =$request->txt_chieu_rong;
         $vat_lieu->dai = $request->txt_chieu_dai;
         $vat_lieu->cao = $request->txt_chieu_cao;
-        $vat_lieu->don_gia = $request->txt_don_gia;
         $vat_lieu->chat_lieu = $request->sl_chat_lieu;
         $vat_lieu->yeu_cau = $request->sl_yeu_cau;
         $vat_lieu->mo_ta = $request->txt_mo_ta;

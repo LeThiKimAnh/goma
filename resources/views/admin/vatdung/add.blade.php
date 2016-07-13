@@ -15,7 +15,7 @@
          <div class="form-group">
              <label>Chi tiết vật dụng</label>
              <table class="table table-striped table-bordered table-hover">
-               <thead>
+                <thead>
                      <tr align="center">
                          <th>Tên vật liệu</th>
                          <th>Số lượng</th>
@@ -67,8 +67,12 @@
          <div id="insert_erro"></div>
 
         <div class="form-group">
-             <label>Phụ phí</label>
-             <input class="form-control" placeholder="Nhập phụ phí" name="txt_phuphi" />
+            <label>Giá sản xuất</label>
+            <input class="form-control" placeholder="Nhập giá sản xuất" name="txt_giaSX" />
+        </div>
+         <div class="form-group">
+            <label>Hệ số</label>
+            <input class="form-control" placeholder="Nhập hệ số giá" name="txt_heSo" />
         </div>
         <div class="form-group">
             <label>Mô tả vật dụng</label>

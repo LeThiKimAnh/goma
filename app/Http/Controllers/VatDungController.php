@@ -11,6 +11,7 @@ use App\VatLieu;
 use App\VatDung;
 use App\ChiTietVatDung;
 use App\ChiTietDonHang;
+use App\DonHang;
 use DB;
 
 function check($array,$key){
@@ -56,12 +57,13 @@ class VatDungController extends Controller
             	$vat_dung = new VatDung;
                 $vat_dung->ma_vat_dung = "VD".($cout+1);
             	$vat_dung->ten = $request->txt_vd;
-                $vat_dung->phu_phi = $request->txt_phuphi;
+                $vat_dung->gia_san_xuat = $request->txt_giaSX;
+                $vat_dung->he_so = $request->txt_heSo;
+                $vat_dung->gia_san_pham = ($request->txt_heSo)*($request->txt_giaSX);
             	$vat_dung->mo_ta = $request->txt_mo_ta;
             	$vat_dung->save();
             	$vatdung_id = $vat_dung->id;
 
-                $don_gia_vd = 0;
             	for($i = 0;$i<count($vatlieu_id_mang);$i++){
             		$chi_tiet_vd = new ChiTietVatDung;
             		$chi_tiet_vd->vatdung_id = $vatdung_id;
@@ -69,12 +71,7 @@ class VatDungController extends Controller
             		$chi_tiet_vd->so_luong = $soluong_mang[$i];
             		$chi_tiet_vd->save();
                     $vat_lieu = VatLieu::find($vatlieu_id_mang[$i]);
-                    $don_gia_vd = $don_gia_vd+$vat_lieu['don_gia']*$soluong_mang[$i]; 
             	}
-
-                $vat_dung = VatDung::find($vatdung_id);
-                $vat_dung->don_gia = $don_gia_vd+($vat_dung->phu_phi);
-                $vat_dung->save();
 
                 return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã thêm thành công vật liệu']);
             }
@@ -89,13 +86,13 @@ class VatDungController extends Controller
         return redirect()->route('getVatdung')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Tối thiểu phải có một vật liệu trong vật dụng']);
     }
     public function listVd(){
-    	$data = VatDung::select('id','ten','mo_ta','ma_vat_dung','don_gia')->orderBy('id','DESC')->get()->toArray();
+    	$data = VatDung::select('id','ten','mo_ta','ma_vat_dung','gia_san_xuat','gia_san_pham','he_so')->orderBy('id','DESC')->get()->toArray();
     	return view('admin.vatdung.list',compact('data'));
     }
     public function deleteVD($id){
         $chi_tiet_dh = ChiTietDonHang::where('vatdung_id',$id);
         if($chi_tiet_dh->count()>0){
-            return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message'=>'Success !! Bạn không thể xóa vật dụng này, có đơn hàng đang chứa nó, phải xóa đơn hàng trước']);
+            return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Bạn không thể xóa vật dụng này, có đơn hàng đang chứa nó, phải xóa đơn hàng trước']);
         }else{
             $vat_dung = VatDung::find($id);
             $vat_dung->delete($id);
@@ -113,10 +110,6 @@ class VatDungController extends Controller
             ['txt_vd'=>'required'],
             ["txt_vd.required"=>"Xin hãy nhập tên vật dung!!"]
             );
-        $this->validate($request,
-            ['txt_phuphi'=>'required'],
-            ["txt_phuphi.required"=>"Xin hãy nhập tên vật dụng!!"]
-            );
         $vatlieu_id_mang_get = $request->vatlieu;
         $soluong_mang_get = $request->soLuong;
 
@@ -128,8 +121,6 @@ class VatDungController extends Controller
                 $chitiet = ChiTietVatDung::where('vatdung_id','=',$id);
                 $chitiet->delete();
 
-                $don_gia_vd = 0;
-
                 for($i = 0;$i<count($vatlieu_id_mang);$i++){
                     $chi_tiet_vd = new ChiTietVatDung;
                     $chi_tiet_vd->vatdung_id = $id;
@@ -138,14 +129,14 @@ class VatDungController extends Controller
                     $chi_tiet_vd->save();
 
                     $vat_lieu = VatLieu::find($vatlieu_id_mang[$i]);
-                    $don_gia_vd = $don_gia_vd+$vat_lieu['don_gia']*$soluong_mang[$i];
 
                 }
                 $vat_dung =  VatDung::find($id);
                 $vat_dung->ten = $request->txt_vd;
                 $vat_dung->mo_ta = $request->txt_mo_ta;
-                $vat_dung->phu_phi = $request->txt_phuphi;
-                $vat_dung->don_gia = $don_gia_vd+($request->txt_phuphi);
+                $vat_dung->gia_san_xuat = $request->txt_giaSX;
+                $vat_dung->he_so = $request->txt_heSo;
+                $vat_dung->gia_san_pham = ($request->txt_heSo)*($request->txt_giaSX);
                 $vat_dung->save();
 
                 return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã sửa thành công vật dụng']);

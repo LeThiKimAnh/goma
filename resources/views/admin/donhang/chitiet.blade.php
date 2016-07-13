@@ -54,7 +54,7 @@
             @endif
             @if($don_hang['trang_thai']==0)
                 <button type="submit" class="btn btn-primary">Xử Lý</button>
-             @endif
+            @endif
          </div id="insert_erro_vd">
          </div>
     </form>

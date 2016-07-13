@@ -25,10 +25,6 @@
              <input class="form-control" name="txt_chieu_cao" placeholder="Nhập chiều cao" value="{{old('txt_ten')}}" type="number" min="0" ></input>
          </div>
          <div class="form-group">
-             <label>Đơn giá</label>
-             <input class="form-control" name="txt_don_gia" placeholder="Nhập đơn giá" type="number" min="0"></input>
-         </div>
-         <div class="form-group">
              <label>Chất liệu</label>
              <select class="form-control" name="sl_chat_lieu">
                 <option value="">Hãy chọn chất liệu</option>
