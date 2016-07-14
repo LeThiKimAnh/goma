@@ -138,7 +138,7 @@ class Panel {
 			$hw_diff = $bound->width - $rect->height;
 
 			if ($this->req == 0 and $wh_diff > 0 and $hw_diff > 0 and
-					($bound->width < 100 or $bound->height < 100 or
+					($bound->width < 100 or $bound->height < 100 or 
 					($rect->width < 100 and $rect->height < 100))) {
 				// rotate it
 				$temp = $rect->width;
