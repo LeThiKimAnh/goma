@@ -25,20 +25,21 @@
                      <tr align="center">
                          <th>STT</th>
                          <th>Tên Vật dụng</th>
+                         <th>Đơn giá</th>
                          <th>Số lượng</th>
                          <th>Đơn Vị</th>
                      </tr>
                 </thead>
                  <tbody>
                         <?php $stt = 0 ?>
-                         @foreach($chi_tiet_dh as $item)
+                         @foreach($vatdungs as $item)
                          <?php $stt = $stt + 1 ;
-                            $vatdung = DB::table('vat_dung')->where('id',$item['vatdung_id'])->first();
                          ?>
                        <tr class="odd gradeX" align="center">
                              <td>{!!$stt!!}</td>
-                             <td>{!!$vatdung->ten!!}</td>
-                             <td>{!!$item['so_luong']!!}</td>
+                             <td>{!!$item->ten!!}</td>
+                             <td>{!!$item->don_gia!!}</td>
+                             <td>{!!$item->so_luong!!}</td>
                              <td>Cái</td>
                         </tr>
                         @endforeach

@@ -187,13 +187,20 @@ function fnExcelReport()
 {
     var tab_text="<table border='2px'><tr bgcolor='#87AFC6'>";
     var textRange; var j=0;
-    tab = document.getElementById('dataTables'); // id of table
+    // tab = document.getElementById('dataTables'); // id of table
+    tab = document.getElementsByName('trdata');
 
-    for(j = 0 ; j < tab.rows.length ; j++) 
+    for(j = 0 ; j < tab.length ; j++) 
     {     
-        tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+        tab_text=tab_text+tab[j].innerHTML+"</tr>";
         //tab_text=tab_text+"</tr>";
     }
+
+    // for(j = 0 ; j < tab.rows.length ; j++) 
+    // {     
+    //     tab_text=tab_text+tab.rows[j].innerHTML+"</tr>";
+    //     //tab_text=tab_text+"</tr>";
+    // }
 
     tab_text=tab_text+"</table>";
     tab_text= tab_text.replace(/<A[^>]*>|<\/A>/g, "");//remove if u want links in your table

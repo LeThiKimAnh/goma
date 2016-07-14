@@ -18,6 +18,7 @@ class ChiTietDonHang extends Migration
         $table->foreign('donhang_id')->references('id')->on('don_hang')->onDelete('cascade');
         $table->integer('vatdung_id')->unsigned();
         $table->foreign('vatdung_id')->references('id')->on('vat_dung')->onDelete('cascade');
+        $table->double('don_gia');
         $table->integer('so_luong');
         $table->timestamps();
        });

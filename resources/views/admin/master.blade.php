@@ -61,10 +61,10 @@
 
 	<body>
 
-		<div id="wrapper">
+		<div id="wrapper" >
 
 			<!-- Navigation -->
-			<nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 				<div class="navbar-header">
 					<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
 						<span class="sr-only">Toggle navigation</span>
@@ -178,11 +178,12 @@
 			<!-- Page Content -->
 			<div id="page-wrapper">
 				<div class="container-fluid">
+					<!-- Page Heading -->
 					<div class="row">
-						<div class="col-lg-12">
-							<h1 class="page-header">@yield('controller')
+						<div class="col-lg-12" style="margin-top:20px; ">
+							<h2 class="page-header">@yield('controller')
 								<small>@yield('action')</small>
-							</h1>
+							</h2>
 						</div>
 						<!-- /.col-lg-12 -->
 						<div class="col-lg-12  ">
@@ -197,7 +198,8 @@
 							@endif
 						</div>
 						<!-- đây là nơi chứa nội dung -->
-
+					</div>
+					<div>
 						@yield('content')
 
 						<!-- End đây là nơi chứa nội dung -->

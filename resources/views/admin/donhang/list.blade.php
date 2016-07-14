@@ -7,65 +7,63 @@
 <form method="GET" action="{!!URL::route('SearchDH')!!}" name="form_search">
 @include('admin.blocks.error')
   <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
+  <div class="col-lg-10" style="">
+    <div class="form-group row col-lg-6">
+      <label class="form-control-label col-sm-5">Mã đơn hàng :</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" placeholder="Mã đơn hàng" name="txt_maDH" value="{!!old('txt_maDH')!!}">
+      </div>
+    </div>
 
-  <div class="form-group row col-lg-6">
-    <label class="form-control-label col-sm-5">Mã đơn hàng :</label>
-    <div class="col-sm-7">
-      <input type="text" class="form-control" placeholder="Mã đơn hàng" name="txt_maDH" value="{!!old('txt_maDH')!!}">
+    <div class="form-group row col-lg-6">
+      <label class="form-control-label col-sm-5">Khách hàng :</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" placeholder="Tên Khách hàng" name="txt_KH">
+      </div>
+    </div>
+
+    <div class="form-group row col-lg-6">
+        <label class="form-control-label col-sm-5">Người lập đơn :</label>
+        <div class="col-sm-7">
+          <input type="text" class="form-control" placeholder="Người lập đơn hàng" name="txt_NL">
+        </div>
+    </div>
+
+    <div class="form-group row col-lg-6">
+        <label class="form-control-label col-sm-5">Trạng thái :</label>
+        <div class="col-sm-7">
+          <select class="form-control" name="txt_TT" id="select_vd">
+            <option value="" >Chọn trạng thái</option>
+                <option value='0'>Chưa xử lý</option>
+                <option value='1'>Đang chờ xử lý</option>
+                <option value='2'>Đã xử lý</option>
+          </select>   
+        </div>
+    </div>
+    <div class="col-lg-12"></div>
+    <div class="form-group col-lg-12">
+      <button type="submit" class="btn btn-primary center-block" style="margin-top:50px">Tìm kiếm  <i class="glyphicon glyphicon-search"></i></button>
     </div>
   </div>
-
-  <div class="form-group row col-lg-6">
-    <label class="form-control-label col-sm-5">Khách hàng :</label>
-    <div class="col-sm-7">
-      <input type="text" class="form-control" placeholder="Tên Khách hàng" name="txt_KH">
-    </div>
-  </div>
-
-  <div class="form-group row col-lg-6">
-      <label class="form-control-label col-sm-5">Người lập đơn :</label>
-      <div class="col-sm-7">
-        <input type="text" class="form-control" placeholder="Người lập đơn hàng" name="txt_NL">
-      </div>
-  </div>
-
-  <div class="form-group row col-lg-6">
-      <label class="form-control-label col-sm-5">Trạng thái :</label>
-      <div class="col-sm-7">
-        <select class="form-control" name="txt_TT" id="select_vd">
-          <option value="" >Chọn tìm theo trạng thái</option>
-              <option value='0'>Chưa xử lý</option>
-              <option value='1'>Đang chờ xử lý</option>
-              <option value='2'>Đã xử lý</option>
-        </select>   
-      </div>
-  </div>
-
-  <div class="form-group row col-sm-6">
-      <label class="form-control-label col-sm-5">Ngày giao:</label>
-      <div class="form-group row col-sm-7">
-      <div class="form-group">
-          <label for="inputEmail3" class="col-sm-2 form-control-label">Từ: </label>
-          <div id="datepicker1" class="input-group date col-sm-10" data-date-format="dd-mm-yyyy">
+  <div class="col-lg-2">
+    <div class="panel panel-default">
+      <div class="panel-heading">Ngày giao</div>
+      <div class="panel-body"> 
+          Từ:
+          <div id="datepicker1" class="input-group date" data-date-format="dd-mm-yyyy">
                <input class="form-control" type="text" name ="start_date"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
           </div>
-      </div>
-          <label for="inputEmail3" class="col-sm-2 form-control-label">Đến: </label>
-          <div id="datepicker2" class="input-group date col-sm-10" data-date-format="dd-mm-yyyy">
+          Đến: 
+          <div id="datepicker2" class="input-group date" data-date-format="dd-mm-yyyy">
              <input class="form-control" type="text" name ="end_date"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
           </div>
-      </div>   
+      </div>
+    </div>
   </div>
-
-  <div class="form-group col-lg-12">
-    <button type="submit" class="btn btn-primary center-block" id="btn_them_vd">Tìm kiếm  <i class="glyphicon glyphicon-search"></i></button>
-  </div>
-
 </form>
 </div>
 
 
-</div>
 <div class="col-lg-12 ">
     @if(Session::has('flash_message1'))
         <div class="alert alert-danger {!! Session::get('flash_level') !!}">
@@ -85,7 +83,7 @@
 
  <table class="table table-striped table-bordered table-hover" id="dataTables">
    <thead>
-         <tr align="center">
+         <tr align="center" name ="trdata">
              <th>STT</th>
              <th>Mã đơn hàng</th>
              <th>Khách hàng</th>
@@ -98,7 +96,7 @@
     @foreach($data as $item)
      <tbody>
      <?php $stt = $stt + 1 ?>
-           <tr class="odd gradeX clickable accordion-toggle" align="center " data-toggle="collapse" data-target="#accordion{!!$item['id']!!}" data-toggle="tooltip" data-placement="top" title="Xóa đơn hàng">
+           <tr class="odd gradeX clickable accordion-toggle" align="center " data-toggle="collapse" data-target="#accordion{!!$item['id']!!}" name ="trdata">
              <td>{!!$stt!!}</td>
              <td>{!!$item["ma_don_hang"]!!}</td>
              <td>{!!$item["khach_hang"]!!}</td>
