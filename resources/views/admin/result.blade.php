@@ -17,20 +17,21 @@
 
 	function createCanvas(panel, idx) {
 		var canvas = document.createElement('canvas');
+		var scale = 0.425;
 		canvas.setAttribute('id', 'canvas' + idx);
 		canvas.setAttribute('class', 'img');
 
-		canvas.width = 2400;
-		canvas.height = 1200;
+		canvas.width = panel.width * scale;
+		canvas.height = panel.height * scale;
 
 		var ctx = canvas.getContext('2d');
-		ctx.scale(0.425, 0.425);
+		ctx.scale(scale, scale);
 
 		var pattern = ctx.createPattern(imageObj, 'repeat');
 
 		ctx.beginPath();
 		ctx.lineWidth = 3;
-		ctx.rect(0, 0, 2400, 1200);
+		ctx.rect(0, 0, panel.width, panel.height);
 		ctx.strokeStyle = 'black';
 		ctx.stroke();
 
@@ -81,7 +82,9 @@
 				clazz = "item active";
 				indicator.setAttribute('class', 'active');
 			}
+			canvas.setAttribute('style', 'display: inline');
 			wrapper.setAttribute('class', clazz);
+			wrapper.setAttribute('style', 'text-align: center;');
 			indicator.setAttribute('data-slide-to', j);
 			indicator.setAttribute('data-target', '#myCarousel');
 			j += 1;
@@ -96,13 +99,13 @@
 </script>
 
 <div class="col-lg-12" style="padding-bottom:120px">
-	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+	<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
 		<!-- Indicators -->
 		<ol id ='slide-indicator' class="carousel-indicators">
 		</ol>
 
 		<!-- Wrapper for slides -->
-		<div id="slider" class="carousel-inner" role="listbox" style="height: 512px">
+		<div id="slider" class="carousel-inner" role="listbox" style="height: 512px;">
 		</div>
 
 		<!-- Left and right controls -->
