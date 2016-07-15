@@ -29,6 +29,7 @@ Route::get('vatdung/delete/{id}',['as'=>'delvatdung','uses'=>'VatDungController@
 Route::get('vatdung/edit/{id}',['as'=>'getEditVD','uses'=>'VatDungController@getEdit','middleware'=>'auth']);
 Route::post('vatdung/edit/{id}',['as'=>'postEditVD','uses'=>'VatDungController@postEdit','middleware'=>'auth']);
 Route::get('vatdung/chitiet/{id}',['as'=>'chitietVD','uses'=>'VatDungController@chitiet','middleware'=>'auth']);
+Route::get('vatdung/searchVD',['as'=>'SearchVD','uses'=>'VatDungController@searchVD','middleware'=>'auth']);
 
 Route::get('donhang/add',['as'=>'getDonhang','uses'=>'DonHangController@get_themDonHang','middleware'=>'auth']);
 Route::post('donhang/add',['as'=>'postDonhang','uses'=>'DonHangController@post_DonHang','middleware'=>'auth']);

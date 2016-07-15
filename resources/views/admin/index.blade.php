@@ -9,7 +9,6 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-tasks fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">{!!$so_don_hang!!}</div>
@@ -31,7 +30,6 @@
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">
-                        <i class="fa fa-tasks fa-5x"></i>
                     </div>
                     <div class="col-xs-9 text-right">
                         <div class="huge">{!!$so_don_hang_daxl!!}</div>
@@ -51,10 +49,10 @@
 </div>
 <!-- /.row -->
 <div class="row">
-  <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i>Đơn hàng mới gần đây nhất</h3>
+                <h3 class="panel-title">Đơn hàng mới gần đây nhất</h3>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -96,7 +94,7 @@
         </div>
          <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i>Đơn hàng sắp đến hạn</h3>
+                <h3 class="panel-title">Đơn hàng sắp đến hạn</h3>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -138,10 +136,10 @@
             </div>
         </div>
     </div>
-   <div class="col-lg-4">
+   <div class="col-lg-6">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i>Đơn hàng đã xử lý và kết quả</h3>
+                <h3 class="panel-title">Đơn hàng đã xử lý và kết quả</h3>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">
@@ -182,10 +180,10 @@
             </div>
         </div>
     </div>
-    <div class="col-lg-4">
+    <div class="col-lg-6">
         <div class="panel panel-info">
             <div class="panel-heading">
-                <h3 class="panel-title"><i class="fa fa-money fa-fw"></i>Đơn hàng chưa xử lý</h3>
+                <h3 class="panel-title">Đơn hàng chưa xử lý</h3>
             </div>
             <div class="panel-body">
                 <div class="table-responsive">

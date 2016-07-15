@@ -116,6 +116,9 @@
 								<a href="{!!URL::route('dashboard')!!}"><i class="glyphicon glyphicon-dashboard"></i> Dashboard</a>
 							</li>
 							<li>
+								<a href="{!!URL::route('listDhDaXL')!!}"><i class="glyphicon glyphicon-save-file"></i> Kết quả</a>
+							</li>
+							<li>
 								<a href="#"><i class="glyphicon glyphicon-list-alt"></i> Đơn Hàng<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
 									<li>

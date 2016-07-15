@@ -3,6 +3,7 @@
 @section('action','List')
 @section('content')
 <!-- /.col-lg-12 -->
+
 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
     <thead>
         <tr align="center">

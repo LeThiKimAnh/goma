@@ -1,10 +1,13 @@
 @extends('admin.master')
 @section('controller','Vật Liệu')
 @section('action','List')
-@section('content')                    <!-- /.col-lg-12 -->
+@section('content')    
+<div class="form-group pull-right" >
+  <button class="btn btn-default " onclick="return fnExcelReport()" >Xuất danh sách ra Exel</button>
+</div>                <!-- /.col-lg-12 -->
 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
     <thead>
-        <tr align="center">
+        <tr align="center" name ="trdata">
             <th>STT</th>
             <th>Mã vật liệu</th>
             <th>Tên Vật Liệu</th>
@@ -21,7 +24,7 @@
         <?php $stt=0 ?>
         @foreach($data as $item)
             <?php $stt = $stt +1 ?>
-            <tr class="even gradeC" align="center">
+            <tr class="even gradeC" align="center" name ="trdata">
                 <td>{!!$stt!!}</td>
                 <td>{!!$item['ten_ma']!!}</td>
                 <td>{!!$item['ten']!!}</td>

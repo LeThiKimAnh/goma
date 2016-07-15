@@ -157,4 +157,43 @@ class VatDungController extends Controller
         return view('admin.vatdung.chitiet',compact('vat_dung','chi_tiet_vd'));
     }
 
+    public function searchVD(Request $request){
+        $maVD = $request->txt_maVD;
+        $tenVD = $request->txt_VD;
+        $gia_SX = $request->txt_giaSX;
+        $gia_SP = $request->txt_giaSP;
+        $he_so = $request->txt_HS;
+        $data = VatDung::select('id','ten','mo_ta','ma_vat_dung','gia_san_xuat','gia_san_pham','he_so');
+
+        $sql_data = "";
+
+        if(!ctype_space($maVD)&&!empty($maVD)){
+           $sql[] = " ma_vat_dung = '".$maVD."'";
+        }
+        if(!ctype_space($tenVD)&&!empty($tenVD)){
+            $sql[] = " ten= '".$tenVD."'";
+        }
+        if(!ctype_space($gia_SX)&&!empty($gia_SX)){
+            $sql[] = " gia_san_xuat=".$gia_SX."";
+        }
+        if(!ctype_space($gia_SP)&&!empty($gia_SP)){
+            $sql[] = " gia_san_pham =".$gia_SP."";
+        }
+        if(!ctype_space($he_so)&&!empty($he_so)){
+            $sql[] = " he_so=".$he_so;
+        }
+        
+        for($i = 0; $i<count($sql);$i++){
+            if($i==count($sql)-1){
+                $sql_data = $sql_data.$sql[$i];
+            }else{
+                 $sql_data = $sql_data.$sql[$i]." and";
+             }
+        }
+
+        $data = VatDung::whereRaw($sql_data)->get();
+        return view('admin.vatdung.list',compact('data'));
+
+    }
+
 }

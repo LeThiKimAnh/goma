@@ -190,7 +190,7 @@ class DonHangController extends Controller
     public function listDhDaXL(){
         $data = DonHang::where('trang_thai',2)->orderBy('id','DESC')->get()->toArray();
         $action = 'Đã xử lý';
-        return view('admin.donhang.daXL',compact('data','action'));
+        return view('admin.donhang.list',compact('data','action'));
     }
     public function listDhCXL(){
         $data = DonHang::where('trang_thai',0)->orderBy('id','DESC')->get()->toArray();
@@ -199,6 +199,8 @@ class DonHangController extends Controller
     }
 
     public function searchDH(Request $request){
+        $page = $request-> page;
+        $per_page = 10;
         $action = 'List';
         $maDH = $request ->txt_maDH;
         $tenKH = $request ->txt_KH;
@@ -208,311 +210,36 @@ class DonHangController extends Controller
         $time2 =   strtotime( $request ->end_date);
         $start_date = date('Y-m-d', $time1);
         $end_date = date('Y-m-d', $time2);
-        
+
+         $sql_data = "";
         if(!ctype_space($maDH)&&!empty($maDH)){
-            if(!ctype_space($tenKH)&&!empty($tenKH)){
-                if(!ctype_space($nguoi_TD)&&!empty($nguoi_TD)){
-                    if($trang_thai!=""){
-                        if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('khach_hang',$tenKH)->where('nguoi_tao_don',$nguoi_TD)->where('trang_thai',$trang_thai)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('khach_hang',$tenKH)->where('nguoi_tao_don',$nguoi_TD)->where('trang_thai',$trang_thai)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
+            $sql[] = " ma_don_hang ='".$maDH."'";
+        }
+        if(!ctype_space($tenKH)&&!empty($tenKH)){
+            $sql[] =" khach_hang='".$tenKH."'";
+        }
+        if(!ctype_space($nguoi_TD)&&!empty($nguoi_TD)){
+            $sql[] =" nguoi_tao_don='".$nguoi_TD."'";
+        }
+        if($trang_thai!=""){
+            $sql[] = " trang_thai=".$trang_thai."";
+        }
+        if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
+            $sql[] = " ngay_giao_hang >= ".$start_date." and ngay_giao_hang <= ".$end_date."";
 
-                    }else{
-                       if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('khach_hang',$tenKH)->where('nguoi_tao_don',$nguoi_TD)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('khach_hang',$tenKH)->where('nguoi_tao_don',$nguoi_TD)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
-                    }
-                }else{
-                    if($trang_thai!=""){
-                        if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('khach_hang',$tenKH)->where('trang_thai',$trang_thai)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('khach_hang',$tenKH)->where('trang_thai',$trang_thai)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
-
-                    }else{
-                       if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('khach_hang',$tenKH)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('khach_hang',$tenKH)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
-                    }
-                }
+        }
+        for($i = 0; $i<count($sql);$i++){
+            if($i==count($sql)-1){
+                $sql_data = $sql_data.$sql[$i];
             }else{
-                if(!ctype_space($nguoi_TD)&&!empty($nguoi_TD)){
-                    if($trang_thai!=""){
-                        if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('nguoi_tao_don',$nguoi_TD)->where('trang_thai',$trang_thai)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('nguoi_tao_don',$nguoi_TD)->where('trang_thai',$trang_thai)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
+                 $sql_data = $sql_data.$sql[$i]." and";
+             }
+        }
 
-                    }else{
-                       if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('nguoi_tao_don',$nguoi_TD)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('nguoi_tao_don',$nguoi_TD)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
-                    }
-                }else{
-                    if($trang_thai!=""){
-                        if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('trang_thai',$trang_thai)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('trang_thai',$trang_thai)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
+        $data = DonHang::whereRaw($sql_data)->get();
 
-                    }else{
-                       if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ma_don_hang',$maDH)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
-                    }
-                }
-            }
-        }else{
-            if(!ctype_space($tenKH)&&!empty($tenKH)){
-                if(!ctype_space($nguoi_TD)&&!empty($nguoi_TD)){
-                    if($trang_thai!=""){
-                        if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('khach_hang',$tenKH)->where('nguoi_tao_don',$nguoi_TD)->where('trang_thai',$trang_thai)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('khach_hang',$tenKH)->where('nguoi_tao_don',$nguoi_TD)->where('trang_thai',$trang_thai)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
-
-                    }else{
-                       if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('khach_hang',$tenKH)->where('nguoi_tao_don',$nguoi_TD)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('khach_hang',$tenKH)->where('nguoi_tao_don',$nguoi_TD)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
-                    }
-                }else{
-                    if($trang_thai!=""){
-                        if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('khach_hang',$tenKH)->where('trang_thai',$trang_thai)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('khach_hang',$tenKH)->where('trang_thai',$trang_thai)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
-
-                    }else{
-                       if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('khach_hang',$tenKH)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('khach_hang',$tenKH)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
-                    }
-                }
-            }else{
-                if(!ctype_space($nguoi_TD)&&!empty($nguoi_TD)){
-                    if($trang_thai!=""){
-                        if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('nguoi_tao_don',$nguoi_TD)->where('trang_thai',$trang_thai)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('nguoi_tao_don',$nguoi_TD)->where('trang_thai',$trang_thai)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
-
-                    }else{
-                       if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('nguoi_tao_don',$nguoi_TD)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('nguoi_tao_don',$nguoi_TD)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
-                    }
-                }else{
-                    if($trang_thai!=""){
-                        if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('trang_thai',$trang_thai)->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('trang_thai',$trang_thai)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                        }
-
-                    }else{
-                       if(!ctype_space($time1)&&!empty($time1)&&!ctype_space($time2)&&!empty($time2)){
-                            $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->where('ngay_giao_hang','>=',$start_date)->where('ngay_giao_hang','<=',$end_date)->orderBy('id','DESC')->get()->toArray();
-                            if(count($data)>0){
-                                return view('admin.donhang.list',compact('data','action'));
-                            }else{
-                                return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Không có kết quả phù hợp yêu cầu của bạn']);
-                            }
-                           
-                        }else{
-                            return redirect()->route('listDh')->with(['flash_level'=>'success','flash_message1'=>'Bạn phải điền thông tin để tìm']);
-                            }
-                        }
-                    }
-                }
-            }
+        return view('admin.donhang.list',compact('data','action'));
+        
         }
     
 }

@@ -7,58 +7,60 @@
 <form method="GET" action="{!!URL::route('SearchDH')!!}" name="form_search">
 @include('admin.blocks.error')
   <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
-  <div class="col-lg-10" style="">
-    <div class="form-group row col-lg-6">
+  <div class="col-lg-12">
+    <div class="form-group col-lg-4">
       <label class="form-control-label col-sm-5">Mã đơn hàng :</label>
       <div class="col-sm-7">
         <input type="text" class="form-control" placeholder="Mã đơn hàng" name="txt_maDH" value="{!!old('txt_maDH')!!}">
       </div>
     </div>
 
-    <div class="form-group row col-lg-6">
+    <div class="form-group col-lg-4">
       <label class="form-control-label col-sm-5">Khách hàng :</label>
       <div class="col-sm-7">
         <input type="text" class="form-control" placeholder="Tên Khách hàng" name="txt_KH">
       </div>
     </div>
 
-    <div class="form-group row col-lg-6">
-        <label class="form-control-label col-sm-5">Người lập đơn :</label>
+    <div class="form-group col-lg-4">
+         <label class="form-control-label col-sm-5"> Hạn từ ngày:</label>
+          <div id="datepicker1" class="input-group date col-sm-7" data-date-format="dd-mm-yyyy">
+               <input class="form-control" type="text" name ="start_date"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
+          </div>
+    </div>
+  </div>
+  <div class="col-lg-12">
+    <div class="form-group col-lg-4">
+        <label class="form-control-label col-sm-5">Người lập đơn:</label>
         <div class="col-sm-7">
           <input type="text" class="form-control" placeholder="Người lập đơn hàng" name="txt_NL">
         </div>
     </div>
 
-    <div class="form-group row col-lg-6">
+    <div class="form-group col-lg-4">
         <label class="form-control-label col-sm-5">Trạng thái :</label>
         <div class="col-sm-7">
           <select class="form-control" name="txt_TT" id="select_vd">
-            <option value="" >Chọn trạng thái</option>
+            <option value="" >Trạng thái</option>
                 <option value='0'>Chưa xử lý</option>
                 <option value='1'>Đang chờ xử lý</option>
                 <option value='2'>Đã xử lý</option>
           </select>   
         </div>
     </div>
-    <div class="col-lg-12"></div>
-    <div class="form-group col-lg-12">
-      <button type="submit" class="btn btn-primary center-block" style="margin-top:50px">Tìm kiếm  <i class="glyphicon glyphicon-search"></i></button>
-    </div>
-  </div>
-  <div class="col-lg-2">
-    <div class="panel panel-default">
-      <div class="panel-heading">Ngày giao</div>
-      <div class="panel-body"> 
-          Từ:
-          <div id="datepicker1" class="input-group date" data-date-format="dd-mm-yyyy">
-               <input class="form-control" type="text" name ="start_date"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
-          </div>
-          Đến: 
-          <div id="datepicker2" class="input-group date" data-date-format="dd-mm-yyyy">
+    <div class="form-group col-lg-4">
+          <label class="form-control-label col-sm-5">Đến ngày: </label>
+          <div id="datepicker2" class="input-group date col-sm-7" data-date-format="dd-mm-yyyy">
              <input class="form-control" type="text" name ="end_date"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
           </div>
-      </div>
     </div>
+  </div>
+    <div class="form-group col-lg-12">
+      <button type="submit" class="btn btn-primary center-block">Tìm kiếm   <i class="glyphicon glyphicon-search"></i></button>
+    </div>
+  
+    
+    
   </div>
 </form>
 </div>
@@ -93,8 +95,9 @@
            </tr>
     </thead>
      <?php $stt = 0 ?>
-    @foreach($data as $item)
-     <tbody>
+   
+     <tbody id="myTable">
+      @foreach($data as $item)
      <?php $stt = $stt + 1 ?>
            <tr class="odd gradeX clickable accordion-toggle" align="center " data-toggle="collapse" data-target="#accordion{!!$item['id']!!}" name ="trdata">
              <td>{!!$stt!!}</td>
@@ -200,10 +203,11 @@
               </td>
               </div>
             </tr>
-          
+              @endforeach  
     </tbody>
-      @endforeach
+
 </table>
+<ul class="pagination"><li class="paginate_button previous disabled" aria-controls="dataTables" tabindex="0" id="dataTables_previous"><a href="#">Previous</a></li><li class="paginate_button active" aria-controls="dataTables" tabindex="0"><a href="#">1</a></li><li class="paginate_button " aria-controls="dataTables" tabindex="0"><a href="?page=1">2</a></li><li class="paginate_button " aria-controls="dataTables" tabindex="0"><a href="#">3</a></li><li class="paginate_button " aria-controls="dataTables" tabindex="0"><a href="#">4</a></li><li class="paginate_button next" aria-controls="dataTables" tabindex="0" id="dataTables_next"><a href="#">Next</a></li></ul>
 <a id="back-to-top" href="#" class="btn btn-info btn-lg back-to-top" role="button" title="Trở về đầu trang" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
 
   @endsection 
