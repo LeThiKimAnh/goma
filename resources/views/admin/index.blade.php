@@ -49,7 +49,7 @@
 </div>
 <!-- /.row -->
 <div class="row">
-    <div class="col-lg-6">
+	<div class="col-lg-6">
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">Đơn hàng mới gần đây nhất</h3>
@@ -66,24 +66,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($data as $item)
+							@foreach($data as $item)
                             <tr>
                                 <td>{!!$item["ma_don_hang"]!!}</td>
                                 <td> 
-                                    <?php 
-                                     $d = getdate(strtotime($item["created_at"]));
-                                     print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
-                                     ?>              
+									<?php
+									$d = getdate(strtotime($item["created_at"]));
+									print $d['mday'] . '/' . $d['mon'] . '/' . $d['year'];
+									?>              
                                 </td>
                                 <td> 
-                                    <?php 
-                                     $d = getdate(strtotime($item["ngay_giao_hang"]));
-                                     print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
-                                     ?>              
+									<?php
+									$d = getdate(strtotime($item["ngay_giao_hang"]));
+									print $d['mday'] . '/' . $d['mon'] . '/' . $d['year'];
+									?>              
                                 </td>
                                 <td>{!!$item["tong_gia"]!!}</td>
                             </tr>
-                        @endforeach
+							@endforeach
                         </tbody>
                     </table>
                 </div>
@@ -92,7 +92,7 @@
                 </div>
             </div>
         </div>
-         <div class="panel panel-info">
+		<div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">Đơn hàng sắp đến hạn</h3>
             </div>
@@ -112,20 +112,20 @@
                             <tr>
                                 <td>{!!$item["ma_don_hang"]!!}</td>
                                 <td> 
-                                    <?php 
-                                     $d = getdate(strtotime($item["created_at"]));
-                                     print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
-                                     ?>              
+									<?php
+									$d = getdate(strtotime($item["created_at"]));
+									print $d['mday'] . '/' . $d['mon'] . '/' . $d['year'];
+									?>              
                                 </td>
                                 <td> 
-                                    <?php 
-                                     $d = getdate(strtotime($item["ngay_giao_hang"]));
-                                     print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
-                                     ?>              
+									<?php
+									$d = getdate(strtotime($item["ngay_giao_hang"]));
+									print $d['mday'] . '/' . $d['mon'] . '/' . $d['year'];
+									?>              
                                 </td>
                                 <td>{!!$item["tong_gia"]!!}</td>
                             </tr>
-                        @endforeach
+							@endforeach
                         </tbody>
                         </tbody>
                     </table>
@@ -136,7 +136,7 @@
             </div>
         </div>
     </div>
-   <div class="col-lg-6">
+	<div class="col-lg-6">
         <div class="panel panel-info">
             <div class="panel-heading">
                 <h3 class="panel-title">Đơn hàng đã xử lý và kết quả</h3>
@@ -153,24 +153,24 @@
                             </tr>
                         </thead>
                         <tbody>
-                        @foreach($data_don_hang_daxl as $item)
+							@foreach($data_don_hang_daxl as $item)
                             <tr>
                                 <td>{!!$item["ma_don_hang"]!!}</td>
                                 <td>
-                                    <?php 
-                                        $d = getdate(strtotime($item["created_at"]));
-                                        print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
-                                     ?>  
+									<?php
+									$d = getdate(strtotime($item["created_at"]));
+									print $d['mday'] . '/' . $d['mon'] . '/' . $d['year'];
+									?>  
                                 </td>
                                 <td> 
-                                    <?php 
-                                     $d = getdate(strtotime($item["ngay_giao_hang"]));
-                                     print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
-                                     ?>              
+									<?php
+									$d = getdate(strtotime($item["ngay_giao_hang"]));
+									print $d['mday'] . '/' . $d['mon'] . '/' . $d['year'];
+									?>              
                                 </td>
                                 <td><a href="{!!URL::route('result',$item['id'])!!}">kết quả</a></td>
                             </tr>
-                        @endforeach
+							@endforeach
                         </tbody>
                     </table>
                 </div>
@@ -190,7 +190,7 @@
                     <table class="table table-bordered table-hover table-striped">
                         <thead>
                             <tr>
-                               <th>Mã đơn hàng</th>
+								<th>Mã đơn hàng</th>
                                 <th>Date</th>
                                 <th>Hạn cuối</th>
                                 <th>Hóa đơn(VND)</th>
@@ -198,22 +198,22 @@
                         </thead>
                         <tbody>
                             @foreach($data_don_hang_chxl as $item)
-                                <tr>
-                                     <td>{!!$item["ma_don_hang"]!!}</td>
+							<tr>
+								<td>{!!$item["ma_don_hang"]!!}</td>
                                 <td>
-                                    <?php 
-                                        $d = getdate(strtotime($item["created_at"]));
-                                        print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
-                                     ?>  
+									<?php
+									$d = getdate(strtotime($item["created_at"]));
+									print $d['mday'] . '/' . $d['mon'] . '/' . $d['year'];
+									?>  
                                 </td>
                                 <td> 
-                                    <?php 
-                                     $d = getdate(strtotime($item["ngay_giao_hang"]));
-                                     print $d['mday'].'/'.$d['mon'].'/'.$d['year'];
-                                     ?>              
+									<?php
+									$d = getdate(strtotime($item["ngay_giao_hang"]));
+									print $d['mday'] . '/' . $d['mon'] . '/' . $d['year'];
+									?>              
                                 </td>
                                 <td>{!!$item["tong_gia"]!!}</td>
-                                </tr>
+							</tr>
                             @endforeach
                         </tbody>
                     </table>

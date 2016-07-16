@@ -5,47 +5,6 @@
 	var imageObj = new Image();
 	imageObj.src = '/admin/images/WLsci.png';
 
-<<<<<<< HEAD
-<div class="col-lg-11" style="padding-bottom:120px">
-<div id="myCarousel" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-    <li data-target="#myCarousel" data-slide-to="3"></li>
-  </ol>
-
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner" role="listbox">
-    <div class="item active">
-      <img src="{{url('admin/images/anh1.jpg')}}" alt="Chania">
-    </div>
-
-    <div class="item">
-      <img src="{{url('admin/images/anh2.jpg')}}" alt="Chania">
-    </div>
-
-    <div class="item">
-      <img src="{{url('admin/images/anh3.jpg')}}" alt="Chania" alt="Flower">
-    </div>
-
-    <div class="item">
-      <img src="{{url('admin/images/anh4.jpg')}}" alt="Chania" alt="Flower">
-    </div>
-  </div>
-
-  <!-- Left and right controls -->
-  <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-=======
 	function random_color() {
 		var color = [0, 0, 0];
 		for (var i = 0; i <= 2; i++) {
@@ -58,20 +17,21 @@
 
 	function createCanvas(panel, idx) {
 		var canvas = document.createElement('canvas');
+		var scale = 0.425;
 		canvas.setAttribute('id', 'canvas' + idx);
 		canvas.setAttribute('class', 'img');
 
-		canvas.width = 2400;
-		canvas.height = 1200;
+		canvas.width = panel.width * scale;
+		canvas.height = panel.height * scale;
 
 		var ctx = canvas.getContext('2d');
-		ctx.scale(0.425, 0.425);
+		ctx.scale(scale, scale);
 
 		var pattern = ctx.createPattern(imageObj, 'repeat');
 
 		ctx.beginPath();
 		ctx.lineWidth = 3;
-		ctx.rect(0, 0, 2400, 1200);
+		ctx.rect(0, 0, panel.width, panel.height);
 		ctx.strokeStyle = 'black';
 		ctx.stroke();
 
@@ -122,7 +82,9 @@
 				clazz = "item active";
 				indicator.setAttribute('class', 'active');
 			}
+			canvas.setAttribute('style', 'display: inline');
 			wrapper.setAttribute('class', clazz);
+			wrapper.setAttribute('style', 'text-align: center;');
 			indicator.setAttribute('data-slide-to', j);
 			indicator.setAttribute('data-target', '#myCarousel');
 			j += 1;
@@ -137,13 +99,13 @@
 </script>
 
 <div class="col-lg-12" style="padding-bottom:120px">
-	<div id="myCarousel" class="carousel slide" data-ride="carousel">
+	<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
 		<!-- Indicators -->
 		<ol id ='slide-indicator' class="carousel-indicators">
 		</ol>
 
 		<!-- Wrapper for slides -->
-		<div id="slider" class="carousel-inner" role="listbox" style="height: 512px">
+		<div id="slider" class="carousel-inner" role="listbox" style="height: 512px;">
 		</div>
 
 		<!-- Left and right controls -->
@@ -156,6 +118,5 @@
 			<span class="sr-only">Next</span>
 		</a>
 	</div>
->>>>>>> origin/master
 </div>
 @endsection

@@ -201,6 +201,9 @@ class Panel {
 
 	public function sketch() {
 		return array(
+			"width" => $this->width,
+			"height" => $this->height,
+			"req" => $this->req,
 			"rects" => $this->map(),
 			"remains" => $this->remain()
 		);
