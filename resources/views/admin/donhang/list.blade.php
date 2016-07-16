@@ -39,17 +39,37 @@
         <label class="form-control-label col-sm-5">Trạng thái :</label>
         <div class="col-sm-7">
           <select class="form-control" name="txt_TT" id="select_vd">
+          @if($trang_thai ==0)
             <option value="" >Trạng thái</option>
-                <option value='0'>Chưa xử lý</option>
-                <option value='1'>Đang chờ xử lý</option>
+                <option value='0' selected="true">Chưa xử lý</option>
+                <option value='1' >Đang chờ xử lý</option>
                 <option value='2'>Đã xử lý</option>
+          @endif
+           @if($trang_thai ==1)
+            <option value="" >Trạng thái</option>
+                <option value='0' >Chưa xử lý</option>
+                <option value='1' selected="true">Đang chờ xử lý</option>
+                <option value='2'>Đã xử lý</option>
+          @endif
+           @if($trang_thai ==2)
+            <option value="" >Trạng thái</option>
+                <option value='0' >Chưa xử lý</option>
+                <option value='1' >Đang chờ xử lý</option>
+                <option value='2' selected="true">Đã xử lý</option>
+          @endif
+          @if($trang_thai ==-1)
+            <option value="">Trạng thái</option>
+                <option value='0' >Chưa xử lý</option>
+                <option value='1' >Đang chờ xử lý</option>
+                <option value='2'>Đã xử lý</option>
+          @endif
           </select>   
         </div>
     </div>
     <div class="form-group col-lg-4">
           <label class="form-control-label col-sm-5">Đến ngày: </label>
           <div id="datepicker2" class="input-group date col-sm-7" data-date-format="dd-mm-yyyy">
-             <input class="form-control" type="text" name ="end_date" > <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" value="{!!$d2!!}"></i></span> 
+             <input class="form-control" type="text" name ="end_date" value="{!!$d2!!}"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" ></i></span> 
           </div>
     </div>
   </div>

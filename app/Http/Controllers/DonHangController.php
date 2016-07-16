@@ -105,7 +105,7 @@ class DonHangController extends Controller {
 		$maDH = "";
 		$tenKH = "";
 		$nguoi_TD = "";
-		$trang_thai = "";
+		$trang_thai = -1;
 		$d1 = "";
 		$d2 = "";
 		$data = DonHang::orderBy('id', 'DESC')->paginate(2);
@@ -189,24 +189,11 @@ class DonHangController extends Controller {
 		return view('admin.donhang.chitiet', compact('don_hang', 'id', 'vatdungs', 'check_tt'));
 	}
 
-	public function chitiet_daXL($id) {
-		$don_hang = DonHang::find($id);
-		$check_tt = 1;
-		$chi_tiet_dh = ChiTietDonHang::where('donhang_id', '=', $id)->get()->toArray();
-		return view('admin.donhang.chitiet', compact('don_hang', 'chi_tiet_dh', 'id', 'check_tt'));
-	}
-
-	public function listDhDaXL() {
-		$data = DonHang::where('trang_thai', 2)->orderBy('id', 'DESC')->get()->toArray();
-		$action = 'Đã xử lý';
-		return view('admin.donhang.list', compact('data', 'action'));
-	}
-
-	public function listDhCXL() {
-		$data = DonHang::where('trang_thai', 0)->orderBy('id', 'DESC')->get()->toArray();
-		$action = 'Chưa xử lý';
-		return view('admin.donhang.list', compact('data', 'action'));
-	}
+	// public function listDhCXL() {
+	// 	$data = DonHang::where('trang_thai', 0)->orderBy('id', 'DESC')->get()->toArray();
+	// 	$action = 'Chưa xử lý';
+	// 	return view('admin.donhang.list', compact('data', 'action'));
+	// }
 
 	public function searchDH(Request $request) {
 		$per_page = 2;

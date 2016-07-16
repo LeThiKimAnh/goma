@@ -37,7 +37,7 @@
                     </div>
                 </div>
             </div>
-            <a href="{!!URL::route('listDhDaXL')!!}">
+            <a href="{!!URL::route('SearchDH').'?txt_TT=2'!!}">
                 <div class="panel-footer">
                     <span class="pull-left">Xem chi tiết</span>
                     <span class="pull-right"><i class="fa fa-arrow-circle-right"></i></span>
@@ -175,7 +175,7 @@
                     </table>
                 </div>
                 <div class="text-right">
-                    <a href="{!!URL::route('listDhDaXL')!!}">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{!!URL::route('SearchDH').'?txt_TT=2'!!}">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>
@@ -219,7 +219,7 @@
                     </table>
                 </div>
                 <div class="text-right">
-                    <a href="{!!URL::route('listDhCXL')!!}">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
+                    <a href="{!!URL::route('SearchDH').'?txt_TT=0'!!}">Xem chi tiết <i class="fa fa-arrow-circle-right"></i></a>
                 </div>
             </div>
         </div>
