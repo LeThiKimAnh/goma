@@ -46,6 +46,11 @@
 			var rect = rects[i];
 			ctx.fillStyle = random_color();
 			ctx.fillRect(rect[1], rect[0], rect[2], rect[3]);
+//			ctx.beginPath();
+//			ctx.rect(rect[1], rect[0], rect[2], rect[3]);
+//			ctx.lineWidth = 3;
+//			ctx.strokeStyle = 'black';
+//			ctx.stroke();
 		}
 
 		for (var i = 0; i < remains.length; i++) {
