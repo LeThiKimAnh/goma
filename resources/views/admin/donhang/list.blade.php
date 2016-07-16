@@ -5,8 +5,6 @@
 
 <div class="form-group">
 <form method="GET" action="{!!URL::route('SearchDH')!!}" name="form_search">
-@include('admin.blocks.error')
-  <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
   <div class="col-lg-12">
     <div class="form-group col-lg-4">
       <label class="form-control-label col-sm-5">Mã đơn hàng :</label>
