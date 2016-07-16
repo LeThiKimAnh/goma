@@ -29,5 +29,8 @@ return [
     */
 
     'compiled' => realpath(storage_path('framework/views')),
-
+    
 ];
+return array(
+    'pagination' => 'pagination::slider',
+    );

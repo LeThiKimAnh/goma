@@ -11,21 +11,21 @@
     <div class="form-group col-lg-4">
       <label class="form-control-label col-sm-5">Mã đơn hàng :</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" placeholder="Mã đơn hàng" name="txt_maDH" value="{!!old('txt_maDH')!!}">
+        <input type="text" class="form-control" placeholder="Mã đơn hàng" name="txt_maDH" value="{!!$maDH!!}">
       </div>
     </div>
 
     <div class="form-group col-lg-4">
       <label class="form-control-label col-sm-5">Khách hàng :</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" placeholder="Tên Khách hàng" name="txt_KH">
+        <input type="text" class="form-control" placeholder="Tên Khách hàng" name="txt_KH" value="{!!$tenKH!!}">
       </div>
     </div>
 
     <div class="form-group col-lg-4">
          <label class="form-control-label col-sm-5"> Hạn từ ngày:</label>
           <div id="datepicker1" class="input-group date col-sm-7" data-date-format="dd-mm-yyyy">
-               <input class="form-control" type="text" name ="start_date"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
+               <input class="form-control" type="text" name ="start_date" value="{!!$d1!!}"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
           </div>
     </div>
   </div>
@@ -33,7 +33,7 @@
     <div class="form-group col-lg-4">
         <label class="form-control-label col-sm-5">Người lập đơn:</label>
         <div class="col-sm-7">
-          <input type="text" class="form-control" placeholder="Người lập đơn hàng" name="txt_NL">
+          <input type="text" class="form-control" placeholder="Người lập đơn hàng" name="txt_NL" value="{!!$nguoi_TD!!}">
         </div>
     </div>
 
@@ -51,7 +51,7 @@
     <div class="form-group col-lg-4">
           <label class="form-control-label col-sm-5">Đến ngày: </label>
           <div id="datepicker2" class="input-group date col-sm-7" data-date-format="dd-mm-yyyy">
-             <input class="form-control" type="text" name ="end_date"> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
+             <input class="form-control" type="text" name ="end_date" > <span class="input-group-addon"><i class="glyphicon glyphicon-calendar" value="{!!$d2!!}"></i></span> 
           </div>
     </div>
   </div>
@@ -205,9 +205,10 @@
             </tr>
               @endforeach  
     </tbody>
-
 </table>
-<ul class="pagination"><li class="paginate_button previous disabled" aria-controls="dataTables" tabindex="0" id="dataTables_previous"><a href="#">Previous</a></li><li class="paginate_button active" aria-controls="dataTables" tabindex="0"><a href="#">1</a></li><li class="paginate_button " aria-controls="dataTables" tabindex="0"><a href="?page=1">2</a></li><li class="paginate_button " aria-controls="dataTables" tabindex="0"><a href="#">3</a></li><li class="paginate_button " aria-controls="dataTables" tabindex="0"><a href="#">4</a></li><li class="paginate_button next" aria-controls="dataTables" tabindex="0" id="dataTables_next"><a href="#">Next</a></li></ul>
+<div class="pull-right">
+  {!! $data->render() !!}
+</div>
 <a id="back-to-top" href="#" class="btn btn-info btn-lg back-to-top" role="button" title="Trở về đầu trang" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
 
   @endsection 

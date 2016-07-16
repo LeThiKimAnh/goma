@@ -103,8 +103,15 @@ class DonHangController extends Controller
     }
     public function listDh(){
         $action = 'List';
-        $data = DonHang::select('id','khach_hang','nguoi_tao_don','mo_ta','trang_thai','ma_don_hang','tong_gia','ngay_giao_hang','created_at','updated_at')->orderBy('id','DESC')->get()->toArray();
-        return view('admin.donhang.list',compact('data','action'));
+        $maDH = "";
+        $tenKH = "";
+        $nguoi_TD = "";
+        $trang_thai = "";
+        $d1 = "";
+        $d2 = "";
+        $data = DonHang::orderBy('id','DESC')->paginate(10);
+        return view('admin.donhang.list',compact('data','action','maDH','tenKH','d1','d2','nguoi_TD','trang_thai'));
+        // return view('admin.donhang.list',compact('data','action'));
     }
     public function deleteDH($id){
         $don_hang = DonHang::find($id);
@@ -199,13 +206,15 @@ class DonHangController extends Controller
     }
 
     public function searchDH(Request $request){
-        $page = $request-> page;
+        $page = $request->page;
         $per_page = 10;
         $action = 'List';
         $maDH = $request ->txt_maDH;
         $tenKH = $request ->txt_KH;
         $nguoi_TD = $request->txt_NL;
         $trang_thai = $request->txt_TT;
+        $d1 = $request ->start_date;
+        $d2 = $request ->end_date;
         $time1 = strtotime( $request ->start_date);
         $time2 =   strtotime( $request ->end_date);
         $start_date = date('Y-m-d', $time1);
@@ -235,10 +244,12 @@ class DonHangController extends Controller
                  $sql_data = $sql_data.$sql[$i]." and";
              }
         }
+        print_r($sql);
 
-        $data = DonHang::whereRaw($sql_data)->get();
 
-        return view('admin.donhang.list',compact('data','action'));
+        $data = DonHang::whereRaw($sql_data)->orderBy('id','DESC')->paginate(2);
+        print_r($data);
+        return view('admin.donhang.list',compact('data','action','maDH','tenKH','d1','d2','nguoi_TD','trang_thai'));
         
         }
     
