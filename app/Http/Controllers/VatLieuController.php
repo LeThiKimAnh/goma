@@ -28,8 +28,15 @@ class VatLieuController extends Controller
     	return redirect()->route('list')->with(['flash_level'=>'success','flash_message_success'=>'Thêm vật liệu thành công']);
     }
     public function listVl(){
-    	$data = VatLieu::select('id','ten','ten_ma','rong','dai','cao','mo_ta','chat_lieu','yeu_cau')->orderBy('id','DESC')->get()->toArray();
-    	return view('admin.vatlieu.list',compact('data'));
+        $per_page = 2;
+        $maVL = "";
+        $tenVL = "";
+        $rong ="";
+        $dai = "";
+        $chat_lieu = -1;
+        $loai = -1;
+    	$data = VatLieu::orderBy('id', 'DESC')->paginate($per_page);
+    	return view('admin.vatlieu.list',compact('data','maVL','tenVL','rong','dai','chat_lieu','loai'));
     }
     public function deleteVL($id){
         $chi_tiet_vd = ChiTietVatDung::where('vatlieu_id',$id);
@@ -43,7 +50,12 @@ class VatLieuController extends Controller
     }
     public function getEdit($id){
     	$vat_lieu = VatLieu::find($id);
-    	return view('admin.vatlieu.edit',compact('vat_lieu'));
+        if($vat_lieu!= null){
+            return view('admin.vatlieu.edit',compact('vat_lieu'));
+        }else{
+            return view('errors.404');
+        }
+    	
     }
     public function postEdit(Request $request,$id){
     	$this->validate($request,
@@ -92,5 +104,46 @@ class VatLieuController extends Controller
         $vat_lieu->mo_ta = $request->txt_mo_ta;
         $vat_lieu->save();
     	return redirect()->route('list')->with(['flash_level'=>'success','flash_message_success'=>'Sửa vật liệu thành công']);
+    }
+    public function searchVL(Request $request){
+        $per_page = 10;
+        $maVL = $request->txt_maVL;
+        $tenVL = $request->txt_VL;
+        $rong = $request->txt_R;
+        $dai = $request->txt_D;
+        $chat_lieu = $request->txt_CL;
+        $loai = $request->txt_YC;
+
+        $sql_data = "";
+        $sql = array();
+
+        if(!ctype_space($maVL)&&!empty($maVL)){
+           $sql[] = " ten_ma = '".$maVL."'";
+        }
+        if(!ctype_space($tenVL)&&!empty($tenVL)){
+            $sql[] = " ten= '".$tenVL."'";
+        }
+        if(!ctype_space($rong)&&!empty($rong)){
+            $sql[] = " rong=".$rong."";
+        }
+        if(!ctype_space($dai)&&!empty($dai)){
+            $sql[] = " dai =".$dai."";
+        }
+        if (!ctype_space($chat_lieu)&&!empty($chat_lieu)) {
+            $sql[] = " chat_lieu=" . $chat_lieu . "";
+        }
+        if (!ctype_space($loai)&&!empty($loai)&&$loai>0) {
+            $sql[] = " yeu_cau=" . $loai . "";
+        }
+        
+       if (count($sql)) {
+            $sql_data = implode(" and ", $sql);
+            $data = VatLieu::whereRaw($sql_data)->orderBy('id', 'DESC')->paginate($per_page);
+        } else {
+            $data = VatLieu::orderBy('id', 'DESC')->paginate($per_page);
+        }
+
+        $data->setPath($request->fullUrl());
+        return view('admin.vatlieu.list',compact('data','maVL','tenVL','rong','dai','chat_lieu','loai'));
     }
 }

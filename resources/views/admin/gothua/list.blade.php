@@ -1,21 +1,21 @@
 @extends('admin.master')
-@section('controller','Vật Liệu')
+@section('controller','Kho Gỗ')
 @section('action','List')
 @section('content')  
 <div class="form-group">
-<form method="GET" action="{!!URL::route('SearchVL')!!}" name="form_search">
+<form method="GET" action="{!!URL::route('SearchGo')!!}" name="form_search">
   <div class="col-lg-12" style="">
     <div class="form-group col-lg-4">
-      <label class="form-control-label col-sm-5">Mã vật liệu:</label>
+      <label class="form-control-label col-sm-5">Tên gỗ:</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" placeholder="Mã vật liệu" name="txt_maVL" value="{!!$maVL!!}">
+        <input type="text" class="form-control" placeholder="Tên gỗ" name="txt_ten" value="{!!$tenVL!!}">
       </div>
     </div>
 
     <div class="form-group col-lg-4">
-      <label class="form-control-label col-sm-5">Tên vật liệu:</label>
+      <label class="form-control-label col-sm-5">Dài:</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" placeholder="Tên vật liệu" name="txt_VL" value="{!!$tenVL!!}">
+        <input type="text" class="form-control" placeholder="Chiều dài" name="txt_D" value="{!!$dai!!}">
       </div>
     </div>
 
@@ -27,13 +27,6 @@
     </div>
   </div>
   <div class="col-lg-12">
-    <div class="form-group col-lg-4">
-        <label class="form-control-label col-sm-5">Dài:</label>
-         <div class="col-sm-7">
-          <input type="text" class="form-control" placeholder="Chiều dài" name="txt_D" value="{!!$dai!!}">
-        </div>
-    </div>
-
     <div class="form-group col-lg-4">
         <label class="form-control-label col-sm-5">Chất liệu:</label>
         @if($chat_lieu==1)
@@ -57,7 +50,7 @@
         @if($chat_lieu==-1)
          <div class="col-sm-7">
           <select class="form-control" name="txt_CL" id="select_vd">
-            <option value="" >Chất liệu</option>
+            <option value="-1" >Chất liệu</option>
                 <option value='1' >gỗ</option>
                 <option value='2' >sắt</option>
           </select>   
@@ -115,7 +108,6 @@
     <thead>
         <tr align="center" name ="trdata">
             <th>STT</th>
-            <th>Mã vật liệu</th>
             <th>Tên Vật Liệu</th>
             <th>Rộng</th>
             <th>Dài</th>
@@ -132,7 +124,6 @@
             <?php $stt = $stt +1 ?>
             <tr class="even gradeC" align="center" name ="trdata">
                 <td>{!!$stt!!}</td>
-                <td>{!!$item['ten_ma']!!}</td>
                 <td>{!!$item['ten']!!}</td>
                 <td>{!!$item['rong']!!}</td>
                 <td>{!!$item['dai']!!}</td>
@@ -154,9 +145,9 @@
                 </td>
                 <td>{!!$item['mo_ta']!!}</td>
                 <td class="center" style="padding:2px;">
-                    <form method="POST" action="{!!URL::route('delUser',$item['id'])!!}"> <input type="hidden" name="_token" value="{!! csrf_token() !!}" /><button type="submit" class="btn btn-link" onclick="return xacnhanxoa('ban co chac la muon xoa khong')"><i class="fa fa-trash-o fa-fw"></i> Xóa</button></form>
+                    <form method="POST" action="{!!URL::route('delgothua',$item['id'])!!}"> <input type="hidden" name="_token" value="{!! csrf_token() !!}" /><button type="submit" class="btn btn-link" onclick="return xacnhanxoa('ban co chac la muon xoa khong')"><i class="fa fa-trash-o fa-fw"></i> Xóa</button></form>
                 </td>
-                <td class="center"  style="padding:2px;"> <a href="{!!URL::route('getEdit',$item['id'])!!}" class="btn btn-link"><i class="fa fa-pencil fa-fw"></i> Sửa</a></td>
+                <td class="center"  style="padding:2px;"> <a href="{!!URL::route('getEditGo',$item['id'])!!}" class="btn btn-link"><i class="fa fa-pencil fa-fw"></i> Sửa</a></td>
             </tr>
         @endforeach
     </tbody>

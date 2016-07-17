@@ -86,8 +86,14 @@ class VatDungController extends Controller
         return redirect()->route('getVatdung')->with(['flash_level'=>'success','flash_message'=>'Cảnh báo !! Tối thiểu phải có một vật liệu trong vật dụng']);
     }
     public function listVd(){
-    	$data = VatDung::select('id','ten','mo_ta','ma_vat_dung','gia_san_xuat','gia_san_pham','he_so')->orderBy('id','DESC')->get()->toArray();
-    	return view('admin.vatdung.list',compact('data'));
+        $per_page = 10;
+        $maVD = "";
+        $tenVD = "";
+        $gia_SX ="";
+        $gia_SP = "";
+        $he_so = "";
+        $data = VatDung::orderBy('id', 'DESC')->paginate($per_page);
+    	return view('admin.vatdung.list',compact('data','maVD','tenVD','gia_SX','gia_SP','he_so'));
     }
     public function deleteVD($id){
         $chi_tiet_dh = ChiTietDonHang::where('vatdung_id',$id);
@@ -103,7 +109,12 @@ class VatDungController extends Controller
         $data = VatLieu::select('id','ten')->get()->toArray();
         $vat_dung = VatDung::find($id);
         $vat_lieus = DB::table('chi_tiet_vat_dung')->join('vat_lieu','vat_lieu.id','=','chi_tiet_vat_dung.vatlieu_id')->where('chi_tiet_vat_dung.vatdung_id','=',$id)->get();
-        return view('admin.vatdung.edit',compact('data','vat_dung','vat_lieus'));
+        if($vat_dung!= null){
+            return view('admin.vatdung.edit',compact('data','vat_dung','vat_lieus'));
+        }else{
+            return view('errors.404');
+        }
+        
     }
     public function postEdit(Request $request,$id){
         $this->validate($request,
@@ -154,18 +165,26 @@ class VatDungController extends Controller
     public function chitiet($id){
         $vat_dung = VatDung::find($id);
         $chi_tiet_vd = ChiTietVatDung::where('vatdung_id',$id)->get()->toArray();
-        return view('admin.vatdung.chitiet',compact('vat_dung','chi_tiet_vd'));
+        $vat_lieus = DB::table('chi_tiet_vat_dung')->join('vat_lieu','vat_lieu.id','=','chi_tiet_vat_dung.vatlieu_id')->where('chi_tiet_vat_dung.vatdung_id','=',$id)->get();
+        if($vat_dung!= null){
+            return view('admin.vatdung.chitiet',compact('vat_dung','vat_lieus'));
+        }else{
+            return view('errors.404');
+        }
+       
+        
     }
 
     public function searchVD(Request $request){
+        $per_page = 10;
         $maVD = $request->txt_maVD;
         $tenVD = $request->txt_VD;
         $gia_SX = $request->txt_giaSX;
         $gia_SP = $request->txt_giaSP;
         $he_so = $request->txt_HS;
-        $data = VatDung::select('id','ten','mo_ta','ma_vat_dung','gia_san_xuat','gia_san_pham','he_so');
 
         $sql_data = "";
+        $sql = array();
 
         if(!ctype_space($maVD)&&!empty($maVD)){
            $sql[] = " ma_vat_dung = '".$maVD."'";
@@ -183,16 +202,15 @@ class VatDungController extends Controller
             $sql[] = " he_so=".$he_so;
         }
         
-        for($i = 0; $i<count($sql);$i++){
-            if($i==count($sql)-1){
-                $sql_data = $sql_data.$sql[$i];
-            }else{
-                 $sql_data = $sql_data.$sql[$i]." and";
-             }
+       if (count($sql)) {
+            $sql_data = implode(" and ", $sql);
+            $data = VatDung::whereRaw($sql_data)->orderBy('id', 'DESC')->paginate($per_page);
+        } else {
+            $data = VatDung::orderBy('id', 'DESC')->paginate($per_page);
         }
 
-        $data = VatDung::whereRaw($sql_data)->get();
-        return view('admin.vatdung.list',compact('data'));
+        $data->setPath($request->fullUrl());
+        return view('admin.vatdung.list',compact('data','maVD','tenVD','gia_SX','gia_SP','he_so'));
 
     }
 

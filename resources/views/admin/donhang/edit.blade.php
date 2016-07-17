@@ -71,7 +71,7 @@
         <div class="form-group">
             <label>Ngày giao hàng:</label>
             <div id="datepicker_edit" class="input-group date" data-date-format="dd-mm-yyyy">
-             <input class="form-control" type="text" readonly=""  name = "date" value="" /> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
+             <input class="form-control" type="text" readonly=""  name = "date" value="{!! $d['mday'].'/'.$d['mon'].'/'.$d['year']!!}" /> <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> 
             </div>
         </div>
 

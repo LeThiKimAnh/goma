@@ -32,14 +32,22 @@
                 @if($item['level']==3)
                     Sale
                 @endif
-                @if($item['level']==3)
+                @if($item['level']==4)
                     Tech
                 @endif
             
             </td>
             @if(Auth::user()->level ==1)
-            <td class="center"><i class="fa fa-trash-o  fa-fw"></i><a onclick="return xacnhanxoa('ban co chac la muon xoa khong')" href="{!!URL::route('delUser',$item['id'])!!}"> Delete</a></td>
-            <td class="center"><i class="fa fa-pencil fa-fw"></i> <a href="{!!URL::route('getEditUser',$item['id'])!!}">Edit</a></td>
+            <td class="center" style="padding:2px;">
+                <form method="POST" action="{!!URL::route('delUser',$item['id'])!!}"> 
+                    <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
+                    <button type="submit" class="btn btn-link" onclick="return xacnhanxoa('ban co chac la muon xoa khong')">
+                        <i class="fa fa-trash-o fa-fw"></i>
+                        Xóa
+                    </button>
+                </form>
+            </td>
+            <td class="center"  style="padding:2px;"> <a href="{!!URL::route('getEditUser',$item['id'])!!}" class="btn btn-link"><i class="fa fa-pencil fa-fw"></i> Sửa</a></td>
             @endif
         </tr>
     @endforeach

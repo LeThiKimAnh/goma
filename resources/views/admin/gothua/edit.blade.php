@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('controller','Vật Liệu')
+@section('controller','Kho Gỗ')
 @section('action','Edit')
 @section('content')
 <form action="" method="POST" enctype="multipart/form-data">
@@ -9,29 +9,29 @@
      <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
         <div class="form-group">
              <label>Tên Vật Liệu</label>
-             <input class="form-control" name="txt_ten" value="{!!$vat_lieu['ten']!!}" placeholder="Nhập tên vật liệu" />
+             <input class="form-control" name="txt_ten" value="{!!$go_thua['ten']!!}" placeholder="Nhập tên vật liệu" />
          </div>
          <div class="form-group">
              <label>rộng</label>
-             <input class="form-control" name="txt_chieu_rong" value="{!!$vat_lieu['rong']!!}" placeholder="Nhập chiều rộng" value="{{old('txt_ten')}}" type="number" min="0"></input>
+             <input class="form-control" name="txt_chieu_rong" value="{!!$go_thua['rong']!!}" placeholder="Nhập chiều rộng" value="{{old('txt_ten')}}" type="number" min="0"></input>
          </div>
          <div class="form-group">
              <label>dài</label>
-             <input class="form-control" name="txt_chieu_dai" value="{!!$vat_lieu['dai']!!}" placeholder="Nhập chiều dài" value="{{old('txt_ten')}}" type="number" min="0"></input>
+             <input class="form-control" name="txt_chieu_dai" value="{!!$go_thua['dai']!!}" placeholder="Nhập chiều dài" value="{{old('txt_ten')}}" type="number" min="0"></input>
          </div>
          <div class="form-group" style="display:none">
              <label>cao</label>
-             <input class="form-control" name="txt_chieu_cao" value="{!!$vat_lieu['cao']!!}" placeholder="Nhập chiều cao" value="{{old('txt_ten')}}" type="number" min="0"></input>
+             <input class="form-control" name="txt_chieu_cao" value="{!!$go_thua['cao']!!}" placeholder="Nhập chiều cao" value="{{old('txt_ten')}}" type="number" min="0"></input>
          </div>
          <div class="form-group">
              <label>Chất liệu</label>
-             @if($vat_lieu['chat_lieu']==1)
+             @if($go_thua['chat_lieu']==1)
                  <select class="form-control" name="sl_chat_lieu">
                     <option value="">Hãy chọn chất liệu</option>
                     <option value='1' selected="true">gỗ</option>
                     <option value='2'>sắt</option>
                  </select>
-             @elseif($vat_lieu['chat_lieu']==2)
+             @elseif($go_thua['chat_lieu']==2)
                  <select class="form-control" name="sl_chat_lieu">
                     <option value="">Hãy chọn chất liệu</option>
                     <option value='1'>gỗ</option>
@@ -41,21 +41,21 @@
          </div>
          <div class="form-group">
              <label>Yêu cầu</label>
-             @if($vat_lieu['yeu_cau']==1)
+             @if($go_thua['yeu_cau']==1)
                  <select class="form-control" name="sl_yeu_cau">
                     <option value="">Hãy chọn yêu cầu</option>
                     <option value='1' selected="true">vân ngang</option>
                     <option value='2'>vân dọc</option>
                     <option value='0'>không vân</option>
                  </select>
-             @elseif($vat_lieu['yeu_cau']==2)
+             @elseif($go_thua['yeu_cau']==2)
                  <select class="form-control" name="sl_yeu_cau">
                     <option value="">Hãy chọn yêu cầu</option>
                     <option value='1'>vân ngang</option>
                     <option value='2' selected="true">vân dọc</option>
                     <option value='0'>không vân</option>
                  </select>
-             @elseif($vat_lieu['yeu_cau']==0)
+             @elseif($go_thua['yeu_cau']==0)
                  <select class="form-control" name="sl_yeu_cau">
                     <option value="">Hãy chọn yêu cầu</option>
                     <option value='1'>vân ngang</option>
@@ -64,10 +64,6 @@
                  </select>
              @endif
          </div>
-       <div class="form-group">
-        <label>Mô tả vật liệu</label>
-        <textarea class="form-control" rows="3" name="txt_mo_ta">{!!$vat_lieu['mo_ta']!!}</textarea>
-        </div>
          <button type="submit" class="btn btn-success">
             Lưu lại
          </button>

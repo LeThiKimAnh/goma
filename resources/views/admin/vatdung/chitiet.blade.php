@@ -20,20 +20,38 @@
                      <tr align="center">
                          <th>STT</th>
                          <th>Tên Vật liệu</th>
+                         <th>Dài</th>
+                         <th>Rộng</th>
+                         <th>Chất liệu</th>
+                         <th>Yêu cầu</th>
                          <th>Số lượng</th>
                          <th>Đơn Vị</th>
                      </tr>
                 </thead>
                  <tbody>
                         <?php $stt = 0 ?>
-                         @foreach($chi_tiet_vd as $item)
-                         <?php $stt = $stt + 1 ;
-                            $vat_lieu = DB::table('vat_lieu')->where('id',$item['vatlieu_id'])->first();
+                         @foreach($vat_lieus as $item)
+                         <?php 
+                            $stt = $stt + 1 ;
                          ?>
                        <tr class="odd gradeX" align="center">
                              <td>{!!$stt!!}</td>
-                             <td>{!!$vat_lieu->ten!!}</td>
-                             <td>{!!$item['so_luong']!!}</td>
+                             <td>{!!$item->ten!!}</td>
+                             <td>{!!$item->dai!!}</td>
+                             <td>{!!$item->rong!!}</td>
+                             @if($item->chat_lieu==1)
+                                <td>gỗ</td>
+                             @elseif($item->chat_lieu==2)
+                                <td>sắt</td>
+                             @endif
+                             @if($item->yeu_cau==1)
+                                <td>vân ngang</td>
+                             @elseif($item->yeu_cau==2)
+                                <td>vân dọc</td>
+                             @elseif($item->yeu_cau==0)
+                                <td>không vân</td>
+                             @endif
+                             <td>{!!$item->so_luong!!}</td>
                              <td>Cái</td>
                         </tr>
                         @endforeach

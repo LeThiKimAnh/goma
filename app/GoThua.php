@@ -8,5 +8,5 @@ class GoThua extends Model
 {
    protected $table ='go_thua';
 
-   protected $fillable =['dai','rong','cao','chat_lieu'];
+   protected $fillable =['ten','dai','rong','cao','chat_lieu','yeu_cau'];
 }

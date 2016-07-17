@@ -44,24 +44,35 @@
                 <option value='0' selected="true">Chưa xử lý</option>
                 <option value='1' >Đang chờ xử lý</option>
                 <option value='2'>Đã xử lý</option>
+                <option value='3'>Xử lý xong</option>
           @endif
            @if($trang_thai ==1)
             <option value="" >Trạng thái</option>
                 <option value='0' >Chưa xử lý</option>
                 <option value='1' selected="true">Đang chờ xử lý</option>
                 <option value='2'>Đã xử lý</option>
+                <option value='3'>Xử lý xong</option>
           @endif
            @if($trang_thai ==2)
             <option value="" >Trạng thái</option>
                 <option value='0' >Chưa xử lý</option>
                 <option value='1' >Đang chờ xử lý</option>
                 <option value='2' selected="true">Đã xử lý</option>
+                <option value='3'>Xử lý xong</option>
           @endif
           @if($trang_thai ==-1)
-            <option value="">Trạng thái</option>
+            <option value="-1">Trạng thái</option>
                 <option value='0' >Chưa xử lý</option>
                 <option value='1' >Đang chờ xử lý</option>
                 <option value='2'>Đã xử lý</option>
+                <option value='3'>Xử lý xong</option>
+          @endif
+           @if($trang_thai ==3)
+            <option value="-1">Trạng thái</option>
+                <option value='0' >Chưa xử lý</option>
+                <option value='1' >Đang chờ xử lý</option>
+                <option value='2'>Đã xử lý</option>
+                <option value='3' selected="true">Xử lý xong</option>
           @endif
           </select>   
         </div>
@@ -109,7 +120,9 @@
              <th>Khách hàng</th>
              <th>Người lập đơn</th>
              <th>Trạng thái</th>
+             @if(Auth::user()->level ==1||Auth::user()->level ==2)
              <th>Tác vụ</th>
+             @endif
            </tr>
     </thead>
      <?php $stt = 0 ?>
@@ -127,10 +140,13 @@
                     Chưa xử lý
                @elseif($item["trang_thai"]==1)
                     Đang chờ xử lý
-                @elseif($item["trang_thai"]==2)
+               @elseif($item["trang_thai"]==2)
                     Đã xử lý
+               @elseif($item["trang_thai"]==3)
+                    Xử lý xong
                @endif
              </td>
+              @if(Auth::user()->level ==1||Auth::user()->level ==2)
               @if($item["trang_thai"]==0)
                <td>
                  <form method="POST" action="{!!URL::route('session',$item['id'])!!}">
@@ -143,6 +159,7 @@
                 <td>
                   <a type="button" class="btn btn-success" href="{{URL::route('result',$item['id'])}}">Kết quả</a>
                 </td>
+              @endif
               @endif
             </tr>
             <tr class="collapse" id="accordion{!!$item['id']!!}">
@@ -205,7 +222,11 @@
                 <div class="form-group col-lg-2">
                   <div class="form-group">
                     <div class="col-lg-6">
-                      <a type="button" class="btn btn-default" onclick="return xacnhanxoa('ban co chac la muon xoa khong')" href="{{URL::route('deldonhang',$item['id'])}}" data-toggle="tooltip" data-placement="top" title="Xóa đơn hàng"><i class="fa fa-trash-o fa-fw"></i></a>
+                    <form method="POST" action="{!!URL::route('deldonhang',$item['id'])!!}"> 
+                      <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
+                      <button type="submit" class="btn btn-default" onclick="return xacnhanxoa('ban co chac la muon xoa khong')" data-toggle="tooltip" data-placement="top" title="Xóa đơn hàng"><i class="fa fa-trash-o fa-fw"></i>
+                      </button>
+                      </form>
                     </div>
                     <div class="col-lg-6">
                       <a type="button" class="btn btn-default" href="{{URL::route('getEditDH',$item['id'])}}" data-toggle="tooltip" data-placement="top" title="Sửa đơn hàng"><i class="fa fa-pencil fa-fw"></i></a>
@@ -215,7 +236,7 @@
                 @endif
                 <div class=" form-group col-lg-2">
                   <div class="form-group">
-                    <a href="{{URL::route('chitietDH',$item['id'])}}" class="centered-text"><h3><i class="fa fa-eye" aria-hidden="true"></i>Chi tiết</h3></a>
+                    <a href="{{URL::route('chitietDH',$item['id'])}}" class="centered-text"><h4>Chi tiết</h4></a>
                   </div>
                 </div>
               </td>

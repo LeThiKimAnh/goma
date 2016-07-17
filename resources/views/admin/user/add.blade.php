@@ -26,7 +26,7 @@
         <div class="form-group">
             <label>User Level</label>
             <label class="radio-inline">
-                <input name="rdoLevel" value="1" type="radio">Admin
+                <input name="rdoLevel" value="1" type="radio" checked="">Admin
             </label>
             <label class="radio-inline">
                 <input name="rdoLevel" value="2" type="radio" >Sale Admin

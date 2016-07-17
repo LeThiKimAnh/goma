@@ -46,15 +46,12 @@
                     
                 </tbody>
             </table>
-            @if($check_tt==1)
-            <div class="form-group">
-             <a type="button" class="btn btn-primary" href="{!!URL::route('listDhDaXL')!!}">Quay lại danh sách</a>
-            @else
             <div class="form-group">
             <a type="button" class="btn btn-primary" href="{!!URL::route('listDh')!!}">Quay lại danh sách</a>
-            @endif
+            @if(Auth::user()->level ==1||Auth::user()->level ==2)
             @if($don_hang['trang_thai']==0)
                 <button type="submit" class="btn btn-primary">Xử Lý</button>
+            @endif
             @endif
          </div id="insert_erro_vd">
          </div>

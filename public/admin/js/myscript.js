@@ -59,7 +59,7 @@ $(document).ready(function(){
 	$("#datepicker_edit").datepicker({        
 		autoclose: true,         
 		todayHighlight: true 
-		}).datepicker('update', new Date());
+		}).datepicker('update');
 
 });
 function check(key,dl){

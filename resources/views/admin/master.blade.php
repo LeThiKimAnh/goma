@@ -152,15 +152,27 @@
 								<!-- /.nav-second-level -->
 							</li>
 							<li>
+								<a href="#"><i class="glyphicon glyphicon-home"></i> Kho Gỗ<span class="fa arrow"></span></a>
+								<ul class="nav nav-second-level">
+									<li>
+										<a href="{!!URL::route('khogoList')!!}"> Danh sách kho</a>
+									</li>
+									<li>
+										<a href="{!!URL::route('khogoAdd')!!}"> Thêm gỗ</a>
+									</li>
+								</ul>
+								<!-- /.nav-second-level -->
+							</li>
+							<li>
 								<a href="#"><i class="glyphicon glyphicon-user"></i> User<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
 									<li>
 										<a href="{!!URL::route('listUser')!!}">Danh Sách User</a>
 									</li>
 									@if(Auth::user()->level ==1)
-									<li>
-										<a href="{!!URL::route('userAdd')!!}"> Thêm User</a>
-									</li>
+										<li>
+											<a href="{!!URL::route('userAdd')!!}"> Thêm User</a>
+										</li>
 									@endif
 									<li>
 										<a href="{!!URL::route('getRepass')!!}">Đổi mật khẩu</a>

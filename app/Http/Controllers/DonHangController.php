@@ -108,7 +108,7 @@ class DonHangController extends Controller {
 		$trang_thai = -1;
 		$d1 = "";
 		$d2 = "";
-		$data = DonHang::orderBy('id', 'DESC')->paginate(2);
+		$data = DonHang::orderBy('id', 'DESC')->paginate(10);
 		return view('admin.donhang.list', compact('data', 'action', 'maDH', 'tenKH', 'd1', 'd2', 'nguoi_TD', 'trang_thai'));
 		// return view('admin.donhang.list',compact('data','action'));
 	}
@@ -152,12 +152,14 @@ class DonHangController extends Controller {
 
 				for ($i = 0; $i < count($vatdung_id_mang); $i++) {
 					$chi_tiet_dh = new ChiTietDonHang;
+					$vat_dung = VatDung::find($vatdung_id_mang[$i]);
 					$chi_tiet_dh->donhang_id = $id;
 					$chi_tiet_dh->vatdung_id = $vatdung_id_mang[$i];
 					$chi_tiet_dh->so_luong = $soluong_mang[$i];
+					$chi_tiet_dh->don_gia = $vat_dung['gia_san_pham'];
 					$chi_tiet_dh->save();
 
-					$vat_dung = VatDung::find($vatdung_id_mang[$i]);
+					
 					$tong_gia = $tong_gia + $vat_dung['gia_san_pham'] * $soluong_mang[$i];
 				}
 				$don_hang = DonHang::find($id);
@@ -189,14 +191,8 @@ class DonHangController extends Controller {
 		return view('admin.donhang.chitiet', compact('don_hang', 'id', 'vatdungs', 'check_tt'));
 	}
 
-	// public function listDhCXL() {
-	// 	$data = DonHang::where('trang_thai', 0)->orderBy('id', 'DESC')->get()->toArray();
-	// 	$action = 'Chưa xử lý';
-	// 	return view('admin.donhang.list', compact('data', 'action'));
-	// }
-
 	public function searchDH(Request $request) {
-		$per_page = 2;
+		$per_page = 10;
 		$action = 'List';
 		$maDH = $request->txt_maDH;
 		$tenKH = $request->txt_KH;
@@ -219,7 +215,7 @@ class DonHangController extends Controller {
 		if (!ctype_space($nguoi_TD) && !empty($nguoi_TD)) {
 			$sql[] = " nguoi_tao_don='" . $nguoi_TD . "'";
 		}
-		if ($trang_thai != "") {
+		if (!ctype_space($trang_thai) && !empty($trang_thai)&&$trang_thai>=0){
 			$sql[] = " trang_thai=" . $trang_thai . "";
 		}
 		if (!ctype_space($time1) && !empty($time1) && !ctype_space($time2) && !empty($time2)) {

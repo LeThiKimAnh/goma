@@ -5,47 +5,46 @@
 
 <div class="form-group">
 <form method="GET" action="{!!URL::route('SearchVD')!!}" name="form_search">
-@include('admin.blocks.error')
-  <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
-  <div class="col-lg-12" style="">
+  
     <div class="form-group col-lg-4">
       <label class="form-control-label col-sm-5">Mã vật dụng:</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" placeholder="Mã vật dụng" name="txt_maVD" value="{!!old('txt_maDH')!!}">
+        <input type="text" class="form-control" placeholder="Mã vật dụng" name="txt_maVD" value="{!!$maVD!!}">
       </div>
     </div>
 
     <div class="form-group col-lg-4">
       <label class="form-control-label col-sm-5">Tên vật dụng:</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" placeholder="Tên Khách hàng" name="txt_VD">
+        <input type="text" class="form-control" placeholder="Tên vật dụng" name="txt_VD" value="{!!$tenVD!!}">
       </div>
     </div>
 
+    @if(Auth::user()->level==1||Auth::user()->level==2)
     <div class="form-group col-lg-4">
         <label class="form-control-label col-sm-5">Giá sản xuất:</label>
         <div class="col-sm-7">
-          <input type="text" class="form-control" placeholder="Người lập đơn hàng" name="txt_giaSX">
+          <input type="text" class="form-control" placeholder="Giá sản xuất" name="txt_giaSX" value="{!!$gia_SX!!}">
         </div>
     </div>
+    @endif
   </div>
-  <div class="col-lg-12">
+
     <div class="form-group col-lg-4">
         <label class="form-control-label col-sm-5">Giá sản phẩm:</label>
          <div class="col-sm-7">
-          <input type="text" class="form-control" placeholder="Người lập đơn hàng" name="txt_giaSP">
+          <input type="text" class="form-control" placeholder="Giá sản phẩm" name="txt_giaSP" value="{!!$gia_SP!!}">
         </div>
     </div>
-
+  @if(Auth::user()->level==1||Auth::user()->level==2)
     <div class="form-group col-lg-4">
         <label class="form-control-label col-sm-5">Hệ số:</label>
          <div class="col-sm-7">
-          <input type="text" class="form-control" placeholder="hệ số" name="txt_HS">
+          <input type="text" class="form-control" placeholder="Hệ số" name="txt_HS" value="{!!$he_so!!}">
         </div>
     </div>
-  </div>
-
-    <div class="col-lg-12"></div>
+  @endif
+ 
     <div class="form-group col-lg-12">
       <button type="submit" class="btn btn-primary center-block">Tìm kiếm  <i class="glyphicon glyphicon-search"></i></button>
     </div>
@@ -79,9 +78,14 @@
             <th>STT</th>
             <th>Mã Vật Dụng</th>
             <th>Tên</th>
-            <th>Chi tiết</th>
+            @if(Auth::user()->level==1||Auth::user()->level==2)
+            <th>Giá sản xuất</th>
+            @endif
+            <th>Giá sản phẩm</th>
+            @if(Auth::user()->level==1||Auth::user()->level==2)
             <th>Xóa</th>
             <th>Sửa</th>
+            @endif
         </tr>
     </thead>
     <tbody >
@@ -92,12 +96,17 @@
                 <td>{!!$stt!!}</td>
                 <td>{!!$item["ma_vat_dung"]!!}</td>
                 <td>{!!$item["ten"]!!}</td>
-                <td class="center"><a href ="{{URL::route('chitietVD',$item['id'])}}">Chi tiết</a></td>
-                <td class="center"><i class="fa fa-trash-o fa-fw"></i><a  href="{{URL::route('delvatdung',$item['id'])}}" onclick="return xacnhanxoa('Bạn có muốn xóa vật dụng này')">Xóa</a></td>
-                <td class="center"><i class="fa fa-pencil fa-fw"></i><a  href ="{{URL::route('getEditVD',$item['id'])}}">Sửa</a></td>
+                @if(Auth::user()->level==1||Auth::user()->level==2)
+                <td>{!!$item['gia_san_xuat']!!}</td>
+                @endif
+                <td>{!!$item['gia_san_pham']!!}</td>
+                @if(Auth::user()->level==1||Auth::user()->level==2)
+                <td class="center" style="padding:2px;"> <form method="POST" action="{!!URL::route('delvatdung',$item['id'])!!}"> <input type="hidden" name="_token" value="{!! csrf_token() !!}" /><button type="submit" class="btn btn-link" onclick="return xacnhanxoa('ban co chac la muon xoa khong')"><i class="fa fa-trash-o fa-fw"></i> Xóa</button></form></td>
+                <td class="center" style="padding:2px;"><a class="btn btn-link" href="{{URL::route('getEditVD',$item['id'])}}"><i class="fa fa-pencil fa-fw"></i> Sửa</a></td>
+                @endif
             </tr>
             <tr class="collapse" id="accordion{!!$item['id']!!}">
-                <td colspan="6">
+                <td colspan="7">
               <div >
                 <div class="col-lg-1">
                 </div>
@@ -106,10 +115,12 @@
                     <div class="col-lg-4"><h4>Tên vật dụng :</h4></div>
                     <div class="col-lg-8"><h4>{!!$item['ten']!!}</h4></div>
                   </div>
+                  @if(Auth::user()->level==1||Auth::user()->level==2)
                   <div class=" col-lg-12">
                     <div class="col-lg-4"><h4>Giá sản xuất :</h4></div>
                     <div class="col-lg-8"><h4>{!!$item['gia_san_xuat']!!}</h4></div>
                   </div>
+                  @endif
                   <div class="col-lg-12">
                     <div class="col-lg-4"><h4>Giá bán :</h4></div>
                     <div class="col-lg-8">
@@ -118,28 +129,20 @@
                           </h4>
                     </div>
                   </div>
+                  @if(Auth::user()->level==1||Auth::user()->level==2)
                   <div class="col-lg-12">
                     <div class="col-lg-4"><h4>Hệ số :</h4></div>
                     <div class="col-lg-8"><h4>{!!$item['he_so']!!}</h4></div>
                   </div>
+                  @endif
                   <div class="col-lg-12">
                     <div class="col-lg-4"><h4>Mô tả :</h4></div>
                     <div class="col-lg-8"><h4>{!!$item['mo_ta']!!}</h4></div>
                   </div>
                 </div>
-                <div class="form-group col-lg-2">
-                  <div class="form-group">
-                    <div class="col-lg-6">
-                      <a type="button" class="btn btn-default" onclick="return xacnhanxoa('ban co chac la muon xoa khong')" href="{{URL::route('deldonhang',$item['id'])}}" data-toggle="tooltip" data-placement="top" title="Xóa đơn hàng"><i class="fa fa-trash-o fa-fw"></i></a>
-                    </div>
-                    <div class="col-lg-6">
-                      <a type="button" class="btn btn-default" href="{{URL::route('getEditDH',$item['id'])}}" data-toggle="tooltip" data-placement="top" title="Sửa đơn hàng"><i class="fa fa-pencil fa-fw"></i></a>
-                    </div>
-                  </div>
-                </div>
                 <div class=" form-group col-lg-2">
                   <div class="form-group">
-                    <a href="{{URL::route('chitietDH',$item['id'])}}" class="centered-text"><h3><i class="fa fa-eye" aria-hidden="true"></i>Chi tiết</h3></a>
+                    <a href="{{URL::route('chitietVD',$item['id'])}}" class="centered-text"><h4>Chi tiết</h4></a>
                   </div>
                 </div>
               </td>
@@ -147,6 +150,9 @@
         @endforeach
     </tbody>
 </table>
+<div class="pull-right">
+  {!! $data->render() !!}
+</div>
 
 <a id="back-to-top" href="#" class="btn btn-info btn-lg back-to-top" role="button" title="Trở về đầu trang" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
 @endsection
