@@ -3,6 +3,16 @@
 @section('action','Detail')
 @section('content')
 
+<ol class="breadcrumb">
+    <li class="active">
+    <a href="{!!URL::route('vd-getList')!!}">
+        <i class="glyphicon glyphicon-bed"></i> Vật dụng
+    </a>
+    </li>
+    <li class="active">
+        <i class="fa fa-edit"></i> Chi tiết
+    </li>
+</ol>
 <div class="col-lg-7" style="padding-bottom:120px">
     @include('admin.blocks.error')
         <input type="hidden" name="_token" value="{!! csrf_token() !!}" />
@@ -58,9 +68,6 @@
                     
                 </tbody>
             </table>
-            <div class="form-group">
-             <a type="button" class="btn btn-primary" href="{!!URL::route('vd-getList')!!}">Quay lại danh sách</a>
-         </div>
          </div>
 
 </div>

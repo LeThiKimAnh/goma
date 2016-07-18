@@ -3,7 +3,16 @@
 @section('action','Detail')
 @section('content')
 
-
+<ol class="breadcrumb">
+    <li class="active">
+    <a href="{!!URL::route('listDh')!!}">
+        <i class="glyphicon glyphicon-list-alt"></i> Danh Sách
+    </a>
+    </li>
+    <li class="active">
+        <i class="fa fa-edit"></i> Chi tiết
+    </li>
+</ol>
 
 <div class="col-lg-7" style="padding-bottom:120px">
     @include('admin.blocks.error')
@@ -47,7 +56,6 @@
                 </tbody>
             </table>
             <div class="form-group">
-            <a type="button" class="btn btn-primary" href="{!!URL::route('listDh')!!}">Quay lại danh sách</a>
             @if(Auth::user()->level ==1||Auth::user()->level ==2)
             @if($don_hang['trang_thai']==0)
                 <button type="submit" class="btn btn-primary">Xử Lý</button>

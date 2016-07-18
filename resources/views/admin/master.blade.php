@@ -62,7 +62,6 @@
 	<body>
 
 		<div id="wrapper" >
-
 			<!-- Navigation -->
 			<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
 				<div class="navbar-header">
@@ -121,12 +120,15 @@
 									<li>
 										<a href="{!!URL::route('listDh')!!}"> Danh sách đơn hàng</a>
 									</li>
+									@if(Auth::user()->level ==1||Auth::user()->level ==2||Auth::user()->level ==3)
 									<li>
 										<a href="{!!URL::route('getDonhang')!!}"> Thêm đơn hàng</a>
 									</li>
+									@endif
 								</ul>
 								<!-- /.nav-second-level -->
 							</li>
+							@if(Auth::user()->level ==1||Auth::user()->level ==2)
 							<li>
 								<a href="#"><i class="glyphicon glyphicon-bed"></i> Vật Dụng<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
@@ -139,6 +141,7 @@
 								</ul>
 								<!-- /.nav-second-level -->
 							</li>
+
 							<li>
 								<a href="#"><i class="glyphicon glyphicon-object-align-bottom"></i> Vật Liệu<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
@@ -151,6 +154,7 @@
 								</ul>
 								<!-- /.nav-second-level -->
 							</li>
+
 							<li>
 								<a href="#"><i class="glyphicon glyphicon-home"></i> Kho Gỗ<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
@@ -163,6 +167,7 @@
 								</ul>
 								<!-- /.nav-second-level -->
 							</li>
+							@endif
 							<li>
 								<a href="#"><i class="glyphicon glyphicon-user"></i> User<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">

@@ -109,7 +109,7 @@
 </form>
 </div>  
 <div class="form-group pull-right" >
-  <button class="btn btn-default " onclick="return fnExcelReport()" >Xuất danh sách ra Exel</button>
+  <button class="btn btn-default " onclick="return fnExcelReport()" >Xuất danh sách ra Excel</button>
 </div>                <!-- /.col-lg-12 -->
 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
     <thead>

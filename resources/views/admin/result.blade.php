@@ -1,4 +1,6 @@
 @extends('admin.master')
+@section('controller','Kết quả')
+@section('action','')
 @section('content')
 <script>
 	var solution = <?php print $session->sketch; ?>;
@@ -102,7 +104,16 @@
 	// show after 1 second
 	setTimeout(show, 1000);
 </script>
-
+<ol class="breadcrumb">
+    <li class="active">
+    <a href="{!!URL::route('listDh')!!}">
+        <i class="glyphicon glyphicon-list-alt"></i> Danh Sách
+    </a>
+    </li>
+    <li class="active">
+        <i class="fa fa-edit"></i> Kết quả
+    </li>
+</ol>
 <div class="col-lg-12" style="padding-bottom:120px">
 	<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
 		<!-- Indicators -->
@@ -124,4 +135,56 @@
 		</a>
 	</div>
 </div>
+<div class="form-group pull-right" >
+  <button class="btn btn-default " onclick="return fnExcelReport()" >Xuất danh sách ra Excel</button>
+</div>   
+<table class="table table-striped table-bordered table-hover" id="dataTables">
+    <thead>
+         <tr align="center" name ="trdata">
+             <th>STT</th>
+             <th>Tên Panel</th>
+             <th>Dài</th>
+             <th>Rộng</th>
+             <th>Yêu cầu</th>
+         </tr>
+    </thead>
+   
+     <tbody id="myTable">
+           <tr class="odd gradeX clickable accordion-toggle" align="center " data-toggle="collapse" data-target="#accordion" name ="trdata">
+             <td>1</td>
+             <td>ABC</td>
+             <td>100</td>
+             <td>50</td>
+             <td>Yêu cầu</td>
+            </tr>
+            <tr class="collapse" id="accordion">
+              <td colspan="5">
+              <div class="col-lg-1"></div>
+              <div class="col-lg-9">
+               	<table class="table table-striped table-bordered table-hover">
+               		<thead>
+               			<th>STT</th>
+			            <th>Tên mã</th>
+			            <th>Top</th>
+			            <th>Left</th>
+			            <th>Dài</th>
+			            <th>Rộng</th>
+               		</thead>
+               		<tbody>
+               			<tr>
+               				<td>1</td>
+               				<td>A1</td>
+               				<td>10</td>
+               				<td>20</td>
+               				<td>30</td>
+               				<td>40</td>
+               			</tr>
+               		</tbody>
+               	</table>
+              </div>
+              </td>
+              </div>
+            </tr>
+    </tbody>
+</table>
 @endsection
