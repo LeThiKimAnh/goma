@@ -5,7 +5,7 @@
 <script>
 	var solution = <?php print $session->sketch; ?>;
 	var imageObj = new Image();
-	
+
 	imageObj.src = "{{url('/admin/images/WLsci.png')}}";
 
 
@@ -116,7 +116,7 @@
         <i class="fa fa-edit"></i> Kết quả
     </li>
 </ol>
-<div class="col-lg-12" style="border-bottom-width: 100px;">
+<div class="col-lg-12"  style="padding-bottom:20px">
 	<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
 		<!-- Indicators -->
 		<ol id ='slide-indicator' class="carousel-indicators">
@@ -140,7 +140,7 @@
 <div class="form-group pull-right" >
 	<button class="btn btn-default " onclick="return fnExcelReport()" >Xuất danh sách ra Excel</button>
 </div>   
-<table class="table table-striped table-bordered table-hover" id="dataTables" style="padding-bottom:120px">
+<table class="table table-striped table-bordered table-hover" id="dataTables" style="margin-bottom: 2cm;">
     <thead>
 		<tr align="center" name ="trdata">
 			<th>STT</th>
@@ -168,10 +168,10 @@
 				@endif
 			</td>
 		</tr>
-		<tr class="collapse" id="accordion{{ $panel->id }}">
+		<tr class="collapse" id="accordion{{ $panel->id }}" name ="trdata">
 			<td colspan="5">
 				<div class="col-lg-1"></div>
-				<div class="col-lg-9">
+				<div class="col-lg-10">
 					<table class="table table-striped table-bordered table-hover">
 						<thead>
 						<th>STT</th>
@@ -196,10 +196,28 @@
 						</tbody>
 					</table>
 				</div>
+				<div class="col-lg-2">
+				</div>
+				<div class="col-lg-12">
+				<div class="col-lg-11">
+					
+				</div>
+				<div class="col-lg-1 pull-right">
+					<div class="col-lg-4 ">
+					</div>
+					<div class="col-lg-4 ">
+						<button data-toggle="collapse" data-target="#accordion{{ $panel->id }}" style="margin-bottom: 10px;"><i class="glyphicon glyphicon-chevron-up"></i> 
+						</button>
+					</div>
+				</div>
+					
+				</div>
 			</td>
 			</div>
+			
 		</tr>
 		@endforeach 
     </tbody>
 </table>
+<a id="back-to-top" href="#" class="btn btn-info btn-lg back-to-top" role="button" title="Trở về đầu trang" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
 @endsection
