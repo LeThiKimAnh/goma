@@ -114,7 +114,7 @@
         <i class="fa fa-edit"></i> Kết quả
     </li>
 </ol>
-<div class="col-lg-12" style="padding-bottom:20px">
+<div class="col-lg-12" style="border-bottom-width: 100px;">
 	<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
 		<!-- Indicators -->
 		<ol id ='slide-indicator' class="carousel-indicators">
@@ -138,7 +138,7 @@
 <div class="form-group pull-right" >
   <button class="btn btn-default " onclick="return fnExcelReport()" >Xuất danh sách ra Excel</button>
 </div>   
-<table class="table table-striped table-bordered table-hover" id="dataTables">
+<table class="table table-striped table-bordered table-hover" id="dataTables" style="padding-bottom:120px">
     <thead>
          <tr align="center" name ="trdata">
              <th>STT</th>
@@ -157,7 +157,7 @@
              <td>50</td>
              <td>Yêu cầu</td>
             </tr>
-            <tr class="collapse" id="accordion">
+            <tr class="collapse" id="accordion" data-toggle="collapse" data-target="#accordion" >
               <td colspan="5">
               <div class="col-lg-1"></div>
               <div class="col-lg-9">
