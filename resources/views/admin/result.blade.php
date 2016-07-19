@@ -5,7 +5,9 @@
 <script>
 	var solution = <?php print $session->sketch; ?>;
 	var imageObj = new Image();
+	
 	imageObj.src = "{{url('/admin/images/WLsci.png')}}";
+
 
 	function random_color() {
 		var color = [0, 0, 0];
