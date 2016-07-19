@@ -10,7 +10,7 @@ use Auth;
 class SessionController extends Controller {
 
 	public function session($id) {
-		if(Auth::user()->level==1||Auth::user()->level==2){
+		if (Auth::user()->level == 1 || Auth::user()->level == 2) {
 			$don_hang = DonHang::find($id);
 			$trang_thai = $don_hang->trang_thai;
 
@@ -29,16 +29,21 @@ class SessionController extends Controller {
 			} else {
 				return redirect()->route('listDh')->with(['flash_level' => 'success', 'flash_message' => 'Đơn hàng này đã hoặc đang đợi xử lý']);
 			}
-		}else{
+		} else {
 			return view('errors.500');
 		}
 	}
 
 	public function result($id) {
-		if(Auth::user()->level==1||Auth::user()->level==2||Auth::user()->level==4){
+		if (Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 4) {
 			$session = Session::where('donhang_id', $id)->first();
-			return view('admin.result', compact('session'));
-		}else{
+			if ($session != null && $session->sketch != null) {
+				$panels = json_decode($session->sketch)->panels;
+				return view('admin.result', compact('session', 'panels'));
+			} else {
+				return view('errors.404');
+			}
+		} else {
 			return view('errors.404');
 		}
 	}
