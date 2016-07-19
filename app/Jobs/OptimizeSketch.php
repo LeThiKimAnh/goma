@@ -34,7 +34,7 @@ class OptimizeSketch extends Job implements ShouldQueue {
 	public function handle() {
 		Log::info("Starting optimze the session");
 		$order_id = $this->session->donhang_id;
-		$gothua = DB::select("SELECT dai as height,rong as width, chat_lieu as req FROM go_thua WHERE dai > 50 and rong > 50;");
+		$gothua = DB::select("SELECT dai as height,rong as width, yeu_cau as req FROM go_thua WHERE dai > 50 and rong > 50 and chat_lieu = 1;");
 		DB::table('go_thua')->truncate();
 		$sql = "SELECT c.ten as `code`, SUM(a.so_luong * b.so_luong) as count, c.dai as height, c.rong as width, c.yeu_cau as req FROM chi_tiet_vat_dung as a inner join chi_tiet_don_hang as b ON a.vatdung_id = b.vatdung_id and b.donhang_id = $order_id inner join vat_lieu as c ON a.vatlieu_id = c.id GROUP BY a.vatlieu_id;";
 		$res = DB::select($sql);
@@ -59,7 +59,7 @@ class OptimizeSketch extends Job implements ShouldQueue {
 			array_push($recyclees, $r);
 		}
 
-		$solution = new Solution();
+		$solution = new Solution($order_id);
 		$solution->run($rects, $recyclees);
 
 		$sketch = $solution->to_json();
@@ -70,7 +70,9 @@ class OptimizeSketch extends Job implements ShouldQueue {
 			return array(
 				'dai' => $rect[3],
 				'rong' => $rect[2],
-				'chat_lieu' => $rect[4]
+				'yeu_cau' => $rect[4],
+				'ten' => 'Go thua',
+				'chat_lieu' => 1 # GO
 			);
 		}, $solution->remain());
 		DB::table('go_thua')->insert($remains);

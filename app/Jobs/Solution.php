@@ -14,7 +14,12 @@ class Solution {
 
 	private $panels = array();
 	private $remain = array();
+	private $order_id;
 	public static $REQS = array(Solution::VERTICAL, Solution::HORIZONAL, Solution::NONE);
+
+	public function __construct($order_id) {
+		$this->order_id = $order_id;
+	}
 
 	public function run($rects, $recyclees) {
 		// sort all the rect by area desc
@@ -48,18 +53,25 @@ class Solution {
 		return $this->remain;
 	}
 
-	public function to_json() {
+	public function sketch() {
 		$sketch = array();
+		$id = 1;
 		foreach ($this->panels as $p) {
-			array_push($sketch, $p->sketch());
+			$p_sketch = $p->sketch();
+			$p_sketch['id'] = 'panel_' . $this->order_id . '_' . $id++;
+			array_push($sketch, $p_sketch);
 		}
-		var_dump($this->remain);
 		$obj = array(
 			"panels" => $sketch,
 			"remain" => $this->remain
 		);
 
-		return json_encode($obj);
+		return $obj;
+	}
+
+	public function to_json() {
+		$sketch = $this->sketch();
+		return json_encode($sketch);
 	}
 
 	private function runOnReq($rects, $recyclees, $req) {
@@ -77,7 +89,7 @@ class Solution {
 			$remain = $panel->remain();
 			array_push($this->panels, $panel);
 			$this->remain = array_merge($this->remain, $remain);
-			
+
 			if (count($rects) == 0) {
 				break;
 			}

@@ -106,9 +106,9 @@
 </script>
 <ol class="breadcrumb">
     <li class="active">
-    <a href="{!!URL::route('listDh')!!}">
-        <i class="glyphicon glyphicon-list-alt"></i> Danh Sách
-    </a>
+		<a href="{!!URL::route('listDh')!!}">
+			<i class="glyphicon glyphicon-list-alt"></i> Danh Sách
+		</a>
     </li>
     <li class="active">
         <i class="fa fa-edit"></i> Kết quả
@@ -136,55 +136,68 @@
 	</div>
 </div>
 <div class="form-group pull-right" >
-  <button class="btn btn-default " onclick="return fnExcelReport()" >Xuất danh sách ra Excel</button>
+	<button class="btn btn-default " onclick="return fnExcelReport()" >Xuất danh sách ra Excel</button>
 </div>   
 <table class="table table-striped table-bordered table-hover" id="dataTables" style="padding-bottom:120px">
     <thead>
-         <tr align="center" name ="trdata">
-             <th>STT</th>
-             <th>Tên Panel</th>
-             <th>Dài</th>
-             <th>Rộng</th>
-             <th>Yêu cầu</th>
-         </tr>
+		<tr align="center" name ="trdata">
+			<th>STT</th>
+			<th>Tên Panel</th>
+			<th>Dài</th>
+			<th>Rộng</th>
+			<th>Yêu cầu</th>
+		</tr>
     </thead>
-   
-     <tbody id="myTable">
-           <tr class="odd gradeX clickable accordion-toggle" align="center " data-toggle="collapse" data-target="#accordion" name ="trdata">
-             <td>1</td>
-             <td>ABC</td>
-             <td>100</td>
-             <td>50</td>
-             <td>Yêu cầu</td>
-            </tr>
-            <tr class="collapse" id="accordion" data-toggle="collapse" data-target="#accordion" >
-              <td colspan="5">
-              <div class="col-lg-1"></div>
-              <div class="col-lg-9">
-               	<table class="table table-striped table-bordered table-hover">
-               		<thead>
-               			<th>STT</th>
-			            <th>Tên mã</th>
-			            <th>Top</th>
-			            <th>Left</th>
-			            <th>Dài</th>
-			            <th>Rộng</th>
-               		</thead>
-               		<tbody>
-               			<tr>
-               				<td>1</td>
-               				<td>A1</td>
-               				<td>10</td>
-               				<td>20</td>
-               				<td>30</td>
-               				<td>40</td>
-               			</tr>
-               		</tbody>
-               	</table>
-              </div>
-              </td>
-              </div>
-            </tr>
+	<tbody id="myTable">
+		<?php $stt = 1 ?>
+		@foreach($panels as $panel)
+		<tr class="odd gradeX clickable accordion-toggle" align="center " data-toggle="collapse" data-target="#accordion{{ $panel->id }}" name ="trdata">
+			<td>{{ $stt++ }}</td>
+			<td>{{ $panel->id }}</td>
+			<td>{{ $panel->height }}</td>
+			<td>{{ $panel->width }}</td>
+			<td>
+				@if($panel->req==1)
+				vân ngang
+				@elseif($panel->req==2)
+				vân dọc
+				@else
+				không vân
+				@endif
+			</td>
+		</tr>
+		<tr class="collapse" id="accordion{{ $panel->id }}">
+			<td colspan="5">
+				<div class="col-lg-1"></div>
+				<div class="col-lg-9">
+					<table class="table table-striped table-bordered table-hover">
+						<thead>
+						<th>STT</th>
+						<th>Tên mã</th>
+						<th>Top</th>
+						<th>Left</th>
+						<th>Dài</th>
+						<th>Rộng</th>
+						</thead>
+						<tbody>
+							<?php $sstt = 1; ?>
+							@foreach($panel->rects as $rect)
+							<tr>
+								<td>{{ $sstt++ }}</td>
+								<td>{{ $rect[4] }}</td>
+								<td>{{ $rect[0] }}</td>
+								<td>{{ $rect[1] }}</td>
+								<td>{{ $rect[3] }}</td>
+								<td>{{ $rect[2] }}</td>
+							</tr>
+							@endforeach  
+						</tbody>
+					</table>
+				</div>
+			</td>
+			</div>
+		</tr>
+		@endforeach 
     </tbody>
 </table>
 @endsection

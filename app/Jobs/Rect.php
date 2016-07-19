@@ -8,7 +8,6 @@ class Rect {
 	public $left;
 	public $width;
 	public $height;
-	
 	public $code;
 	public $area;
 	public $req;
@@ -30,7 +29,7 @@ class Rect {
 	}
 
 	public function sketch() {
-		return array($this->top, $this->left, $this->width, $this->height);
+		return array($this->top, $this->left, $this->width, $this->height, $this->code);
 	}
 
 	public function draw() {
