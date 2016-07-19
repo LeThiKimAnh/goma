@@ -10,29 +10,37 @@ use Auth;
 class SessionController extends Controller {
 
 	public function session($id) {
-		$don_hang = DonHang::find($id);
-		$trang_thai = $don_hang->trang_thai;
+		if(Auth::user()->level==1||Auth::user()->level==2){
+			$don_hang = DonHang::find($id);
+			$trang_thai = $don_hang->trang_thai;
 
-		if ($trang_thai == 0) {
-			$don_hang->trang_thai = 1;
-			$don_hang->save();
-			$session = new Session;
-			$session->donhang_id = $id;
-			$session->nguoi_xu_ly = Auth::user()->username;
-			$session->trang_thai = 1;
-			$session->sketch = '';
-			$session->save();
+			if ($trang_thai == 0) {
+				$don_hang->trang_thai = 1;
+				$don_hang->save();
+				$session = new Session;
+				$session->donhang_id = $id;
+				$session->nguoi_xu_ly = Auth::user()->username;
+				$session->trang_thai = 1;
+				$session->sketch = '';
+				$session->save();
 
-			$this->dispatch(new OptimizeSketch($session));
-			return redirect()->route('listDh')->with(['flash_level' => 'success', 'flash_message_success' => 'Đơn hàng đang chờ xử lý']);
-		} else {
-			return redirect()->route('listDh')->with(['flash_level' => 'success', 'flash_message' => 'Đơn hàng này đã hoặc đang đợi xử lý']);
+				$this->dispatch(new OptimizeSketch($session));
+				return redirect()->route('listDh')->with(['flash_level' => 'success', 'flash_message_success' => 'Đơn hàng đang chờ xử lý']);
+			} else {
+				return redirect()->route('listDh')->with(['flash_level' => 'success', 'flash_message' => 'Đơn hàng này đã hoặc đang đợi xử lý']);
+			}
+		}else{
+			return view('errors.500');
 		}
 	}
 
 	public function result($id) {
-		$session = Session::where('donhang_id', $id)->first();
-		return view('admin.result', compact('session'));
+		if(Auth::user()->level==1||Auth::user()->level==2||Auth::user()->level==4){
+			$session = Session::where('donhang_id', $id)->first();
+			return view('admin.result', compact('session'));
+		}else{
+			return view('errors.404');
+		}
 	}
 
 }

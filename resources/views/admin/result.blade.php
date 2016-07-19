@@ -114,7 +114,7 @@
         <i class="fa fa-edit"></i> Kết quả
     </li>
 </ol>
-<div class="col-lg-12" style="padding-bottom:120px">
+<div class="col-lg-12" style="padding-bottom:20px">
 	<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
 		<!-- Indicators -->
 		<ol id ='slide-indicator' class="carousel-indicators">

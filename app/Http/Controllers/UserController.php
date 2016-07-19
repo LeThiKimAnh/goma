@@ -13,61 +13,80 @@ use Hash;
 class UserController extends Controller
 {
     public function getAdd(){
-        $user = Auth::user()->level;
-        if($user==1){
-            return view('admin.user.add');
+        if(Auth::user()->level==1){
+            $user = Auth::user()->level;
+            if($user==1){
+                return view('admin.user.add');
+            }else{
+                return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Bạn không đủ quyền để thực hiện tác vụ này']);
+            }
         }else{
-            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Bạn không đủ quyền để thực hiện tác vụ này']);
+            return view('errors.404');
         }	
     }
     public function postAdd(UserRequest $request){
-    	$user = new User;
-    	$user->username = $request->txtUser;
-    	$user->email 	= $request->txtEmail;
-    	$user->password = bcrypt($request->txtPass);
-        $user->level = $request->rdoLevel;
-    	$user->save();
-    	return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message_success'=>'Success !!Complete Add User']);
+        if(Auth::user()->level==1){
+        	$user = new User;
+        	$user->username = $request->txtUser;
+        	$user->email 	= $request->txtEmail;
+        	$user->password = bcrypt($request->txtPass);
+            $user->level = $request->rdoLevel;
+        	$user->save();
+        	return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message_success'=>'Success !!Complete Add User']);
+        }else{
+            return view('errors.500');
+        }
     }
     public function listUser(){
     	$data = User::select('id','username','level')->get()->toArray();
         return view('admin.user.list',compact('data'));
     }
     public function deleteUser($id){
-        $user = Auth::user()->level;
-        if($user == 1){
-            $user = User::find($id);
-            $user->delete($id);
-            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message_success'=>'Success !!Complete Delete User']);
+        if(Auth::user()->level==1){
+            $user = Auth::user()->level;
+            if($user == 1){
+                $user = User::find($id);
+                $user->delete($id);
+                return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message_success'=>'Success !!Complete Delete User']);
+            }else{
+                return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Bạn không đủ quyền để thực hiện tác vụ này']);
+            }
         }else{
-            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Bạn không đủ quyền để thực hiện tác vụ này']);
+            return view('errors.500');
         }
     	
     }
     public function getEdit($id){
-        $user = Auth::user()->level;
-        if($user ==1){
-            $data = User::find($id);
-            return view('admin.user.edit',compact('data'));
+        if(Auth::user()->level==1){
+            $user = Auth::user()->level;
+            if($user ==1){
+                $data = User::find($id);
+                return view('admin.user.edit',compact('data'));
+            }else{
+                return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Bạn không đủ quyền để thực hiện tác vụ này']);
+            }
         }else{
-            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message'=>'Bạn không đủ quyền để thực hiện tác vụ này']);
+            return view('errors.404');
         }
-        
     }
 
     public function postEdit(Request $request,$id){
-	    $this->validate($request,
-            ["txtUser"=>"required"],
-            ["txtUser.required"=>"Please Enter User Name !!"]
-            );
-            $user = User::find($id);
-            $user->username = $request->txtUser;
-            $user->email    = $request->txtEmail;
-            $user->password = bcrypt($request->txtPass);
-            $user->level = $request->rdoLevel;
-            $user->save();
-            return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message_success'=>'Success !!Complete Edit User']);          
-	    }
+        if(Auth::user()->level==1){
+    	    $this->validate($request,
+                ["txtUser"=>"required"],
+                ["txtUser.required"=>"Please Enter User Name !!"]
+                );
+                $user = User::find($id);
+                $user->username = $request->txtUser;
+                $user->email    = $request->txtEmail;
+                $user->password = bcrypt($request->txtPass);
+                $user->level = $request->rdoLevel;
+                $user->save();
+                return redirect()->route('listUser')->with(['flash_level'=>'success','flash_message_success'=>'Success !!Complete Edit User']);     
+        }else{
+            return view('errors.505');
+        }     
+    }
 
     public function getRepass(){
         return view('admin.user.repass');
