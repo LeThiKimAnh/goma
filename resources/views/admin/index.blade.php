@@ -136,6 +136,7 @@
             </div>
         </div>
     </div>
+   
 	<div class="col-lg-6">
         <div class="panel panel-info">
             <div class="panel-heading">
@@ -149,7 +150,9 @@
                                 <th>Mã đơn hàng</th>
                                 <th>Date</th>
                                 <th>Hạn cuối</th>
+                                @if(Auth::user()->level !=3)
                                 <th>Xem kết quả</th>
+                                @endif
                             </tr>
                         </thead>
                         <tbody>
@@ -168,7 +171,9 @@
 									print $d['mday'] . '/' . $d['mon'] . '/' . $d['year'];
 									?>              
                                 </td>
+                                @if(Auth::user()->level !=3)
                                 <td><a href="{!!URL::route('result',$item['id'])!!}">kết quả</a></td>
+                                @endif
                             </tr>
 							@endforeach
                         </tbody>
@@ -180,6 +185,7 @@
             </div>
         </div>
     </div>
+
     <div class="col-lg-6">
         <div class="panel panel-info">
             <div class="panel-heading">
