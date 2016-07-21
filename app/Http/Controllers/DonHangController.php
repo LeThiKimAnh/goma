@@ -108,15 +108,28 @@ class DonHangController extends Controller {
 	}
 
 	public function listDh() {
-		$action = 'List';
-		$maDH = "";
-		$tenKH = "";
-		$nguoi_TD = "";
-		$trang_thai = -1;
-		$d1 = "";
-		$d2 = "";
-		$data = DonHang::orderBy('id', 'DESC')->paginate(10);
-		return view('admin.donhang.list', compact('data', 'action', 'maDH', 'tenKH', 'd1', 'd2', 'nguoi_TD', 'trang_thai'));
+		if(Auth::user()->level==4){
+			$action = 'List';
+			$maDH = "";
+			$tenKH = "";
+			$nguoi_TD = "";
+			$trang_thai = 2;
+			$d1 = "";
+			$d2 = "";
+			$data = DonHang::where('trang_thai',2)->orderBy('id', 'DESC')->paginate(10);
+			return view('admin.donhang.list', compact('data', 'action', 'maDH', 'tenKH', 'd1', 'd2', 'nguoi_TD', 'trang_thai'));
+		}else{
+			$action = 'List';
+			$maDH = "";
+			$tenKH = "";
+			$nguoi_TD = "";
+			$trang_thai = -1;
+			$d1 = "";
+			$d2 = "";
+			$data = DonHang::orderBy('id', 'DESC')->paginate(10);
+			return view('admin.donhang.list', compact('data', 'action', 'maDH', 'tenKH', 'd1', 'd2', 'nguoi_TD', 'trang_thai'));
+		}
+		
 	}
 
 	public function deleteDH($id) {
@@ -222,6 +235,9 @@ class DonHangController extends Controller {
 		$time2 = strtotime($request->end_date);
 		$start_date = date('Y-m-d', $time1);
 		$end_date = date('Y-m-d', $time2);
+		if($trang_thai==""){
+			$trang_thai = -1;
+		}
 
 		$sql = array();
 		if (!ctype_space($maDH) && !empty($maDH)) {
@@ -233,13 +249,15 @@ class DonHangController extends Controller {
 		if (!ctype_space($nguoi_TD) && !empty($nguoi_TD)) {
 			$sql[] = " nguoi_tao_don='" . $nguoi_TD . "'";
 		}
-		if (!ctype_space($trang_thai) && !empty($trang_thai)&&$trang_thai>=0){
+		if ($trang_thai>=0&&$trang_thai!=""){
+			print_r("hehe");
 			$sql[] = " trang_thai=" . $trang_thai . "";
 		}
 		if (!ctype_space($time1) && !empty($time1) && !ctype_space($time2) && !empty($time2)) {
 			$sql[] = " ngay_giao_hang >= " . $start_date . " and ngay_giao_hang <= " . $end_date . "";
 		}
-
+		print_r($trang_thai);
+		print_r($sql);
 		if (count($sql)) {
 			$sql_data = implode(" and ", $sql);
 			$data = DonHang::whereRaw($sql_data)->orderBy('id', 'DESC')->paginate($per_page);
