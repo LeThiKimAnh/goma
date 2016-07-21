@@ -24,10 +24,12 @@
 		var pattern = ctx.createPattern(imageObj, 'repeat');
 
 		ctx.beginPath();
-		ctx.lineWidth = 3;
+		ctx.lineWidth = 2;
 		ctx.rect(0, 0, panel.width, panel.height);
 		ctx.strokeStyle = 'black';
 		ctx.stroke();
+		ctx.fillStyle = "white";
+		ctx.fill();
 
 		var rects = panel.rects;
 		var remains = panel.remains;
@@ -44,6 +46,7 @@
 			ctx.strokeStyle = 'black';
 			ctx.stroke();
 			ctx.font = "20px Arial";
+			ctx.fillStyle = "black";
 
 			var x = rect[1] + rect[2] / 2 - 5;
 			var y = rect[0] + rect[3] / 2 + 10;
@@ -80,7 +83,8 @@
 
 		var panels = solution['panels'];
 		for (var i = 0, j = 0; i < panels.length; i++) {
-			var canvas = createCanvas(panels[i], i);
+			var panel = panels[i];
+			var canvas = createCanvas(panel, i);
 			if (canvas === null) {
 				continue;
 			}
@@ -88,6 +92,7 @@
 			var wrapper = document.createElement('div');
 			var indicator = document.createElement('li');
 			var caption = document.createElement('div');
+			var req = (panel.req === 0) ? "Khong van" : (panel.req === 1) ? "Van doc" : "Van ngang";
 
 			var clazz = "item";
 			if (i === 0) {
@@ -100,7 +105,7 @@
 			indicator.setAttribute('data-slide-to', j);
 			indicator.setAttribute('data-target', '#myCarousel');
 			caption.setAttribute('class', 'carousel-caption');
-			caption.innerHTML = '<h3> Panel ' + i +'</h3>';
+			caption.innerHTML = '<h4> Panel ' + i + '</h4><p> ' + panel.width + ' x ' + panel.height + ' x ' + req + ' </p>';
 			j += 1;
 
 			wrapper.appendChild(canvas);
