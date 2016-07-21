@@ -8,20 +8,6 @@
 
 	imageObj.src = "{{url('/admin/images/WLsci.png')}}";
 
-	var imageObj2 = new Image();
-	imageObj2.src = "{{url('/admin/images/wood.png')}}";
-
-
-	function random_color() {
-		var color = [0, 0, 0];
-		for (var i = 0; i <= 2; i++) {
-			if (Math.random() < 0.66666) {
-				color[i] = 32 + parseInt(Math.random() * 192);
-			}
-		}
-		return 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
-	}
-
 	function createCanvas(panel, idx) {
 		var canvas = document.createElement('canvas');
 		var scale = 0.425;
@@ -36,13 +22,14 @@
 		ctx.scale(scale, scale);
 
 		var pattern = ctx.createPattern(imageObj, 'repeat');
-		var pattern2 = ctx.createPattern(imageObj2, 'repeat');
 
 		ctx.beginPath();
-		ctx.lineWidth = 3;
+		ctx.lineWidth = 2;
 		ctx.rect(0, 0, panel.width, panel.height);
 		ctx.strokeStyle = 'black';
 		ctx.stroke();
+		ctx.fillStyle = "white";
+		ctx.fill();
 
 		var rects = panel.rects;
 		var remains = panel.remains;
@@ -53,13 +40,26 @@
 
 		for (var i = 0; i < rects.length; i++) {
 			var rect = rects[i];
-			ctx.fillStyle = random_color();
-			ctx.fillRect(rect[1], rect[0], rect[2], rect[3]);
-//			ctx.beginPath();
-//			ctx.rect(rect[1], rect[0], rect[2], rect[3]);
-//			ctx.lineWidth = 3;
-//			ctx.strokeStyle = 'black';
-//			ctx.stroke();
+			ctx.beginPath();
+			ctx.rect(rect[1], rect[0], rect[2], rect[3]);
+			ctx.lineWidth = 1;
+			ctx.strokeStyle = 'black';
+			ctx.stroke();
+			ctx.font = "20px Arial";
+			ctx.fillStyle = "black";
+
+			var x = rect[1] + rect[2] / 2 - 5;
+			var y = rect[0] + rect[3] / 2 + 10;
+
+			if (rect[2] < 50) {
+				ctx.save();
+				ctx.translate(x, y);
+				ctx.rotate(-Math.PI / 2);
+				ctx.fillText(rect[4], 0, 10);
+				ctx.restore();
+			} else {
+				ctx.fillText(rect[4], x, y);
+			}
 		}
 
 		for (var i = 0; i < remains.length; i++) {
@@ -68,7 +68,7 @@
 			ctx.rect(rect[1], rect[0], rect[2], rect[3]);
 			ctx.fillStyle = pattern;
 			ctx.fill();
-			ctx.lineWidth = 3;
+			ctx.lineWidth = 1;
 			ctx.strokeStyle = 'black';
 			ctx.stroke();
 		}
@@ -83,13 +83,16 @@
 
 		var panels = solution['panels'];
 		for (var i = 0, j = 0; i < panels.length; i++) {
-			var canvas = createCanvas(panels[i], i);
+			var panel = panels[i];
+			var canvas = createCanvas(panel, i);
 			if (canvas === null) {
 				continue;
 			}
 
 			var wrapper = document.createElement('div');
 			var indicator = document.createElement('li');
+			var caption = document.createElement('div');
+			var req = (panel.req === 0) ? "Khong van" : (panel.req === 1) ? "Van doc" : "Van ngang";
 
 			var clazz = "item";
 			if (i === 0) {
@@ -101,9 +104,12 @@
 			wrapper.setAttribute('style', 'text-align: center;');
 			indicator.setAttribute('data-slide-to', j);
 			indicator.setAttribute('data-target', '#myCarousel');
+			caption.setAttribute('class', 'carousel-caption');
+			caption.innerHTML = '<h4> Panel ' + i + '</h4><p> ' + panel.width + ' x ' + panel.height + ' x ' + req + ' </p>';
 			j += 1;
 
 			wrapper.appendChild(canvas);
+			wrapper.appendChild(caption);
 			parent.appendChild(wrapper);
 			indicators.appendChild(indicator);
 		}
@@ -209,22 +215,22 @@
 				<div class="col-lg-2">
 				</div>
 				<div class="col-lg-12">
-				<div class="col-lg-11">
-					
-				</div>
-				<div class="col-lg-1 pull-right">
-					<div class="col-lg-4 ">
+					<div class="col-lg-11">
+
 					</div>
-					<div class="col-lg-4 ">
-						<button data-toggle="collapse" data-target="#accordion{{ $panel->id }}" style="margin-bottom: 10px;"><i class="glyphicon glyphicon-chevron-up"></i> 
-						</button>
+					<div class="col-lg-1 pull-right">
+						<div class="col-lg-4 ">
+						</div>
+						<div class="col-lg-4 ">
+							<button data-toggle="collapse" data-target="#accordion{{ $panel->id }}" style="margin-bottom: 10px;"><i class="glyphicon glyphicon-chevron-up"></i> 
+							</button>
+						</div>
 					</div>
-				</div>
-					
+
 				</div>
 			</td>
 			</div>
-			
+
 		</tr>
 		@endforeach 
     </tbody>

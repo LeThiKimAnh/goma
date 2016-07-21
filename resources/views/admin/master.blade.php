@@ -15,12 +15,8 @@
 		<!-- Custom CSS -->
 		<link href="{{url('admin/dist/css/sb-admin-2.css')}}" rel="stylesheet">
 
-		<!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
-
 		<link href="{{url('admin/dist/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
-		<!-- Custom Fonts -->
-		<!-- <link href="{{url('admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet')}}" type="text/css"> -->
-
+		
 		<!-- DataTables CSS -->
 		<link href="{{url('admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css')}}" rel="stylesheet">
 
