@@ -48,13 +48,13 @@
 
 		for (var i = 0; i < rects.length; i++) {
 			var rect = rects[i];
-			ctx.fillStyle = random_color();
-			ctx.fillRect(rect[1], rect[0], rect[2], rect[3]);
-//			ctx.beginPath();
-//			ctx.rect(rect[1], rect[0], rect[2], rect[3]);
-//			ctx.lineWidth = 3;
-//			ctx.strokeStyle = 'black';
-//			ctx.stroke();
+			ctx.beginPath();
+			ctx.rect(rect[1], rect[0], rect[2], rect[3]);
+			ctx.lineWidth = 1;
+			ctx.strokeStyle = 'black';
+			ctx.stroke();
+			ctx.font = "20px Arial";
+			ctx.fillText(rect[4], rect[1] + rect[2] / 2 - 5, rect[0] + rect[3] / 2 + 10);
 		}
 
 		for (var i = 0; i < remains.length; i++) {
@@ -63,7 +63,7 @@
 			ctx.rect(rect[1], rect[0], rect[2], rect[3]);
 			ctx.fillStyle = pattern;
 			ctx.fill();
-			ctx.lineWidth = 3;
+			ctx.lineWidth = 1;
 			ctx.strokeStyle = 'black';
 			ctx.stroke();
 		}
@@ -199,22 +199,22 @@
 				<div class="col-lg-2">
 				</div>
 				<div class="col-lg-12">
-				<div class="col-lg-11">
-					
-				</div>
-				<div class="col-lg-1 pull-right">
-					<div class="col-lg-4 ">
+					<div class="col-lg-11">
+
 					</div>
-					<div class="col-lg-4 ">
-						<button data-toggle="collapse" data-target="#accordion{{ $panel->id }}" style="margin-bottom: 10px;"><i class="glyphicon glyphicon-chevron-up"></i> 
-						</button>
+					<div class="col-lg-1 pull-right">
+						<div class="col-lg-4 ">
+						</div>
+						<div class="col-lg-4 ">
+							<button data-toggle="collapse" data-target="#accordion{{ $panel->id }}" style="margin-bottom: 10px;"><i class="glyphicon glyphicon-chevron-up"></i> 
+							</button>
+						</div>
 					</div>
-				</div>
-					
+
 				</div>
 			</td>
 			</div>
-			
+
 		</tr>
 		@endforeach 
     </tbody>
