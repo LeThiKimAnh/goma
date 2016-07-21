@@ -8,6 +8,9 @@
 
 	imageObj.src = "{{url('/admin/images/WLsci.png')}}";
 
+	var imageObj2 = new Image();
+	imageObj2.src = "{{url('/admin/images/wood.png')}}";
+
 
 	function random_color() {
 		var color = [0, 0, 0];
@@ -23,6 +26,7 @@
 		var canvas = document.createElement('canvas');
 		var scale = 0.425;
 		canvas.setAttribute('id', 'canvas' + idx);
+		canvas.setAttribute('name', 'canvas');
 		canvas.setAttribute('class', 'img');
 
 		canvas.width = panel.width * scale;
@@ -32,6 +36,7 @@
 		ctx.scale(scale, scale);
 
 		var pattern = ctx.createPattern(imageObj, 'repeat');
+		var pattern2 = ctx.createPattern(imageObj2, 'repeat');
 
 		ctx.beginPath();
 		ctx.lineWidth = 3;
@@ -116,6 +121,11 @@
         <i class="fa fa-edit"></i> Kết quả
     </li>
 </ol>
+
+<div class="form-group pull-right">
+	<button class="btn btn-default " onclick="return printData();" >Print</button>
+</div>
+
 <div class="col-lg-12"  style="padding-bottom:20px">
 	<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
 		<!-- Indicators -->
