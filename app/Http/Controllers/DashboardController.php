@@ -25,4 +25,7 @@ class DashboardController extends Controller
 
     	return view('admin.index',compact('so_don_hang','so_don_hang_daxl','data','data_don_hang_daxl','data_don_hang_chxl','don_hang_dead'));
     }
+    public function guide(){
+        return view('admin.HDSD');
+    }
 }

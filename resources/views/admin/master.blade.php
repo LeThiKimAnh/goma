@@ -184,6 +184,10 @@
 								</ul>
 								<!-- /.nav-second-level -->
 							</li>
+							<li>
+								<a href="{!!URL::route('Guide')!!}"><i class="glyphicon glyphicon-book"></i> Document</a>
+
+							</li>
 						</ul>
 					</div>
 					<!-- /.sidebar-collapse -->

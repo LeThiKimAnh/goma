@@ -19,6 +19,7 @@
     <tbody>
     <?php $stt = 0 ?>
     @foreach($data as $item)
+    @if($item['username']!="admin")
         <?php $stt = $stt+1 ?>
         <tr class="odd gradeX" align="center">
             <td>{!!$stt!!}</td>
@@ -50,7 +51,9 @@
             <td class="center"  style="padding:2px;"> <a href="{!!URL::route('getEditUser',$item['id'])!!}" class="btn btn-link"><i class="fa fa-pencil fa-fw"></i> Sửa</a></td>
             @endif
         </tr>
+        @endif
     @endforeach
+
     </tbody>
 </table>
 @endsection
