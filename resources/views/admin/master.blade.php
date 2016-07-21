@@ -15,18 +15,13 @@
 		<!-- Custom CSS -->
 		<link href="{{url('admin/dist/css/sb-admin-2.css')}}" rel="stylesheet">
 
-		<!-- <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css" rel="stylesheet"> -->
-
 		<link href="{{url('admin/dist/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
-		<!-- Custom Fonts -->
-		<!-- <link href="{{url('admin/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet')}}" type="text/css"> -->
-
+		
 		<!-- DataTables CSS -->
 		<link href="{{url('admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css')}}" rel="stylesheet">
 
 		<!-- DataTables Responsive CSS -->
 		<link href="{{url('admin/bower_components/datatables-responsive/css/dataTables.responsive.css')}}" rel="stylesheet">
-		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 		<link href="{{url('admin/dist/css/datepicker.css')}}" rel="stylesheet prefetch">
 		<!-- CKeditor && CKFinder -->
 		<script src="{{url('admin/js/ckeditor/ckeditor.js')}}"></script>

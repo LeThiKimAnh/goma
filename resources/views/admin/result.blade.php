@@ -8,20 +8,6 @@
 
 	imageObj.src = "{{url('/admin/images/WLsci.png')}}";
 
-	var imageObj2 = new Image();
-	imageObj2.src = "{{url('/admin/images/wood.png')}}";
-
-
-	function random_color() {
-		var color = [0, 0, 0];
-		for (var i = 0; i <= 2; i++) {
-			if (Math.random() < 0.66666) {
-				color[i] = 32 + parseInt(Math.random() * 192);
-			}
-		}
-		return 'rgb(' + color[0] + ',' + color[1] + ',' + color[2] + ')';
-	}
-
 	function createCanvas(panel, idx) {
 		var canvas = document.createElement('canvas');
 		var scale = 0.425;
@@ -36,7 +22,6 @@
 		ctx.scale(scale, scale);
 
 		var pattern = ctx.createPattern(imageObj, 'repeat');
-		var pattern2 = ctx.createPattern(imageObj2, 'repeat');
 
 		ctx.beginPath();
 		ctx.lineWidth = 3;
@@ -59,7 +44,19 @@
 			ctx.strokeStyle = 'black';
 			ctx.stroke();
 			ctx.font = "20px Arial";
-			ctx.fillText(rect[4], rect[1] + rect[2] / 2 - 5, rect[0] + rect[3] / 2 + 10);
+
+			var x = rect[1] + rect[2] / 2 - 5;
+			var y = rect[0] + rect[3] / 2 + 10;
+
+			if (rect[2] < 50) {
+				ctx.save();
+				ctx.translate(x, y);
+				ctx.rotate(-Math.PI / 2);
+				ctx.fillText(rect[4], 0, 10);
+				ctx.restore();
+			} else {
+				ctx.fillText(rect[4], x, y);
+			}
 		}
 
 		for (var i = 0; i < remains.length; i++) {
@@ -90,6 +87,7 @@
 
 			var wrapper = document.createElement('div');
 			var indicator = document.createElement('li');
+			var caption = document.createElement('div');
 
 			var clazz = "item";
 			if (i === 0) {
@@ -101,9 +99,12 @@
 			wrapper.setAttribute('style', 'text-align: center;');
 			indicator.setAttribute('data-slide-to', j);
 			indicator.setAttribute('data-target', '#myCarousel');
+			caption.setAttribute('class', 'carousel-caption');
+			caption.innerHTML = '<h3> Panel ' + i +'</h3>';
 			j += 1;
 
 			wrapper.appendChild(canvas);
+			wrapper.appendChild(caption);
 			parent.appendChild(wrapper);
 			indicators.appendChild(indicator);
 		}
