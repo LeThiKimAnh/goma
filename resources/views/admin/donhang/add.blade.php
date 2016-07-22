@@ -18,7 +18,7 @@
              <table class="table table-striped table-bordered table-hover">
                <thead>
                      <tr align="center">
-                         <th>Tên Vật dụng</th>
+                         <th>Tên Sản phẩm</th>
                          <th>Số lượng</th>
                          <th>Đơn Vị</th>
                          <th>Xoá</th>
@@ -34,7 +34,7 @@
                         <tr class="odd gradeX" align="center"  style="display:none">
                              <td>
                              <select class="form-control" name="vatdung[]" id="select_vd_hide">
-                                <option value="" >Chọn Vật Dụng</option>
+                                <option value="" >Chọn Sản phẩm</option>
                                 @foreach($data as $item)
                                     <option value='{!!$item["id"]!!}'>{!!$item['ten']!!}</option>
                                 @endforeach 
@@ -48,7 +48,7 @@
                        <tr class="odd gradeX" align="center" id="row_1">
                              <td>
                              <select class="form-control" name="vatdung[]" id="select_vd">
-                                <option value="" >Chọn Vật Dụng</option>
+                                <option value="" >Chọn Sản phẩm</option>
                                 @foreach($data as $item)
                                     <option value='{!!$item["id"]!!}'>{!!$item['ten']!!}</option>
                                 @endforeach 
@@ -63,7 +63,7 @@
             </table>
          </div>
          <div class="form-group">
-             <button type="button" class="btn btn-primary" id="btn_them_vd">Chọn thêm vật dụng</button>
+             <button type="button" class="btn btn-primary" id="btn_them_vd">Chọn thêm sản phẩm</button>
          </div>
 
          <div  id="insert_erro_vd">     

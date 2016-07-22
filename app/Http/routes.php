@@ -66,6 +66,8 @@ Route::get('khogo/edit/{id}',['as'=>'getEditGo','uses'=>'GoThuaController@getEdi
 Route::post('khogo/edit/{id}',['as'=>'postEditGo','uses'=>'GoThuaController@postEdit','middleware'=>'auth']);
 Route::get('khogo/searchGo',['as'=>'SearchGo','uses'=>'GoThuaController@searchGo','middleware'=>'auth']);
 
+Route::get('guide',['as'=>'Guide','uses'=>'DashboardController@guide','middleware'=>'auth']);
+
 
 
 Route::controllers([

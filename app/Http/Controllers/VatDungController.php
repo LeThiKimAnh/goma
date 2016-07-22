@@ -58,12 +58,16 @@ class VatDungController extends Controller
         if(Auth::user()->level==1||Auth::user()->level==2){
             if(count($vatlieu_id_mang)>0){
                 if((check($vatlieu_id_mang,0)==0)&&(!check_slg($soluong_mang))){
+                    $he_so = $request->txt_heSo;
+                    if($he_so<1){
+                        $he_so = 1;
+                    }
                     $cout = VatDung::max('id');
                 	$vat_dung = new VatDung;
                     $vat_dung->ma_vat_dung = "VD".($cout+1);
                 	$vat_dung->ten = $request->txt_vd;
                     $vat_dung->gia_san_xuat = $request->txt_giaSX;
-                    $vat_dung->he_so = $request->txt_heSo;
+                    $vat_dung->he_so = $he_so;
                     $vat_dung->gia_san_pham = ($request->txt_heSo)*($request->txt_giaSX);
                 	$vat_dung->mo_ta = $request->txt_mo_ta;
                 	$vat_dung->save();
@@ -163,11 +167,15 @@ class VatDungController extends Controller
                         $vat_lieu = VatLieu::find($vatlieu_id_mang[$i]);
 
                     }
+                    $he_so = $request->txt_heSo;
+                    if($he_so<1){
+                        $he_so = 1;
+                    }
                     $vat_dung =  VatDung::find($id);
                     $vat_dung->ten = $request->txt_vd;
                     $vat_dung->mo_ta = $request->txt_mo_ta;
                     $vat_dung->gia_san_xuat = $request->txt_giaSX;
-                    $vat_dung->he_so = $request->txt_heSo;
+                    $vat_dung->he_so = $he_so;
                     $vat_dung->gia_san_pham = ($request->txt_heSo)*($request->txt_giaSX);
                     $vat_dung->save();
 

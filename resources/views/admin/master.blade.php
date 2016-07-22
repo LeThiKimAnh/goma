@@ -23,6 +23,8 @@
 		<!-- DataTables Responsive CSS -->
 		<link href="{{url('admin/bower_components/datatables-responsive/css/dataTables.responsive.css')}}" rel="stylesheet">
 		<link href="{{url('admin/dist/css/datepicker.css')}}" rel="stylesheet prefetch">
+		<!-- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css"> -->
+		<link href="{{url('admin/dist/css/bootstrap.min.css')}}" rel="stylesheet prefetch">
 		<!-- CKeditor && CKFinder -->
 		<script src="{{url('admin/js/ckeditor/ckeditor.js')}}"></script>
 		<script src="{{url('admin/js/ckfinder/ckfinder.js')}}"></script>
@@ -30,10 +32,10 @@
 		<script src="{{url('admin/js/jquery-1.9.1.js')}}"></script>
 		<script src="{{url('admin/js/jquery-ui.js')}}"></script>
 		<script type="text/javascript">
-	var baseURL = "{!!url('/')!!}";
+			var baseURL = "{!!url('/')!!}";
 		</script>
 		<!-- End CKeditor && CKFinder -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+		<script src="{{url('admin/js/jquery.min.js')}}"></script>
 		<style>
 			.carousel-inner > .item > img,
 			.carousel-inner > .item > a > img {
@@ -50,6 +52,9 @@
 			.centered-text {
 			    text-align:center
 			} 
+			.glyphicon-bed:before {
+			  	content: "\e219";
+			}
 		</style>
 	</head>
 
@@ -124,13 +129,13 @@
 							</li>
 							@if(Auth::user()->level ==1||Auth::user()->level ==2)
 							<li>
-								<a href="#"><i class="glyphicon glyphicon-bed"></i> Vật Dụng<span class="fa arrow"></span></a>
+								<a href="#"><i class="glyphicon glyphicon-bed"></i> Sản phẩm<span class="fa arrow"></span></a>
 								<ul class="nav nav-second-level">
 									<li>
-										<a href="{!!URL::route('vd-getList')!!}"> Danh sách vật dụng</a>
+										<a href="{!!URL::route('vd-getList')!!}"> Danh sách sản phẩm</a>
 									</li>
 									<li>
-										<a href="{!!URL::route('getVatdung')!!}"> Thêm vật dụng</a>
+										<a href="{!!URL::route('getVatdung')!!}"> Thêm sản phẩm</a>
 									</li>
 								</ul>
 								<!-- /.nav-second-level -->
@@ -155,9 +160,9 @@
 									<li>
 										<a href="{!!URL::route('khogoList')!!}"> Danh sách kho</a>
 									</li>
-									<li>
+									<!-- <li>
 										<a href="{!!URL::route('khogoAdd')!!}"> Thêm gỗ</a>
-									</li>
+									</li> -->
 								</ul>
 								<!-- /.nav-second-level -->
 							</li>
@@ -178,6 +183,10 @@
 									</li>
 								</ul>
 								<!-- /.nav-second-level -->
+							</li>
+							<li>
+								<a href="{!!URL::route('Guide')!!}"><i class="glyphicon glyphicon-book"></i> Document</a>
+
 							</li>
 						</ul>
 					</div>
