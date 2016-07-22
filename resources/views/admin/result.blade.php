@@ -92,7 +92,7 @@
 			var wrapper = document.createElement('div');
 			var indicator = document.createElement('li');
 			var caption = document.createElement('div');
-			var req = (panel.req === 0) ? "Khong van" : (panel.req === 1) ? "Van doc" : "Van ngang";
+			var req = (panel.req === 0) ? "Không vân" : (panel.req === 1) ? "Vân dọc" : "Vân ngang";
 
 			var clazz = "item";
 			if (i === 0) {
@@ -105,7 +105,7 @@
 			indicator.setAttribute('data-slide-to', j);
 			indicator.setAttribute('data-target', '#myCarousel');
 			caption.setAttribute('class', 'carousel-caption');
-			caption.innerHTML = '<h4> Panel ' + i + '</h4><p> ' + panel.width + ' x ' + panel.height + ' x ' + req + ' </p>';
+			caption.innerHTML = '<h4> Panel ' + j + '</h4><p> ' + panel.width + ' x ' + panel.height + ' x ' + req + ' </p>';
 			j += 1;
 
 			wrapper.appendChild(canvas);
@@ -117,6 +117,26 @@
 	// show after 1 second
 	setTimeout(show, 1000);
 </script>
+<style>
+	.carousel {
+		background-color: #000000;
+		color: #000000;
+		margin-bottom: 60px;
+	}
+	
+	.carousel-control {
+		width: 10%;
+	}
+	.carousel .item {
+		height: 100%;
+	}
+
+	.container-fluid {
+		padding-left: 5px;
+		padding-right: 5px;
+	}
+
+</style>
 <ol class="breadcrumb">
     <li class="active">
 		<a href="{!!URL::route('listDh')!!}">
@@ -132,7 +152,7 @@
 	<button class="btn btn-default " onclick="return printData();" >Print</button>
 </div>
 
-<div class="col-lg-12"  style="padding-bottom:20px">
+<div class="col-lg-12"  style="padding-bottom:20px;padding-left: 0;padding-right: 0">
 	<div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
 		<!-- Indicators -->
 		<ol id ='slide-indicator' class="carousel-indicators">
