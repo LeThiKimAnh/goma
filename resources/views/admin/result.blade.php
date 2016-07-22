@@ -6,9 +6,17 @@
 	var solution = <?php print $session->sketch; ?>;
 	var imageObj = new Image();
 
-	imageObj.src = "{{url('/admin/images/WLsci.png')}}";
+//	imageObj.src = "{{url('/admin/images/WLsci.png')}}";
+	imageObj.src = "{{url('/admin/images/wood.png')}}";
 
 	function createCanvas(panel, idx) {
+		var rects = panel.rects;
+		var remains = panel.remains;
+
+		if (rects.length < 1) {
+			return null;
+		}
+
 		var canvas = document.createElement('canvas');
 		var scale = 0.425;
 		canvas.setAttribute('id', 'canvas' + idx);
@@ -30,13 +38,6 @@
 		ctx.stroke();
 		ctx.fillStyle = "white";
 		ctx.fill();
-
-		var rects = panel.rects;
-		var remains = panel.remains;
-
-		if (rects.length < 1) {
-			return null;
-		}
 
 		for (var i = 0; i < rects.length; i++) {
 			var rect = rects[i];
@@ -86,6 +87,7 @@
 			var panel = panels[i];
 			var canvas = createCanvas(panel, i);
 			if (canvas === null) {
+				console.log('canvas null');
 				continue;
 			}
 
@@ -95,7 +97,7 @@
 			var req = (panel.req === 0) ? "Không vân" : (panel.req === 1) ? "Vân dọc" : "Vân ngang";
 
 			var clazz = "item";
-			if (i === 0) {
+			if (j === 0) {
 				clazz = "item active";
 				indicator.setAttribute('class', 'active');
 			}
@@ -105,13 +107,13 @@
 			indicator.setAttribute('data-slide-to', j);
 			indicator.setAttribute('data-target', '#myCarousel');
 			caption.setAttribute('class', 'carousel-caption');
-			caption.innerHTML = '<h4> Panel ' + j + '</h4><p> ' + panel.width + ' x ' + panel.height + ' x ' + req + ' </p>';
+			caption.innerHTML = '<h4>' + panel.id + '</h4><p> ' + panel.width + ' x ' + panel.height + ' x ' + req + ' </p>';
 			j += 1;
 
 			wrapper.appendChild(canvas);
 			wrapper.appendChild(caption);
 			parent.appendChild(wrapper);
-			indicators.appendChild(indicator);
+			//indicators.appendChild(indicator);
 		}
 	}
 	// show after 1 second
@@ -119,16 +121,21 @@
 </script>
 <style>
 	.carousel {
-		background-color: #000000;
-		color: #000000;
+		background-color: #bed5f4;
 		margin-bottom: 60px;
 	}
-	
+
 	.carousel-control {
 		width: 10%;
 	}
+
 	.carousel .item {
 		height: 100%;
+	}
+
+	.carousel-caption{
+		color: black;
+		text-shadow: none;
 	}
 
 	.container-fluid {

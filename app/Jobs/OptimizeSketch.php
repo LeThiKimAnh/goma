@@ -58,7 +58,7 @@ class OptimizeSketch extends Job implements ShouldQueue {
 
 			array_push($recyclees, $r);
 		}
-
+		
 		$solution = new Solution($order_id);
 		$solution->run($rects, $recyclees);
 

@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-class Panel1 {
+class Panell {
 
 	public $width;
 	public $height;
@@ -137,7 +137,7 @@ class Panel {
 			$wh_diff = $bound->height - $rect->width;
 			$hw_diff = $bound->width - $rect->height;
 
-			if ($this->req == 0 and $wh_diff > 0 and $hw_diff > 0 and
+			if ($this->req == 0 and $wh_diff >= 0 and $hw_diff >= 0 and
 					($bound->width < 100 or $bound->height < 100 or
 					($rect->width < 100 and $rect->height < 100))) {
 				// rotate it
@@ -145,7 +145,7 @@ class Panel {
 				$rect->width = $rect->height;
 				$rect->height = $temp;
 
-				$ww_diff = $hw_diff;
+				$ww_diff = $hw_diff;	
 				$hh_diff = $wh_diff;
 
 				$res = True;
