@@ -22,17 +22,6 @@ class Solution {
 	}
 
 	public function run($rects, $recyclees) {
-		// sort all the rect by area desc
-		usort($rects, function($rect1, $rect2) {
-//			return $rect2->area - $rect1->area;
-			return max($rect2->width, $rect2->height) - max($rect1->width, $rect1->height);
-		});
-		// sort all the recyclee by area desc
-		usort($recyclees, function($rect1, $rect2) {
-//			return $rect2->area - $rect1->area;
-			return max($rect1->width, $rect1->height) - max($rect2->width, $rect2->height);
-		});
-
 		// foreach type of requirement, we pack it separately
 		foreach (Solution::$REQS as $req) {
 			$sub_rects = array_filter($rects, function($rect) use ($req) {
@@ -40,6 +29,23 @@ class Solution {
 			});
 			$sub_recyclees = array_filter($recyclees, function($rect) use ($req) {
 				return $rect->req == $req;
+			});
+
+			// sort all the rect
+			usort($sub_rects, function($rect1, $rect2) use($req) {
+				if ($req == 0) {
+					return max($rect2->width, $rect2->height) - max($rect1->width, $rect1->height);
+				} else {
+					return $rect2->width - $rect1->width;
+				}
+			});
+			// sort all the recyclee
+			usort($sub_recyclees, function($rect1, $rect2) use($req) {
+				if ($req == 0) {
+					return max($rect2->width, $rect2->height) - max($rect1->width, $rect1->height);
+				} else {
+					return $rect1->width - $rect2->width;
+				}
 			});
 			$this->runOnReq($sub_rects, $sub_recyclees, $req);
 		}
@@ -78,13 +84,11 @@ class Solution {
 		if (count($rects) == 0) {
 			return;
 		}
-		echo 'Running on recyclee ' . count($recyclees) . '';
+
 		foreach ($recyclees as $r) {
 			$panel = new Panel($r->width, $r->height, $req);
 			// update remain rects 
-			#echo 'Solution rects ' . count($rects) . '';
 			$rects = $panel->addAll($rects);
-			#echo 'Solution rects ' . count($rects) . '';
 
 			$remain = $panel->remain();
 			array_push($this->panels, $panel);
@@ -95,20 +99,14 @@ class Solution {
 			}
 		}
 
-		echo 'Creating new panel to add ';
 		while (count($rects) != 0) {
 			$panel = new Panel(Solution::STANDARD_W, Solution::STANDARD_H, $req);
 			$rects = $panel->addAll($rects);
 
 			$remain = $panel->remain();
-			#echo 'panel remain';
-			#var_dump($remain);
 			array_push($this->panels, $panel);
 			$this->remain = array_merge($this->remain, $remain);
 		}
-
-		#echo 'Remain =>';
-		#var_dump($this->remain);
 	}
 
 }

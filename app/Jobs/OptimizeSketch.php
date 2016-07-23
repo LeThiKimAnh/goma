@@ -48,8 +48,6 @@ class OptimizeSketch extends Job implements ShouldQueue {
 			}
 		}
 
-		echo '52: recyclee ' . count($gothua);
-
 		foreach ($gothua as $r) {
 			$r->width = intval($r->width);
 			$r->height = intval($r->height);
@@ -58,7 +56,7 @@ class OptimizeSketch extends Job implements ShouldQueue {
 
 			array_push($recyclees, $r);
 		}
-		
+
 		$solution = new Solution($order_id);
 		$solution->run($rects, $recyclees);
 

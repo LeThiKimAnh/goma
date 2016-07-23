@@ -31,7 +31,6 @@ class Node {
 		$hw_diff = $bound->width - $rect->height;
 
 		if ($ww_diff < 0 or $hh_diff < 0) {
-			echo 'early return';
 			return False;
 		}
 
@@ -40,14 +39,12 @@ class Node {
 			// if it has child, it must not take part in this situation
 			// only its children can
 			if ($this->left != null) {
-				echo 'left node';
 				$ret = $this->left->insert($rect);
 				if ($ret) {
 					return $ret;
 				}
 			}
 			if ($this->right != null) {
-				echo 'right node';
 				return $this->right->insert($rect);
 			}
 			return False;
@@ -56,8 +53,6 @@ class Node {
 		if ($this->filled) {
 			return False;
 		}
-		echo 'level > ' . $this->level . ' > bound';
-		var_dump($bound->top, $bound->left, $bound->width, $bound->height);
 
 		if ($ww_diff == 0 and $hh_diff == 0) {
 			$rect->placeAt($bound->top, $bound->left);
@@ -92,9 +87,6 @@ class Node {
 			$this->right->bound->top = $bound->top;
 		}
 		$rect->placeAt($bound->top, $bound->left);
-		echo 'rect';
-		var_dump($rect->top, $rect->left, $rect->width, $rect->height);
-		echo '=========================';
 		return $rect;
 	}
 
