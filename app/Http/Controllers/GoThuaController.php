@@ -36,7 +36,7 @@ class GoThuaController extends Controller
     }
      public function listGo(){
         if(Auth::user()->level==1||Auth::user()->level==2){
-            $per_page = 2;
+            $per_page = 10;
             $tenVL = "";
             $rong ="";
             $dai = "";

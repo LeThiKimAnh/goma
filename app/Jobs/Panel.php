@@ -2,7 +2,7 @@
 
 namespace App\Jobs;
 
-class Panel1 {
+class Panell {
 
 	public $width;
 	public $height;
@@ -29,14 +29,10 @@ class Panel1 {
 
 			if ($this->root->insert($rect)) {
 				#update filled area and mapped_rects
-				echo 'placed ';
-				var_dump($rect->top, $rect->left, $rect->width, $rect->height);
-				echo '=================';
 				$this->filledArea += $rect->area;
 				array_push($this->mapped_rects, $rect);
 			} else {
 				array_push($remain_rects, $rect);
-				echo 'ignored';
 			}
 		}
 		return $remain_rects;
@@ -106,15 +102,11 @@ class Panel {
 	}
 
 	public function addAll($rects) {
-		echo 'add all ' . count($rects);
 		$remain_rects = array();
 		foreach ($rects as $rect) {
 			if ($this->tryInsert($rect)) {
-				echo 'placed';
-				print_r($rect->sketch());
 				array_push($this->mapped_rects, $rect);
 			} else {
-				echo 'ignored';
 				array_push($remain_rects, $rect);
 			}
 		}
@@ -130,14 +122,12 @@ class Panel {
 		while (count($stack)) {
 			$bound = array_pop($stack);
 
-			var_dump($bound);
-
 			$ww_diff = $bound->width - $rect->width;
 			$hh_diff = $bound->height - $rect->height;
 			$wh_diff = $bound->height - $rect->width;
 			$hw_diff = $bound->width - $rect->height;
 
-			if ($this->req == 0 and $wh_diff > 0 and $hw_diff > 0 and
+			if ($this->req == 0 and $wh_diff >= 0 and $hw_diff >= 0 and
 					($bound->width < 100 or $bound->height < 100 or
 					($rect->width < 100 and $rect->height < 100))) {
 				// rotate it
@@ -154,14 +144,10 @@ class Panel {
 				// split horizonaly
 				if ($ww_diff > $gap) {
 					$left = new Bound($bound->top, $bound->left + $rect->width + $gap, $ww_diff - $gap, $rect->height);
-					echo '\n left';
-					var_dump($left);
 					array_unshift($queue, $left);
 				}
 				if ($hh_diff > $gap) {
 					$right = new Bound($bound->top + $rect->height + $gap, $bound->left, $bound->width, $hh_diff - $gap);
-					echo '\n right';
-					var_dump($right);
 					array_unshift($queue, $right);
 				}
 
@@ -169,25 +155,19 @@ class Panel {
 			}
 			if ($ww_diff < 0 or $hh_diff < 0) {
 				// this bound can't fit this rect
-				echo 'not fit \n';
 				array_unshift($queue, $bound);
 				continue;
 			}
 			// place this rect on this bound
 			$res = True;
 			$rect->placeAt($bound->top, $bound->left);
-			// create new sub bound if need
 			// split vertically
 			if ($hh_diff > $gap) {
 				$left = new Bound($bound->top + $rect->height + $gap, $bound->left, $rect->width, $hh_diff - $gap);
-				echo '\n left';
-				var_dump($left);
 				array_unshift($queue, $left);
 			}
 			if ($ww_diff > $gap) {
 				$right = new Bound($bound->top, $bound->left + $rect->width + $gap, $ww_diff - $gap, $bound->height);
-				echo '\n right';
-				var_dump($right);
 				array_unshift($queue, $right);
 			}
 
@@ -221,7 +201,6 @@ class Panel {
 	public function remain() {
 		$res = array();
 		foreach ($this->stack as $bound) {
-			echo 'panel->empty';
 			array_push($res, $bound->sketch($this->req));
 		}
 

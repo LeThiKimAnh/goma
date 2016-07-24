@@ -6,11 +6,21 @@
 	var solution = <?php print $session->sketch; ?>;
 	var imageObj = new Image();
 
-	imageObj.src = "{{url('/admin/images/WLsci.png')}}";
+//	imageObj.src = "{{url('/admin/images/WLsci.png')}}";
+	imageObj.src = "{{url('/admin/images/wood.png')}}";
 
-	function createCanvas(panel, idx) {
-		var canvas = document.createElement('canvas');
-		var scale = 0.425;
+	function createCanvas(panel, idx, scale, doc) {
+		if (doc == null) {
+			doc = document;
+		}
+		var rects = panel.rects;
+		var remains = panel.remains;
+
+		if (rects.length < 1) {
+			return null;
+		}
+
+		var canvas = doc.createElement('canvas');
 		canvas.setAttribute('id', 'canvas' + idx);
 		canvas.setAttribute('name', 'canvas');
 		canvas.setAttribute('class', 'img');
@@ -30,13 +40,6 @@
 		ctx.stroke();
 		ctx.fillStyle = "white";
 		ctx.fill();
-
-		var rects = panel.rects;
-		var remains = panel.remains;
-
-		if (rects.length < 1) {
-			return null;
-		}
 
 		for (var i = 0; i < rects.length; i++) {
 			var rect = rects[i];
@@ -84,8 +87,9 @@
 		var panels = solution['panels'];
 		for (var i = 0, j = 0; i < panels.length; i++) {
 			var panel = panels[i];
-			var canvas = createCanvas(panel, i);
+			var canvas = createCanvas(panel, i, 0.425);
 			if (canvas === null) {
+				console.log('canvas null');
 				continue;
 			}
 
@@ -95,7 +99,7 @@
 			var req = (panel.req === 0) ? "Không vân" : (panel.req === 1) ? "Vân dọc" : "Vân ngang";
 
 			var clazz = "item";
-			if (i === 0) {
+			if (j === 0) {
 				clazz = "item active";
 				indicator.setAttribute('class', 'active');
 			}
@@ -104,31 +108,61 @@
 			wrapper.setAttribute('style', 'text-align: center;');
 			indicator.setAttribute('data-slide-to', j);
 			indicator.setAttribute('data-target', '#myCarousel');
-			caption.setAttribute('class', 'carousel-caption');
-			caption.innerHTML = '<h4> Panel ' + j + '</h4><p> ' + panel.width + ' x ' + panel.height + ' x ' + req + ' </p>';
+			caption.setAttribute('class', 'carousel-caption page-break');
+			caption.innerHTML = '<h4>' + panel.id + '</h4><p> ' + panel.width + ' x ' + panel.height + ' x ' + req + ' </p>';
 			j += 1;
 
 			wrapper.appendChild(canvas);
 			wrapper.appendChild(caption);
 			parent.appendChild(wrapper);
-			indicators.appendChild(indicator);
+			//indicators.appendChild(indicator);
 		}
+	}
+
+	function printData() {
+		var printWindow = window.open("");
+		var printPage = printWindow.document;
+		var panels = solution['panels'];
+
+		printPage.open();
+		printPage.write('<!DOCTYPE html><html><title>In Thiết kế Đơn hàng {{ $session->donhang_id }} <{{ Auth::user()->username }}></title><body> <style>@page {size: landscape;} @media print {.page-break{display:block;page-break-after:always;}}</style>');
+		var content = '';
+		for (var i = 0; i < panels.length; i++) {
+			var panel = panels[i];
+			var req = (panel.req === 0) ? "Không vân" : (panel.req === 1) ? "Vân dọc" : "Vân ngang";
+			var canvas = createCanvas(panel, i, 0.575, printPage);
+
+			if (canvas === null) {
+				console.log('print: canvas null');
+				continue;
+			}
+			content += '<img src="' + canvas.toDataURL('image/jpeg') + '"/>';
+			content += '<div class="page-break"><h4>' + panel.id + '</h4><p> ' + panel.width + ' x ' + panel.height + ' x ' + req + ' </p></div>';
+		}
+
+		printPage.write(content);
+		printPage.write('</body></html>');
+		printPage.close();
+		printWindow.focus();
+//		printWindow.print();
+//		printWindow.close();
 	}
 	// show after 1 second
 	setTimeout(show, 1000);
 </script>
 <style>
 	.carousel {
-		background-color: #000000;
-		color: #000000;
+		background-color: #bed5f4;
 		margin-bottom: 60px;
 	}
-	
-	.carousel-control {
-		width: 10%;
-	}
+
 	.carousel .item {
 		height: 100%;
+	}
+
+	.carousel-caption{
+		color: black;
+		text-shadow: none;
 	}
 
 	.container-fluid {
