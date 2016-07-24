@@ -38,8 +38,7 @@ class SessionController extends Controller {
 		if (Auth::user()->level == 1 || Auth::user()->level == 2 || Auth::user()->level == 4) {
 			$session = Session::where('donhang_id', $id)->first();
 			if ($session != null && $session->sketch != null) {
-				$panels = json_decode($session->sketch)->panels;
-				$panels = array_filter($panels, function($panel) {
+				$panels = array_filter(json_decode($session->sketch)->panels, function($panel) {
 					return count($panel->rects) > 0;
 				});
 				return view('admin.result', compact('session', 'panels'));

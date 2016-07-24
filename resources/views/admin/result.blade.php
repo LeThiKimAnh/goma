@@ -9,7 +9,10 @@
 //	imageObj.src = "{{url('/admin/images/WLsci.png')}}";
 	imageObj.src = "{{url('/admin/images/wood.png')}}";
 
-	function createCanvas(panel, idx) {
+	function createCanvas(panel, idx, scale, doc) {
+		if (doc == null) {
+			doc = document;
+		}
 		var rects = panel.rects;
 		var remains = panel.remains;
 
@@ -17,8 +20,7 @@
 			return null;
 		}
 
-		var canvas = document.createElement('canvas');
-		var scale = 0.425;
+		var canvas = doc.createElement('canvas');
 		canvas.setAttribute('id', 'canvas' + idx);
 		canvas.setAttribute('name', 'canvas');
 		canvas.setAttribute('class', 'img');
@@ -85,7 +87,7 @@
 		var panels = solution['panels'];
 		for (var i = 0, j = 0; i < panels.length; i++) {
 			var panel = panels[i];
-			var canvas = createCanvas(panel, i);
+			var canvas = createCanvas(panel, i, 0.425);
 			if (canvas === null) {
 				console.log('canvas null');
 				continue;
@@ -106,7 +108,7 @@
 			wrapper.setAttribute('style', 'text-align: center;');
 			indicator.setAttribute('data-slide-to', j);
 			indicator.setAttribute('data-target', '#myCarousel');
-			caption.setAttribute('class', 'carousel-caption');
+			caption.setAttribute('class', 'carousel-caption page-break');
 			caption.innerHTML = '<h4>' + panel.id + '</h4><p> ' + panel.width + ' x ' + panel.height + ' x ' + req + ' </p>';
 			j += 1;
 
@@ -116,6 +118,35 @@
 			//indicators.appendChild(indicator);
 		}
 	}
+
+	function printData() {
+		var printWindow = window.open("");
+		var printPage = printWindow.document;
+		var panels = solution['panels'];
+
+		printPage.open();
+		printPage.write('<!DOCTYPE html><html><title>In Thiết kế Đơn hàng {{ $session->donhang_id }} <{{ Auth::user()->username }}></title><body> <style>@page {size: landscape;} @media print {.page-break{display:block;page-break-after:always;}}</style>');
+		var content = '';
+		for (var i = 0; i < panels.length; i++) {
+			var panel = panels[i];
+			var req = (panel.req === 0) ? "Không vân" : (panel.req === 1) ? "Vân dọc" : "Vân ngang";
+			var canvas = createCanvas(panel, i, 0.575, printPage);
+
+			if (canvas === null) {
+				console.log('print: canvas null');
+				continue;
+			}
+			content += '<img src="' + canvas.toDataURL('image/jpeg') + '"/>';
+			content += '<div class="page-break"><h4>' + panel.id + '</h4><p> ' + panel.width + ' x ' + panel.height + ' x ' + req + ' </p></div>';
+		}
+
+		printPage.write(content);
+		printPage.write('</body></html>');
+		printPage.close();
+		printWindow.focus();
+//		printWindow.print();
+//		printWindow.close();
+	}
 	// show after 1 second
 	setTimeout(show, 1000);
 </script>
@@ -123,10 +154,6 @@
 	.carousel {
 		background-color: #bed5f4;
 		margin-bottom: 60px;
-	}
-
-	.carousel-control {
-		width: 10%;
 	}
 
 	.carousel .item {
