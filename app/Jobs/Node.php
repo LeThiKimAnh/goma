@@ -69,9 +69,7 @@ class Node {
 		if ($this->req == Solution::NONE) {
 			// we can rotate the rect here
 		}
-		# TODO it will fit, chose the best way to rotate
-		// create 2 child nodes
-		// split verticaly
+
 		if ($hh_diff > 0) {
 			$this->left = new Node($rect->width, $hh_diff, $this->req);
 			$this->left->level = $this->level + 1;
