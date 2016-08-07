@@ -16,7 +16,7 @@
 		<link href="{{url('admin/dist/css/sb-admin-2.css')}}" rel="stylesheet">
 
 		<link href="{{url('admin/dist/css/font-awesome.min.css')}}" rel="stylesheet" type="text/css">
-		
+
 		<!-- DataTables CSS -->
 		<link href="{{url('admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css')}}" rel="stylesheet">
 
@@ -32,7 +32,7 @@
 		<script src="{{url('admin/js/jquery-1.9.1.js')}}"></script>
 		<script src="{{url('admin/js/jquery-ui.js')}}"></script>
 		<script type="text/javascript">
-			var baseURL = "{!!url('/')!!}";
+var baseURL = "{!!url('/')!!}";
 		</script>
 		<!-- End CKeditor && CKFinder -->
 		<script src="{{url('admin/js/jquery.min.js')}}"></script>
@@ -43,17 +43,17 @@
 				margin: auto;
 			}
 			.back-to-top {
-			    cursor: pointer;
-			    position: fixed;
-			    bottom: 20px;
-			    right: 20px;
-			    display:none;
+				cursor: pointer;
+				position: fixed;
+				bottom: 20px;
+				right: 20px;
+				display:none;
 			}
 			.centered-text {
-			    text-align:center
+				text-align:center
 			} 
 			.glyphicon-bed:before {
-			  	content: "\e219";
+				content: "\e219";
 			}
 			.navbar {
 				min-height: 65px;
@@ -182,9 +182,9 @@
 										<a href="{!!URL::route('listUser')!!}">Danh Sách User</a>
 									</li>
 									@if(Auth::user()->level ==1)
-										<li>
-											<a href="{!!URL::route('userAdd')!!}"> Thêm User</a>
-										</li>
+									<li>
+										<a href="{!!URL::route('userAdd')!!}"> Thêm User</a>
+									</li>
 									@endif
 									<li>
 										<a href="{!!URL::route('getRepass')!!}">Đổi mật khẩu</a>

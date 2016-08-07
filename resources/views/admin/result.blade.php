@@ -9,10 +9,7 @@
 //	imageObj.src = "{{url('/admin/images/WLsci.png')}}";
 	imageObj.src = "{{url('/admin/images/wood.png')}}";
 
-	function createCanvas(panel, idx, scale, doc) {
-		if (doc == null) {
-			doc = document;
-		}
+	function createCanvas(panel, idx, scale) {
 		var rects = panel.rects;
 		var remains = panel.remains;
 
@@ -20,7 +17,7 @@
 			return null;
 		}
 
-		var canvas = doc.createElement('canvas');
+		var canvas = document.createElement('canvas');
 		canvas.setAttribute('id', 'canvas' + idx);
 		canvas.setAttribute('name', 'canvas');
 		canvas.setAttribute('class', 'img');
@@ -89,7 +86,6 @@
 			var panel = panels[i];
 			var canvas = createCanvas(panel, i, 0.425);
 			if (canvas === null) {
-				console.log('canvas null');
 				continue;
 			}
 
@@ -133,7 +129,6 @@
 			var canvas = createCanvas(panel, i, 0.575, printPage);
 
 			if (canvas === null) {
-				console.log('print: canvas null');
 				continue;
 			}
 			content += '<img src="' + canvas.toDataURL('image/jpeg') + '"/>';
@@ -144,8 +139,8 @@
 		printPage.write('</body></html>');
 		printPage.close();
 		printWindow.focus();
-//		printWindow.print();
-//		printWindow.close();
+		printWindow.print();
+		printWindow.close();
 	}
 	// show after 1 second
 	setTimeout(show, 1000);
