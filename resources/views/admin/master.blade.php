@@ -80,7 +80,7 @@
 						<img src="{{url('admin/images/logo.png')}}" width="70px" height="50px" style="margin-left:80px; margin-top:5px">
 					</a>	
 				</div>
-				<div class="navbar-brand " style="margin-left:375px;"><h2 style="margin-top: 0px;">Công ty TNHH Tuyết Nga</h2></div>
+				<div class="navbar-brand " style="margin-left:410px;"><h2 style="margin-top: 0px;">Công ty TNHH Tuyết Nga</h2></div>
 				<!-- /.navbar-header -->
 
 				<ul class="nav navbar-top-links navbar-right">
