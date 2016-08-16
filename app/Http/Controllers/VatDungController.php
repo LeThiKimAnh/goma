@@ -12,6 +12,8 @@ use App\VatDung;
 use App\ChiTietVatDung;
 use App\ChiTietDonHang;
 use App\DonHang;
+
+use App\LichSuGia;
 use DB;
 use Auth;
 
@@ -172,12 +174,23 @@ class VatDungController extends Controller
                         $he_so = 1;
                     }
                     $vat_dung =  VatDung::find($id);
+
+                    $gia_cu = $vat_dung->gia_san_pham;
+
                     $vat_dung->ten = $request->txt_vd;
                     $vat_dung->mo_ta = $request->txt_mo_ta;
                     $vat_dung->gia_san_xuat = $request->txt_giaSX;
                     $vat_dung->he_so = $he_so;
                     $vat_dung->gia_san_pham = ($request->txt_heSo)*($request->txt_giaSX);
                     $vat_dung->save();
+
+                    $lich_su_gia = new LichSuGia;
+                    $lich_su_gia->vatdung_id = $id;
+                    $lich_su_gia->gia_cu = $gia_cu;
+                    $lich_su_gia->nguoi_sua = Auth::user()->username;
+                    $batch_max = LichSuGia::max('batch');
+                    $lich_su_gia->batch = $batch_max+1;
+                    $lich_su_gia->save();
 
                     return redirect()->route('vd-getList')->with(['flash_level'=>'success','flash_message_success'=>'Success !! Đã sửa thành công vật dụng']);
                 }
@@ -249,6 +262,10 @@ class VatDungController extends Controller
         }else{
             return view('errors.404');
         }
+    }
+    public function getData($id){
+        $data = LichSuGia::select('created_at','nguoi_sua','gia_cu')->where('vatdung_id',$id)->orderBy('id', 'DESC')->take(14)->get();
+        return $data;
     }
 
 }

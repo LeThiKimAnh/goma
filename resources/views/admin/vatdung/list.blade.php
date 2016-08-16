@@ -1,5 +1,5 @@
 @extends('admin.master')
-@section('controller','Vật Dụng')
+@section('controller','Sản Phẩm')
 @section('action','List')
 @section('content')
 
@@ -7,16 +7,16 @@
 <form method="GET" action="{!!URL::route('SearchVD')!!}" name="form_search">
   
     <div class="form-group col-lg-4">
-      <label class="form-control-label col-sm-5">Mã vật dụng:</label>
+      <label class="form-control-label col-sm-5">Mã sản phẩm:</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" placeholder="Mã vật dụng" name="txt_maVD" value="{!!$maVD!!}">
+        <input type="text" class="form-control" placeholder="Mã sản phẩm" name="txt_maVD" value="{!!$maVD!!}">
       </div>
     </div>
 
     <div class="form-group col-lg-4">
-      <label class="form-control-label col-sm-5">Tên vật dụng:</label>
+      <label class="form-control-label col-sm-5">Tên:</label>
       <div class="col-sm-7">
-        <input type="text" class="form-control" placeholder="Tên vật dụng" name="txt_VD" value="{!!$tenVD!!}">
+        <input type="text" class="form-control" placeholder="Tên sản phẩm" name="txt_VD" value="{!!$tenVD!!}">
       </div>
     </div>
 
@@ -31,9 +31,9 @@
   </div>
 
     <div class="form-group col-lg-4">
-        <label class="form-control-label col-sm-5">Giá sản phẩm:</label>
+        <label class="form-control-label col-sm-5">Giá bán:</label>
          <div class="col-sm-7">
-          <input type="text" class="form-control" placeholder="Giá sản phẩm" name="txt_giaSP" value="{!!$gia_SP!!}">
+          <input type="text" class="form-control" placeholder="Giá bán" name="txt_giaSP" value="{!!$gia_SP!!}">
         </div>
     </div>
   @if(Auth::user()->level==1||Auth::user()->level==2)
@@ -65,10 +65,14 @@
     @endif
 </div>
 
+<div class="form-group pull-left" >
+  <a type="button" class="btn btn-default " href="{!!URL::route('getVatdung')!!}">Thêm sản phẩm</a>
+</div>
 
 <div class="form-group pull-right" >
   <button class="btn btn-default " onclick="return fnExcelReport()" >Xuất danh sách ra Excel</button>
 </div>
+
                     <!-- /.col-lg-12 -->
 <table class="table table-striped table-bordered table-hover" id="dataTables-example">
  @include('admin.blocks.error')
@@ -144,11 +148,36 @@
                   <div class="form-group">
                     <a href="{{URL::route('chitietVD',$item['id'])}}" class="centered-text"><h4>Chi tiết</h4></a>
                   </div>
+                  @if(Auth::user()->level==1||Auth::user()->level==2||Auth::user()->level==3)
+                  <div class="form-group">
+                    <button type="button" class="btn btn-link centered-text" data-toggle="modal" data-target="#myModal" data-params="<?php echo $item['id'];?>"><h4>Lịch sử giá</h4></button>
+                  </div>
+                  @endif
                 </div>
+               
               </td>
             </tr>
         @endforeach
     </tbody>
+    <div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog" style="z-index:10241;width: 800px" >
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Lịch sử giá</h4>
+          </div>
+          <div class="modal-body">
+            <div class="chartContainer" style="height: 400px"> </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
 </table>
 <div class="pull-right">
   {!! $data->render() !!}

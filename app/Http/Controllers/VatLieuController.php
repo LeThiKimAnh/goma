@@ -44,10 +44,11 @@ class VatLieuController extends Controller
             $tenVL = "";
             $rong ="";
             $dai = "";
+            $day = "";
             $chat_lieu = -1;
             $loai = -1;
         	$data = VatLieu::orderBy('id', 'DESC')->paginate($per_page);
-        	return view('admin.vatlieu.list',compact('data','maVL','tenVL','rong','dai','chat_lieu','loai'));
+        	return view('admin.vatlieu.list',compact('data','maVL','tenVL','rong','dai','chat_lieu','loai','day'));
         }else{
             return view('errors.404');
         }
@@ -95,7 +96,7 @@ class VatLieuController extends Controller
                 );
         	$this->validate($request,
                 ['txt_chieu_cao'=>'required'],
-                ["txt_chieu_cao.required"=>"Xin hãy nhập chiều cao!!"]
+                ["txt_chieu_cao.required"=>"Xin hãy nhập bề dày!!"]
                 );
         	$this->validate($request,
                 ['txt_chieu_rong'=>'numeric'],
@@ -107,7 +108,7 @@ class VatLieuController extends Controller
                 );
         	$this->validate($request,
                 ['txt_chieu_cao'=>'numeric'],
-                ["txt_chieu_cao.numeric"=>"Xin hãy nhập chiều cao!!"]
+                ["txt_chieu_cao.numeric"=>"Bề dày phải là số!!"]
                 );
              $this->validate($request,
                 ['sl_yeu_cau'=>'required'],
@@ -138,6 +139,7 @@ class VatLieuController extends Controller
             $tenVL = $request->txt_VL;
             $rong = $request->txt_R;
             $dai = $request->txt_D;
+            $day = $request->txt_day;
             $chat_lieu = $request->txt_CL;
             $loai = $request->txt_YC;
 
@@ -156,6 +158,9 @@ class VatLieuController extends Controller
             if(!ctype_space($dai)&&!empty($dai)){
                 $sql[] = " dai =".$dai."";
             }
+            if(!ctype_space($day)&&!empty($day)){
+                $sql[] = " cao =".$day."";
+            }
             if (!ctype_space($chat_lieu)&&!empty($chat_lieu)) {
                 $sql[] = " chat_lieu=" . $chat_lieu . "";
             }
@@ -171,7 +176,7 @@ class VatLieuController extends Controller
             }
 
             $data->setPath($request->fullUrl());
-            return view('admin.vatlieu.list',compact('data','maVL','tenVL','rong','dai','chat_lieu','loai'));
+            return view('admin.vatlieu.list',compact('data','maVL','tenVL','rong','dai','day','chat_lieu','loai'));
         }else{
             return view('errors.404');
         }

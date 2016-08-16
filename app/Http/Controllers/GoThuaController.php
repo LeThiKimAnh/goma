@@ -40,10 +40,11 @@ class GoThuaController extends Controller
             $tenVL = "";
             $rong ="";
             $dai = "";
+            $day = "";
             $chat_lieu = -1;
             $loai = -1;
         	$data = GoThua::orderBy('id', 'DESC')->paginate($per_page);
-        	return view('admin.gothua.list',compact('data','tenVL','rong','dai','chat_lieu','loai'));
+        	return view('admin.gothua.list',compact('data','tenVL','rong','dai','chat_lieu','loai','day'));
         }else{
             return view('errors.404');
         }
@@ -130,6 +131,7 @@ class GoThuaController extends Controller
             $tenVL = $request->txt_ten;
             $rong = $request->txt_R;
             $dai = $request->txt_D;
+            $day = $request->txt_day;
             $chat_lieu = $request->txt_CL;
             $loai = $request->txt_YC;
 
@@ -144,6 +146,9 @@ class GoThuaController extends Controller
             }
             if(!ctype_space($dai)&&!empty($dai)){
                 $sql[] = " dai =".$dai."";
+            }
+            if(!ctype_space($day)&&!empty($day)){
+                $sql[] = " cao =".$day."";
             }
             if (!ctype_space($chat_lieu)&&!empty($chat_lieu)&&$chat_lieu>0) {
                 $sql[] = " chat_lieu=" . $chat_lieu . "";

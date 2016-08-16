@@ -20,8 +20,8 @@
              <label>dài</label>
              <input class="form-control" name="txt_chieu_dai" placeholder="Nhập chiều dài" value="{{old('txt_ten')}}" type="number" min="0"></input>
          </div>
-         <div class="form-group" style="display:none">
-             <label>cao</label>
+         <div class="form-group">
+             <label>bề dày</label>
              <input class="form-control" name="txt_chieu_cao" placeholder="Nhập chiều cao" value="{{old('txt_ten')}}" type="number" min="0" ></input>
          </div>
          <div class="form-group">

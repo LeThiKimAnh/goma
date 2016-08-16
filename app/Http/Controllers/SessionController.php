@@ -2,6 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Http\Request;
+
+use App\Http\Requests;
+
 use App\Session;
 use App\DonHang;
 use App\Jobs\OptimizeSketch;
@@ -9,7 +13,7 @@ use Auth;
 
 class SessionController extends Controller {
 
-	public function session($id) {
+	public function session($id,Request $request) {
 		if (Auth::user()->level == 1 || Auth::user()->level == 2) {
 			$don_hang = DonHang::find($id);
 			$trang_thai = $don_hang->trang_thai;
@@ -21,6 +25,15 @@ class SessionController extends Controller {
 				$session->donhang_id = $id;
 				$session->nguoi_xu_ly = Auth::user()->username;
 				$session->trang_thai = 1;
+				$session->dai = $request->txt_dai;
+				$session->rong = $request->txt_rong;
+				$session->day = $request->txt_day;
+				if($request->used=="checked"){
+					$session->go_thua = 1;
+				}else{
+					$session->go_thua = 0;
+				}
+				$session->size_cut = $request->txt_sizecut;
 				$session->sketch = '';
 				$session->save();
 
@@ -32,6 +45,7 @@ class SessionController extends Controller {
 		} else {
 			return view('errors.500');
 		}
+		print_r($request->used);
 	}
 
 	public function result($id) {

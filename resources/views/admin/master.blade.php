@@ -27,12 +27,18 @@
 		<link href="{{url('admin/dist/css/bootstrap.min.css')}}" rel="stylesheet prefetch">
 		<!-- CKeditor && CKFinder -->
 		<script src="{{url('admin/js/ckeditor/ckeditor.js')}}"></script>
+		
+		
+
 		<script src="{{url('admin/js/ckfinder/ckfinder.js')}}"></script>
 		<script src="{{url('admin/js/func_ckfinder.js')}}"></script>
 		<script src="{{url('admin/js/jquery-1.9.1.js')}}"></script>
+		<!-- <script src="{{url('admin/js/bootstrap.min.js')}}"></script> -->
 		<script src="{{url('admin/js/jquery-ui.js')}}"></script>
+
+
 		<script type="text/javascript">
-var baseURL = "{!!url('/')!!}";
+			var baseURL = "{!!url('/')!!}";
 		</script>
 		<!-- End CKeditor && CKFinder -->
 		<script src="{{url('admin/js/jquery.min.js')}}"></script>
@@ -254,8 +260,11 @@ var baseURL = "{!!url('/')!!}";
 		<!-- DataTables JavaScript -->
 		<script src="{{url('admin/bower_components/datatables/media/js/jquery.dataTables.min.js')}}"></script>
 		<script src="{{url('admin/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.min.js')}}"></script>
+		<script src="{{url('admin/js/jquery.canvasjs.js')}}"></script>
+    	<script src="{{url('admin/js/canvasjs.js')}}"></script>
 		<!--myscript -->
 		<script src="{{url('admin/js/myscript.js')}}"></script>
+
 
 		<!-- Page-Level Demo Scripts - Tables - Use for reference -->
 	</body>

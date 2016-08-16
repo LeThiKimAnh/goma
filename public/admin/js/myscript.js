@@ -288,3 +288,58 @@ $(document).ready(function() {
 
 });
 
+var ItemPriceHistory = {};
+$('#myModal').on('shown.bs.modal', function (event) {
+	itemId = event.relatedTarget.getAttribute('data-params');
+	function graphHistory(dl_chinh) {
+		$(".chartContainer").CanvasJSChart({
+                // backgroundColor: "#F5DEB4",
+                animationEnabled: true,
+                animationDuration: 2000,
+                title: {
+                    text: "Lịch sử giá"
+                },
+                axisY: {
+                    // title: "Giá sản phẩm",
+                    includeZero: false,
+                    gridThickness:1
+                    // minimum: 3
+                },
+                axisX: {
+                    // title: "Ngày",
+                    // titleFontColor: "green",
+                    titleFontFamily: "verdana",
+                    margin: 10,
+                    // interval: 1
+                },
+                data:
+                [
+                {
+                    type: "line",
+                    toolTipContent: "{nguoi}: {y} VND <br/> {label}",
+                    dataPoints: dl_chinh
+                }
+                ]
+            
+            });
+	}
+	var dl_chinh = ItemPriceHistory[itemId];
+	if(dl_chinh == undefined) {
+		$.getJSON ("/laravelapps/goma/public/vatdung/data/"+itemId,function(data){    
+	        dl_chinh = new Array();
+	       
+	        for(var i = 0; i< data.length;i++){
+	           var dl =  {
+	                label: data[i].created_at,
+	                y: parseInt(data[i].gia_cu),
+	                nguoi: data[i].nguoi_sua
+	            }
+	            dl_chinh.push(dl);
+	        }
+	        ItemPriceHistory[itemId] = dl_chinh;
+	        graphHistory(dl_chinh.reverse());
+	    });
+	} else {
+		graphHistory(dl_chinh.reverse());
+	}
+});

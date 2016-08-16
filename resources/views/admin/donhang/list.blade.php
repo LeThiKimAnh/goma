@@ -14,7 +14,7 @@
 			</div>
 
 			<div class="form-group col-lg-4">
-				<label class="form-control-label col-sm-5">Khách hàng :</label>
+				<label class="form-control-label col-sm-5">Khách hàng:</label>
 				<div class="col-sm-7">
 					<input type="text" class="form-control" placeholder="Tên Khách hàng" name="txt_KH" value="{!!$tenKH!!}">
 				</div>
@@ -36,7 +36,7 @@
 			</div>
 			@if(Auth::user()->level==4)
 				<div class="form-group col-lg-4">
-					<label class="form-control-label col-sm-5">Trạng thái :</label>
+					<label class="form-control-label col-sm-5">Trạng thái:</label>
 					<div class="col-sm-7">
 						<select class="form-control" name="txt_TT" id="select_vd">
 							@if($trang_thai ==2)
@@ -52,7 +52,7 @@
 				</div>
 			@else
 				<div class="form-group col-lg-4">
-					<label class="form-control-label col-sm-5">Trạng thái :</label>
+					<label class="form-control-label col-sm-5">Trạng thái:</label>
 					<div class="col-sm-7">
 						<select class="form-control" name="txt_TT" id="select_vd">
 							@if($trang_thai ==0)
@@ -121,6 +121,11 @@
     @endif
 </div>
 <!-- <iframe id="txtArea1" style="display:none"></iframe> -->
+@if(Auth::user()->level!=4)
+<div class="form-group pull-left" >
+  <a type="button" class="btn btn-default " href="{!!URL::route('getDonhang')!!}">Thêm đơn hàng</a>
+</div>
+@endif
 
 <div class="form-group pull-right" >
 	<button class="btn btn-default " onclick="return fnExcelReport1()" >Xuất danh sách ra Excel</button>
@@ -163,10 +168,97 @@
 			@if(Auth::user()->level ==1||Auth::user()->level ==2||Auth::user()->level ==4)
 			@if($item["trang_thai"]==0)
 			<td>
-				<form method="POST" action="{!!URL::route('session',$item['id'])!!}">
-					<input type="hidden" name="_token" value="{!! csrf_token() !!}" />
-					<button type="submit" class="btn btn-primary">Xử Lý</button>
-				</form>
+				
+					<button class="btn btn-primary" data-toggle="modal" data-target="#myOption{!!$item['id']!!}">Xử Lý</button>
+					<!-- Modal -->
+					<div id="myOption{!!$item['id']!!}" class="modal fade" role="dialog" >
+					
+					  <div class="modal-dialog" style="z-index:10241">
+
+					    <!-- Modal content-->
+					    <div class="modal-content">
+					      <div class="modal-header">
+					        <button type="button" class="close" data-dismiss="modal">&times;</button>
+					        <h4 class="modal-title">Modal Header</h4>
+					      </div>
+					      <div class="modal-body" style="height: 450px">
+
+					      	<div >
+						      	<form method="POST" action="{!!URL::route('session',$item['id'])!!}">
+									<input type="hidden" name="_token" value="{!! csrf_token() !!}" />
+						      		
+						        		<div class="form-group col-lg-12" >
+							        		<div class="col-lg-5" style="text-align: left;">
+							        			Dùng gỗ thừa trong kho
+							        		</div>
+							        		<div class="col-lg-5"></div>
+							        		<div class="col-lg-2">
+							        			<input type="checkbox" value="checked" name="used" checked="">
+							        		</div>
+							        	</div>
+							        	<div class="form-group col-lg-12">
+							        		<div class="form-group col-lg-12" style="text-align: left;">
+							        			Kích thước gỗ tiêu chuẩn :
+							        		</div>
+							        		<div class="form-group col-lg-12">
+									    		<div class="col-lg-4">
+								      				<label>dài</label>
+								      			</div>
+								      			<div class="col-lg-5">
+								         			<input class="form-control" name="txt_dai" type="number" min="0" value="1200" style="text-align:right"></input>
+								         		</div>
+								      		</div>
+								      		<div class="form-group col-lg-12">
+								      			<div class="col-lg-4">
+								      				<label>rộng</label>
+								      			</div>
+								      			<div class="col-lg-5">
+								         			<input class="form-control" name="txt_rong" type="number" min="0" value="2400" style="text-align:right"></input>
+								         		</div>
+									    	</div>
+									    	<div class="form-group col-lg-12" style="display:none">
+								      			<div class="col-lg-4">
+								      				<label>dày</label>
+								      			</div>
+								      			<div class="col-lg-5">
+								         			<input class="form-control" name="txt_day" type="number" min="0" style="text-align:right"></input>
+								         		</div>
+									    	</div>
+							        	</div>
+							        	<div class="form-group col-lg-12" style="text-align: left;">
+							        		<div class="col-lg-4">Độ dày lát cắt :</div>
+							        		<div class="form-group col-lg-12">
+								        		<div class="col-lg-4">
+								        		</div>
+							        			<div class="col-lg-5">
+							        				<input class="form-control" name="txt_sizecut" type="number" min="0" style="text-align:right" value="4"></input>
+							        			</div>
+								         	</div>
+							        	</div>
+
+							        	<div class="form-group col-lg-12">
+											<p class='alert alert-danger' aria-label='close' style="display:block"><strong>Chú ý!</strong>Sau khi đã xử lý bạn không thể sửa chữa hay thay đổi đơn hàng, hãy xem kỹ thông tin trước khi thực hiện để tránh sai xót ^^</p>
+										</div>
+
+							        	<div class="form-group col-lg-12">
+						        			<button class="btn btn-success center-block" type="submit">Xử Lý đơn hàng</button>
+						        		</div>
+							        	
+						        	<!-- </div> -->
+						        	
+						        	
+						      	</form>
+					      	</div>
+					      	
+					      </div>
+					      <div class="modal-footer">
+					        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+					      </div>
+					    </div>
+
+					  </div>
+					</div>
+				
 			</td>
 			@endif
 			@if($item["trang_thai"]==2)
@@ -299,6 +391,8 @@
 	{!! $data->render() !!}
 </div>
 <a id="back-to-top" href="#" class="btn btn-info btn-lg back-to-top" role="button" title="Trở về đầu trang" data-toggle="tooltip" data-placement="left"><span class="glyphicon glyphicon-chevron-up"></span></a>
+
+
 
 @endsection 
 

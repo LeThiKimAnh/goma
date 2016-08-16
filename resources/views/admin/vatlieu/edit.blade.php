@@ -19,8 +19,8 @@
              <label>dài</label>
              <input class="form-control" name="txt_chieu_dai" value="{!!$vat_lieu['dai']!!}" placeholder="Nhập chiều dài" value="{{old('txt_ten')}}" type="number" min="0"></input>
          </div>
-         <div class="form-group" style="display:none">
-             <label>cao</label>
+         <div class="form-group">
+             <label>dày</label>
              <input class="form-control" name="txt_chieu_cao" value="{!!$vat_lieu['cao']!!}" placeholder="Nhập chiều cao" value="{{old('txt_ten')}}" type="number" min="0"></input>
          </div>
          <div class="form-group">

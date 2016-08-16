@@ -27,6 +27,7 @@ class VatLieuRequest extends Request
             'txt_ten'=>'required|unique:vat_lieu,ten',
             'txt_chieu_rong'=>'required|numeric',
             'txt_chieu_dai'=>'required|numeric',
+            'txt_chieu_cao'=>'required|numeric',
             'sl_chat_lieu'=>'required',
             'sl_yeu_cau'=>'required'
         ];
@@ -40,7 +41,8 @@ class VatLieuRequest extends Request
             'txt_chieu_rong.numeric' =>'chiều rộng không phải là số',
             'txt_chieu_dai.required'=>'Chưa điền chiều dài',
             'txt_chieu_dai.numeric' =>'chiều dài không phải là số',
-            'txt_chieu_cao.required'=>'Chưa điền chiều cao',
+            'txt_chieu_cao.required'=>'Chưa điền bề dày gỗ',
+            'txt_chieu_cao.numeric' =>'Bề dày không phải là số',
             'sl_chat_lieu.required'=>'Chưa chọn chất liệu',
             'sl_yeu_cau.required'=>'Chưa chọn yêu cầu'
         ];

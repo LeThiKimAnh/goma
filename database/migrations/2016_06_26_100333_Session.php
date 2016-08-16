@@ -18,6 +18,11 @@ class Session extends Migration
         $table->foreign('donhang_id')->references('id')->on('don_hang')->onDelete('cascade');
         $table->string('nguoi_xu_ly');
         $table->integer('trang_thai');
+        $table->double('rong');
+        $table->double('dai');
+        $table->double('day');
+        $table->int('go_thua');
+        $table->double('size_cut');
         $table->mediumText('sketch');
         $table->timestamps();
        });

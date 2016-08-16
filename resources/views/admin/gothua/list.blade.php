@@ -28,6 +28,13 @@
   </div>
   <div class="col-lg-12">
     <div class="form-group col-lg-4">
+      <label class="form-control-label col-sm-5">Dày:</label>
+      <div class="col-sm-7">
+        <input type="text" class="form-control" placeholder="Chiều dày" name="txt_day" value="{!!$day!!}">
+      </div>
+    </div>
+
+    <div class="form-group col-lg-4">
         <label class="form-control-label col-sm-5">Chất liệu:</label>
         @if($chat_lieu==1)
          <div class="col-sm-7">
@@ -111,11 +118,11 @@
             <th>Tên Vật Liệu</th>
             <th>Rộng</th>
             <th>Dài</th>
+            <th>Dày</th>
             <th>Chất liệu</th>
             <th>Yêu cầu</th>
             <th>Mô tả</th>
             <th>Xoá</th>
-            <!-- <th>Sửa</th> -->
         </tr>
     </thead>
     <tbody>
@@ -127,6 +134,7 @@
                 <td>{!!$item['ten']!!}</td>
                 <td>{!!$item['rong']!!}</td>
                 <td>{!!$item['dai']!!}</td>
+                <td>{!!$item['cao']!!}</td>
                 <td>
                     @if($item['chat_lieu']==1)
                         gỗ
@@ -147,7 +155,6 @@
                 <td class="center" style="padding:2px;">
                     <form method="POST" action="{!!URL::route('delgothua',$item['id'])!!}"> <input type="hidden" name="_token" value="{!! csrf_token() !!}" /><button type="submit" class="btn btn-link" onclick="return xacnhanxoa('ban co chac la muon xoa khong')"><i class="fa fa-trash-o fa-fw"></i> Xóa</button></form>
                 </td>
-                <!-- <td class="center"  style="padding:2px;"> <a href="{!!URL::route('getEditGo',$item['id'])!!}" class="btn btn-link"><i class="fa fa-pencil fa-fw"></i> Sửa</a></td> -->
             </tr>
         @endforeach
     </tbody>

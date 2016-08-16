@@ -33,6 +33,12 @@
           <input type="text" class="form-control" placeholder="Chiều dài" name="txt_D" value="{!!$dai!!}">
         </div>
     </div>
+    <div class="form-group col-lg-4">
+        <label class="form-control-label col-sm-5">Bề dày:</label>
+         <div class="col-sm-7">
+          <input type="text" class="form-control" placeholder="Bề dày" name="txt_day" value="{!!$day!!}">
+        </div>
+    </div>
 
     <div class="form-group col-lg-4">
         <label class="form-control-label col-sm-5">Chất liệu:</label>
@@ -108,6 +114,9 @@
   </div>
 </form>
 </div>  
+<div class="form-group pull-left" >
+  <a type="button" class="btn btn-default " href="{!!URL::route('getVatLieu')!!}">Thêm vật liệu</a>
+</div>
 <div class="form-group pull-right" >
   <button class="btn btn-default " onclick="return fnExcelReport()" >Xuất danh sách ra Excel</button>
 </div>                <!-- /.col-lg-12 -->
@@ -119,6 +128,7 @@
             <th>Tên Vật Liệu</th>
             <th>Rộng</th>
             <th>Dài</th>
+            <th>Dày</th>
             <th>Chất liệu</th>
             <th>Yêu cầu</th>
             <th>Mô tả</th>
@@ -136,6 +146,7 @@
                 <td>{!!$item['ten']!!}</td>
                 <td>{!!$item['rong']!!}</td>
                 <td>{!!$item['dai']!!}</td>
+                <td>{!!$item['cao']!!}</td>
                 <td>
                     @if($item['chat_lieu']==1)
                         gỗ
